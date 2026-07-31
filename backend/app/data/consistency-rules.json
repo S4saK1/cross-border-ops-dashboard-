@@ -1,0 +1,97 @@
+{
+  "rules": {
+    "exact_match": {
+      "enabled": true,
+      "severity": "ERROR",
+      "description": "同一中文术语的英文翻译必须完全一致"
+    },
+    "synonym_check": {
+      "enabled": true,
+      "severity": "WARNING",
+      "description": "检测同义词变体，建议使用标准化用词"
+    },
+    "spelling_check": {
+      "enabled": true,
+      "severity": "INFO",
+      "description": "检测美式/英式拼写差异，建议统一"
+    }
+  },
+  "standardization": [
+    {
+      "canonical": "Color",
+      "variants": [
+        "Colour"
+      ],
+      "action": "replace",
+      "severity": "INFO",
+      "note": "Amazon统一用美式Color"
+    },
+    {
+      "canonical": "USB-C",
+      "variants": [
+        "Type-C",
+        "USB Type C",
+        "USB Type-C",
+        "Type C"
+      ],
+      "action": "replace",
+      "severity": "WARNING",
+      "note": "推荐USB-C"
+    },
+    {
+      "canonical": "Size",
+      "variants": [
+        "Dimension",
+        "Dimensions"
+      ],
+      "action": "flag",
+      "severity": "INFO",
+      "note": "Size侧重尺码，Dimension侧重长宽高"
+    },
+    {
+      "canonical": "Material",
+      "variants": [
+        "Fabric",
+        "Textile"
+      ],
+      "action": "flag",
+      "severity": "INFO",
+      "note": "通用材质用Material，织物用Fabric"
+    },
+    {
+      "canonical": "Features",
+      "variants": [
+        "Function",
+        "Functions"
+      ],
+      "action": "replace",
+      "severity": "INFO",
+      "note": "Features更通用"
+    }
+  ],
+  "auto_fix_rules": [
+    {
+      "pattern": "Colour",
+      "replacement": "Color",
+      "reason": "Amazon平台统一美式拼写",
+      "severity": "INFO"
+    },
+    {
+      "pattern": "Fibre",
+      "replacement": "Fiber",
+      "reason": "统一美式拼写",
+      "severity": "INFO"
+    },
+    {
+      "pattern": "Honour",
+      "replacement": "Honor",
+      "reason": "统一美式拼写",
+      "severity": "INFO"
+    }
+  ],
+  "severity_definitions": {
+    "ERROR": "明显错误或不一致，必须修正后才能导出",
+    "WARNING": "不一致但不一定是错误，建议确认",
+    "INFO": "建议优化，不影响导出"
+  }
+}

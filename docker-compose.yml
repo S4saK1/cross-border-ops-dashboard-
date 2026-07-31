@@ -1,0 +1,57 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: bilingual-product-cms-backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data:ro
+      - cms-data:/app/data/runtime
+    environment:
+      - DATABASE_URL=${DATABASE_URL:-sqlite:///./data/runtime/bilingual_cms.db}
+      - SECRET_KEY=${SECRET_KEY:?SECRET_KEY is required}
+      - ALLOWED_ORIGINS=${ALLOWED_ORIGINS:-["http://localhost:3000"]}
+      - ADMIN_EMAIL=${ADMIN_EMAIL:-admin@bilingual-product-cms.com}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
+      - POSTGRES_HOST=${POSTGRES_HOST:-postgres}
+      - POSTGRES_PORT=${POSTGRES_PORT:-5432}
+      - POSTGRES_DB=${POSTGRES_DB:-bilingual_product_cms}
+      - POSTGRES_USER=${POSTGRES_USER:-postgres}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-postgres}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    depends_on:
+  # postgres: optional for production; dev uses SQLite by default
+      postgres:
+        condition: service_healthy
+
+  postgres:
+    image: postgres:15-alpine
+    container_name: bilingual-product-cms-postgres
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB:-bilingual_product_cms}
+      - POSTGRES_USER=${POSTGRES_USER:-postgres}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-postgres}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./scripts/postgresql_migration.py:/app/migration.py
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-bilingual_cms}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  cms-data:
+    driver: local
+  postgres-data:
+    driver: local

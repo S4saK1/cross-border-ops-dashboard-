@@ -1,0 +1,39 @@
+global:
+  smtp_smarthost: "${SMTP_SMARTHOST}"
+  smtp_from: "${SMTP_FROM}"
+  smtp_auth_username: "${SMTP_USERNAME}"
+  smtp_auth_password: "${SMTP_PASSWORD}"
+
+route:
+  group_by: ['alertname', 'severity']
+  group_wait: 10s
+  group_interval: 10s
+  repeat_interval: 1h
+  receiver: 'email-admin'
+
+receivers:
+# web.hook receiver disabled: no alertmanager-webhook service exists
+#- name: 'web.hook'
+#  webhook_configs:
+#  - url: 'http://alertmanager-webhook:5001/'
+#    send_resolved: true
+
+- name: 'email-admin'
+  email_configs:
+  - to: '${ALERT_EMAIL_TO}'
+    from: '${SMTP_FROM}'
+    smarthost: '${SMTP_SMARTHOST}'
+    auth_username: '${SMTP_USERNAME}'
+    auth_password: '${SMTP_PASSWORD}'
+    send_resolved: true
+    headers:
+      subject: '[ALERT] {{ .GroupLabels.alertname }} - {{ .Status }}'
+
+- name: 'empty'
+
+inhibit_rules:
+- source_match:
+    severity: 'critical'
+  target_match:
+    severity: 'warning'
+  equal: ['alertname', 'dev', 'instance']

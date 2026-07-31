@@ -1,0 +1,3102 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "created": "2025-07-20",
+    "total_entries": 242,
+    "categories": [
+      "通用属性",
+      "服装鞋帽",
+      "3C电子",
+      "家居家具",
+      "美妆个护",
+      "户外运动",
+      "母婴用品",
+      "汽车配件",
+      "珠宝饰品",
+      "办公文具",
+      "宠物用品"
+    ]
+  },
+  "entries": [
+    {
+      "zh": "颜色",
+      "en": "Color",
+      "category": "通用属性",
+      "note": "Amazon 统一用美式 Color；阿里巴巴也用 Color。英式 Colour 仅在 UK 站点可见，不建议在产品标题中使用",
+      "synonyms": [
+        "Colour"
+      ],
+      "platform_specific": {
+        "amazon": "Color",
+        "alibaba": "Color"
+      }
+    },
+    {
+      "zh": "尺寸",
+      "en": "Size",
+      "category": "通用属性",
+      "note": "Size 是最通用的说法。Dimension 侧重于长宽高具体尺寸参数，Size 侧重于 S/M/L 等尺码",
+      "synonyms": [
+        "Dimension",
+        "Dimensions"
+      ],
+      "platform_specific": {
+        "amazon": "Size",
+        "alibaba": "Size"
+      }
+    },
+    {
+      "zh": "材质",
+      "en": "Material",
+      "category": "通用属性",
+      "note": "Material 是通用材质属性；Fabric 专指纺织面料；Composition 偏向成分构成",
+      "synonyms": [
+        "Fabric",
+        "Composition"
+      ],
+      "platform_specific": {
+        "amazon": "Material",
+        "alibaba": "Material"
+      }
+    },
+    {
+      "zh": "重量",
+      "en": "Weight",
+      "category": "通用属性",
+      "note": "Amazon 用 Net Weight（净重）和 Gross Weight（毛重）区分；Listing 中通常只显示 Net Weight",
+      "synonyms": [
+        "Net Weight",
+        "Gross Weight"
+      ],
+      "platform_specific": {
+        "amazon": "Item Weight",
+        "alibaba": "Weight"
+      }
+    },
+    {
+      "zh": "品牌",
+      "en": "Brand",
+      "category": "通用属性",
+      "note": "Amazon Brand Registry 是品牌保护机制；阿里对应的是品牌旗舰店",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Brand",
+        "alibaba": "Brand Name"
+      }
+    },
+    {
+      "zh": "型号",
+      "en": "Model Number",
+      "category": "通用属性",
+      "note": "Amazon 用 Model Number 或 Model；阿里用 Model Number。注意与 Part Number（零件号）区分",
+      "synonyms": [
+        "Model",
+        "Model No."
+      ],
+      "platform_specific": {
+        "amazon": "Model Number",
+        "alibaba": "Model Number"
+      }
+    },
+    {
+      "zh": "数量",
+      "en": "Quantity",
+      "category": "通用属性",
+      "note": "Count 用于可数物品的计数（如螺丝钉），Quantity 更通用",
+      "synonyms": [
+        "Count",
+        "Qty",
+        "Amount"
+      ],
+      "platform_specific": {
+        "amazon": "Number of Items",
+        "alibaba": "Quantity"
+      }
+    },
+    {
+      "zh": "价格",
+      "en": "Price",
+      "category": "通用属性",
+      "note": "跨境场景注意区分 Unit Price（单价）、Total Price（总价）、FOB Price（离岸价）",
+      "synonyms": [
+        "Unit Price",
+        "FOB Price"
+      ],
+      "platform_specific": {
+        "amazon": "Price",
+        "alibaba": "FOB Price"
+      }
+    },
+    {
+      "zh": "产品名称",
+      "en": "Product Name",
+      "category": "通用属性",
+      "note": "Amazon Listing 中对应 Title/Item Name；阿里对应 Product Name",
+      "synonyms": [
+        "Item Name",
+        "Title"
+      ],
+      "platform_specific": {
+        "amazon": "Item Name",
+        "alibaba": "Product Name"
+      }
+    },
+    {
+      "zh": "描述",
+      "en": "Description",
+      "category": "通用属性",
+      "note": "Amazon 有 Bullet Points + Description 两层；阿里对应 Product Description",
+      "synonyms": [
+        "Product Description"
+      ],
+      "platform_specific": {
+        "amazon": "Product Description",
+        "alibaba": "Description"
+      }
+    },
+    {
+      "zh": "SKU",
+      "en": "SKU",
+      "category": "通用属性",
+      "note": "SKU（Stock Keeping Unit）全球通用，无需翻译。注意与 ASIN（Amazon 专有）区分",
+      "synonyms": [
+        "Stock Keeping Unit"
+      ],
+      "platform_specific": {
+        "amazon": "SKU",
+        "alibaba": "SKU"
+      }
+    },
+    {
+      "zh": "条形码",
+      "en": "Barcode",
+      "category": "通用属性",
+      "note": "UPC（Universal Product Code）用于北美；EAN（European Article Number）用于欧洲；GTIN 是统称",
+      "synonyms": [
+        "UPC",
+        "EAN",
+        "GTIN"
+      ],
+      "platform_specific": {
+        "amazon": "UPC / EAN",
+        "alibaba": "Barcode"
+      }
+    },
+    {
+      "zh": "保质期",
+      "en": "Shelf Life",
+      "category": "通用属性",
+      "note": "Shelf Life 是食品/化妆品通用说法；Expiration Date 是具体到期日；Best Before 是最佳食用日期",
+      "synonyms": [
+        "Expiration Date",
+        "Best Before"
+      ],
+      "platform_specific": {
+        "amazon": "Shelf Life",
+        "alibaba": "Shelf Life"
+      }
+    },
+    {
+      "zh": "认证",
+      "en": "Certification",
+      "category": "通用属性",
+      "note": "跨境产品常见认证：CE（欧洲）、FCC（美国）、RoHS（环保）、FDA（食品药品）",
+      "synonyms": [
+        "Certificate",
+        "Approval"
+      ],
+      "platform_specific": {
+        "amazon": "Certification",
+        "alibaba": "Certification"
+      }
+    },
+    {
+      "zh": "保修期",
+      "en": "Warranty",
+      "category": "通用属性",
+      "note": "Warranty 指保修承诺；Guarantee 偏向质量保证。Amazon 有专门的 Warranty Description 字段",
+      "synonyms": [
+        "Guarantee",
+        "Warranty Period"
+      ],
+      "platform_specific": {
+        "amazon": "Warranty Description",
+        "alibaba": "Warranty"
+      }
+    },
+    {
+      "zh": "使用方法",
+      "en": "How to Use",
+      "category": "通用属性",
+      "note": "Directions for Use 偏正式（药品/化妆品）；How to Use 更通俗；Usage 偏简短",
+      "synonyms": [
+        "Directions for Use",
+        "Usage",
+        "Instructions"
+      ],
+      "platform_specific": {
+        "amazon": "Directions",
+        "alibaba": "How to Use"
+      }
+    },
+    {
+      "zh": "注意事项",
+      "en": "Precautions",
+      "category": "通用属性",
+      "note": "Warnings 偏安全警告；Precautions 偏使用注意；Caution 偏中等风险提醒",
+      "synonyms": [
+        "Warnings",
+        "Caution",
+        "Notice"
+      ],
+      "platform_specific": {
+        "amazon": "Warning",
+        "alibaba": "Precautions"
+      }
+    },
+    {
+      "zh": "适用季节",
+      "en": "Season",
+      "category": "通用属性",
+      "note": "Amazon 用 Season 字段，常见值：Spring, Summer, Fall/Autumn, Winter, All Season",
+      "synonyms": [
+        "Applicable Season"
+      ],
+      "platform_specific": {
+        "amazon": "Season",
+        "alibaba": "Season"
+      }
+    },
+    {
+      "zh": "风格",
+      "en": "Style",
+      "category": "通用属性",
+      "note": "Style 是最通用的说法；Design Pattern 偏向图案设计；Look 偏口语",
+      "synonyms": [
+        "Design",
+        "Design Pattern"
+      ],
+      "platform_specific": {
+        "amazon": "Style",
+        "alibaba": "Style"
+      }
+    },
+    {
+      "zh": "形状",
+      "en": "Shape",
+      "category": "通用属性",
+      "note": "通用，无特别注意",
+      "synonyms": [
+        "Form"
+      ],
+      "platform_specific": {
+        "amazon": "Shape",
+        "alibaba": "Shape"
+      }
+    },
+    {
+      "zh": "尺码",
+      "en": "Size",
+      "category": "通用属性",
+      "note": "尺码（Size）和尺寸（Dimension）在英文中常混用，但尺码更偏向 S/M/L 体系",
+      "synonyms": [
+        "Size Chart"
+      ],
+      "platform_specific": {
+        "amazon": "Size",
+        "alibaba": "Size"
+      }
+    },
+    {
+      "zh": "适用范围",
+      "en": "Application",
+      "category": "通用属性",
+      "note": "Application 偏功能性适用范围；Scope 偏业务范围",
+      "synonyms": [
+        "Applicable Scope",
+        "Scope"
+      ],
+      "platform_specific": {
+        "amazon": "Specific Uses",
+        "alibaba": "Application"
+      }
+    },
+    {
+      "zh": "生产日期",
+      "en": "Date of Manufacture",
+      "category": "通用属性",
+      "note": "Date of Manufacture 更正式；Production Date 也可用但不如前者标准",
+      "synonyms": [
+        "Production Date",
+        "MFG Date"
+      ],
+      "platform_specific": {
+        "amazon": "Date of Manufacture",
+        "alibaba": "Production Date"
+      }
+    },
+    {
+      "zh": "尺寸/长宽高",
+      "en": "Dimensions",
+      "category": "通用属性",
+      "note": "Amazon 用 Product Dimensions，格式为 L x W x H；阿里常用 Length x Width x Height",
+      "synonyms": [
+        "Product Dimensions",
+        "L x W x H"
+      ],
+      "platform_specific": {
+        "amazon": "Product Dimensions",
+        "alibaba": "Dimensions"
+      }
+    },
+    {
+      "zh": "电压",
+      "en": "Voltage",
+      "category": "通用属性",
+      "note": "跨境电子产品必填项。注意 110V（美国/日本）vs 220V（中国/欧洲）差异，需标注 Input Voltage / Output Voltage",
+      "synonyms": [
+        "Input Voltage",
+        "Output Voltage"
+      ],
+      "platform_specific": {
+        "amazon": "Voltage",
+        "alibaba": "Voltage"
+      }
+    },
+    {
+      "zh": "功率",
+      "en": "Power",
+      "category": "通用属性",
+      "note": "功率单位为 Watt(W)。Amazon 用 Wattage 字段",
+      "synonyms": [
+        "Wattage",
+        "Power Rating"
+      ],
+      "platform_specific": {
+        "amazon": "Wattage",
+        "alibaba": "Power"
+      }
+    },
+    {
+      "zh": "频率",
+      "en": "Frequency",
+      "category": "通用属性",
+      "note": "电源频率：50Hz（中国/欧洲）vs 60Hz（美国/日本），电子产品需标注",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Frequency",
+        "alibaba": "Frequency"
+      }
+    },
+    {
+      "zh": "容量",
+      "en": "Capacity",
+      "category": "通用属性",
+      "note": "Volume 偏体积容量；Capacity 偏存储或装载容量，根据品类选择",
+      "synonyms": [
+        "Volume"
+      ],
+      "platform_specific": {
+        "amazon": "Capacity",
+        "alibaba": "Capacity"
+      }
+    },
+    {
+      "zh": "面料",
+      "en": "Fabric",
+      "category": "服装鞋帽",
+      "note": "Fabric 专指纺织面料，比 Material 更精确。常见：Cotton（棉）、Polyester（涤纶）、Nylon（尼龙）",
+      "synonyms": [
+        "Textile",
+        "Material"
+      ],
+      "platform_specific": {
+        "amazon": "Fabric Type",
+        "alibaba": "Fabric"
+      }
+    },
+    {
+      "zh": "版型",
+      "en": "Fit Type",
+      "category": "服装鞋帽",
+      "note": "Amazon 用 Fit Type，常见值：Regular Fit, Slim Fit, Loose Fit, Oversized",
+      "synonyms": [
+        "Fit",
+        "Cut"
+      ],
+      "platform_specific": {
+        "amazon": "Fit Type",
+        "alibaba": "Fit"
+      }
+    },
+    {
+      "zh": "领型",
+      "en": "Neckline",
+      "category": "服装鞋帽",
+      "note": "常见领型：Crew Neck（圆领）、V-Neck（V领）、Collar（翻领）、Turtleneck（高领）",
+      "synonyms": [
+        "Collar Style",
+        "Collar Type"
+      ],
+      "platform_specific": {
+        "amazon": "Neckline",
+        "alibaba": "Collar"
+      }
+    },
+    {
+      "zh": "袖长",
+      "en": "Sleeve Length",
+      "category": "服装鞋帽",
+      "note": "常见值：Short Sleeve, Long Sleeve, 3/4 Sleeve, Sleeveless（无袖）",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Sleeve Type",
+        "alibaba": "Sleeve Length"
+      }
+    },
+    {
+      "zh": "裤长",
+      "en": "Pant Length",
+      "category": "服装鞋帽",
+      "note": "常见值：Full Length（全长）、Cropped（七分裤）、Short（短裤）。也用 Inseam 表示内缝长度",
+      "synonyms": [
+        "Inseam"
+      ],
+      "platform_specific": {
+        "amazon": "Inseam",
+        "alibaba": "Pant Length"
+      }
+    },
+    {
+      "zh": "腰型",
+      "en": "Waist Type",
+      "category": "服装鞋帽",
+      "note": "常见值：High Waist, Mid Rise, Low Rise",
+      "synonyms": [
+        "Rise",
+        "Waist Rise"
+      ],
+      "platform_specific": {
+        "amazon": "Rise Style",
+        "alibaba": "Waist Type"
+      }
+    },
+    {
+      "zh": "图案",
+      "en": "Pattern",
+      "category": "服装鞋帽",
+      "note": "常见值：Solid（纯色）、Striped（条纹）、Plaid（格子）、Floral（花卉）、Print（印花）",
+      "synonyms": [
+        "Print",
+        "Design"
+      ],
+      "platform_specific": {
+        "amazon": "Pattern",
+        "alibaba": "Pattern Type"
+      }
+    },
+    {
+      "zh": "闭合方式",
+      "en": "Closure Type",
+      "category": "服装鞋帽",
+      "note": "常见值：Zipper（拉链）、Button（纽扣）、Lace-up（系带）、Pull On（套穿）、Hook & Eye（钩扣）",
+      "synonyms": [
+        "Closure"
+      ],
+      "platform_specific": {
+        "amazon": "Closure Type",
+        "alibaba": "Closure"
+      }
+    },
+    {
+      "zh": "洗涤说明",
+      "en": "Care Instructions",
+      "category": "服装鞋帽",
+      "note": "也叫 Wash Care 或 Laundry Instructions。Amazon 用 Care Instructions",
+      "synonyms": [
+        "Wash Care",
+        "Laundry Instructions",
+        "Washing Instructions"
+      ],
+      "platform_specific": {
+        "amazon": "Care Instructions",
+        "alibaba": "Washing Instructions"
+      }
+    },
+    {
+      "zh": "弹力",
+      "en": "Stretch",
+      "category": "服装鞋帽",
+      "note": "常见值：High Stretch（高弹）、Medium Stretch（中弹）、Slight Stretch（微弹）、No Stretch（无弹）",
+      "synonyms": [
+        "Elasticity"
+      ],
+      "platform_specific": {
+        "amazon": "Stretch",
+        "alibaba": "Elasticity"
+      }
+    },
+    {
+      "zh": "内里",
+      "en": "Lining",
+      "category": "服装鞋帽",
+      "note": "指服装内衬材质，如 Polyester Lining（涤纶里衬）",
+      "synonyms": [
+        "Inner Material"
+      ],
+      "platform_specific": {
+        "amazon": "Lining",
+        "alibaba": "Lining Material"
+      }
+    },
+    {
+      "zh": "鞋底材质",
+      "en": "Sole Material",
+      "category": "服装鞋帽",
+      "note": "常见值：Rubber（橡胶）、TPR（热塑橡胶）、EVA（泡沫材料）、PU（聚氨酯）、Leather（皮革）",
+      "synonyms": [
+        "Outsole Material"
+      ],
+      "platform_specific": {
+        "amazon": "Sole Material",
+        "alibaba": "Outsole Material"
+      }
+    },
+    {
+      "zh": "鞋面材质",
+      "en": "Upper Material",
+      "category": "服装鞋帽",
+      "note": "Upper 指鞋面部分，常见材质：Mesh（网布）、Leather（皮革）、Canvas（帆布）",
+      "synonyms": [
+        "Upper"
+      ],
+      "platform_specific": {
+        "amazon": "Outer Material",
+        "alibaba": "Upper Material"
+      }
+    },
+    {
+      "zh": "跟高",
+      "en": "Heel Height",
+      "category": "服装鞋帽",
+      "note": "常见值：Flat（平底）、Low Heel（低跟 1-3cm）、Mid Heel（中跟 3-7cm）、High Heel（高跟 7cm+）",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Heel Height",
+        "alibaba": "Heel Height"
+      }
+    },
+    {
+      "zh": "帽檐",
+      "en": "Brim",
+      "category": "服装鞋帽",
+      "note": "Brim 专指帽子的帽檐部分；Visor 特指遮阳帽/棒球帽的前檐",
+      "synonyms": [
+        "Visor"
+      ],
+      "platform_specific": {
+        "amazon": "Brim Size",
+        "alibaba": "Brim"
+      }
+    },
+    {
+      "zh": "厚度",
+      "en": "Thickness",
+      "category": "服装鞋帽",
+      "note": "服装中常用描述：Lightweight（轻薄）、Medium Weight（中等）、Heavyweight（厚实）",
+      "synonyms": [
+        "Weight (fabric)"
+      ],
+      "platform_specific": {
+        "amazon": "Thickness",
+        "alibaba": "Thickness"
+      }
+    },
+    {
+      "zh": "口袋",
+      "en": "Pocket",
+      "category": "服装鞋帽",
+      "note": "常见类型：Side Pocket（侧袋）、Back Pocket（后袋）、Zipper Pocket（拉链袋）、Inner Pocket（内袋）",
+      "synonyms": [
+        "Pockets"
+      ],
+      "platform_specific": {
+        "amazon": "Number of Pockets",
+        "alibaba": "Pocket"
+      }
+    },
+    {
+      "zh": "装饰",
+      "en": "Embellishment",
+      "category": "服装鞋帽",
+      "note": "Embellishment 偏正式装饰（珠片、刺绣等）；Decoration 更通用",
+      "synonyms": [
+        "Decoration",
+        "Ornament"
+      ],
+      "platform_specific": {
+        "amazon": "Embellishment",
+        "alibaba": "Decoration"
+      }
+    },
+    {
+      "zh": "防水等级",
+      "en": "Waterproof Rating",
+      "category": "服装鞋帽",
+      "note": "Waterproof（防水）vs Water-Resistant（防泼水）vs Water-Repellent（拒水）三者有严格区别",
+      "synonyms": [
+        "Water Resistance",
+        "IP Rating"
+      ],
+      "platform_specific": {
+        "amazon": "Water Resistance Level",
+        "alibaba": "Waterproof"
+      }
+    },
+    {
+      "zh": "透气性",
+      "en": "Breathability",
+      "category": "服装鞋帽",
+      "note": "服装和鞋类重要指标。Breathable 是形容词用法，Breathability 是名词",
+      "synonyms": [
+        "Breathable"
+      ],
+      "platform_specific": {
+        "amazon": "Breathability",
+        "alibaba": "Breathability"
+      }
+    },
+    {
+      "zh": "尺码体系",
+      "en": "Size System",
+      "category": "服装鞋帽",
+      "note": "常见体系：US（美国）、UK（英国）、EU（欧洲）、CN（中国）、JP（日本）尺码差异大，需对照表",
+      "synonyms": [
+        "Size Chart",
+        "Size Guide"
+      ],
+      "platform_specific": {
+        "amazon": "Size Map",
+        "alibaba": "Size Chart"
+      }
+    },
+    {
+      "zh": "胸围",
+      "en": "Bust",
+      "category": "服装鞋帽",
+      "note": "Bust 指胸部周长。Chest 常用于男装或童装。Amazon 尺码表中常见",
+      "synonyms": [
+        "Chest",
+        "Bust Size"
+      ],
+      "platform_specific": {
+        "amazon": "Bust",
+        "alibaba": "Bust"
+      }
+    },
+    {
+      "zh": "腰围",
+      "en": "Waist",
+      "category": "服装鞋帽",
+      "note": "Waist 指腰部周长，尺码表必填项",
+      "synonyms": [
+        "Waist Size"
+      ],
+      "platform_specific": {
+        "amazon": "Waist",
+        "alibaba": "Waist"
+      }
+    },
+    {
+      "zh": "臀围",
+      "en": "Hip",
+      "category": "服装鞋帽",
+      "note": "Hip 指臀部周长，裤装和裙装尺码表必填",
+      "synonyms": [
+        "Hip Size"
+      ],
+      "platform_specific": {
+        "amazon": "Hip",
+        "alibaba": "Hip"
+      }
+    },
+    {
+      "zh": "肩宽",
+      "en": "Shoulder Width",
+      "category": "服装鞋帽",
+      "note": "指两肩之间的距离，上衣尺码表常见参数",
+      "synonyms": [
+        "Shoulder"
+      ],
+      "platform_specific": {
+        "amazon": "Shoulder Width",
+        "alibaba": "Shoulder"
+      }
+    },
+    {
+      "zh": "衣长",
+      "en": "Garment Length",
+      "category": "服装鞋帽",
+      "note": "也用 Top Length 表示上衣长度；Dress Length 表示裙长",
+      "synonyms": [
+        "Top Length",
+        "Dress Length"
+      ],
+      "platform_specific": {
+        "amazon": "Item Length",
+        "alibaba": "Garment Length"
+      }
+    },
+    {
+      "zh": "屏幕尺寸",
+      "en": "Screen Size",
+      "category": "3C电子",
+      "note": "通常以英寸（inch）为单位，如 6.5\"。Amazon 用 Screen Size 字段",
+      "synonyms": [
+        "Display Size"
+      ],
+      "platform_specific": {
+        "amazon": "Screen Size",
+        "alibaba": "Screen Size"
+      }
+    },
+    {
+      "zh": "分辨率",
+      "en": "Resolution",
+      "category": "3C电子",
+      "note": "常见标注：1920x1080 (FHD/1080p)、2560x1440 (2K/QHD)、3840x2160 (4K/UHD)",
+      "synonyms": [
+        "Display Resolution"
+      ],
+      "platform_specific": {
+        "amazon": "Resolution",
+        "alibaba": "Resolution"
+      }
+    },
+    {
+      "zh": "电池容量",
+      "en": "Battery Capacity",
+      "category": "3C电子",
+      "note": "单位为 mAh（毫安时）或 Wh（瓦时）。Amazon 常用 Battery Capacity",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Battery Capacity",
+        "alibaba": "Battery Capacity"
+      }
+    },
+    {
+      "zh": "充电接口",
+      "en": "Charging Port",
+      "category": "3C电子",
+      "note": "常见类型：USB-C、Lightning（苹果）、Micro-USB。推荐统一用 USB-C（非 Type-C）",
+      "synonyms": [
+        "Charging Interface",
+        "Connector Type"
+      ],
+      "platform_specific": {
+        "amazon": "Connector Type",
+        "alibaba": "Charging Interface"
+      }
+    },
+    {
+      "zh": "处理器",
+      "en": "Processor",
+      "category": "3C电子",
+      "note": "CPU 是更技术化的说法，Processor 更通用。Amazon 用 Processor",
+      "synonyms": [
+        "CPU",
+        "Chipset"
+      ],
+      "platform_specific": {
+        "amazon": "Processor",
+        "alibaba": "Processor"
+      }
+    },
+    {
+      "zh": "内存",
+      "en": "RAM",
+      "category": "3C电子",
+      "note": "RAM 是行业标准术语。Memory 在日常用语中可指 RAM 或存储。Amazon 用 RAM",
+      "synonyms": [
+        "Memory"
+      ],
+      "platform_specific": {
+        "amazon": "RAM",
+        "alibaba": "Memory"
+      }
+    },
+    {
+      "zh": "存储容量",
+      "en": "Storage Capacity",
+      "category": "3C电子",
+      "note": "注意区分 RAM（运行内存）和 Storage（存储）。常见：64GB, 128GB, 256GB, 512GB, 1TB",
+      "synonyms": [
+        "Internal Storage",
+        "ROM"
+      ],
+      "platform_specific": {
+        "amazon": "Hard Disk Size / Flash Memory Size",
+        "alibaba": "Storage"
+      }
+    },
+    {
+      "zh": "操作系统",
+      "en": "Operating System",
+      "category": "3C电子",
+      "note": "缩写 OS 也通用。Amazon 用 Operating System 字段",
+      "synonyms": [
+        "OS"
+      ],
+      "platform_specific": {
+        "amazon": "Operating System",
+        "alibaba": "Operating System"
+      }
+    },
+    {
+      "zh": "蓝牙版本",
+      "en": "Bluetooth Version",
+      "category": "3C电子",
+      "note": "常见版本：Bluetooth 5.0, 5.1, 5.2, 5.3。版本越高功耗越低、连接越稳定",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Bluetooth Version",
+        "alibaba": "Bluetooth"
+      }
+    },
+    {
+      "zh": "WiFi标准",
+      "en": "WiFi Standard",
+      "category": "3C电子",
+      "note": "常见：WiFi 4 (802.11n)、WiFi 5 (802.11ac)、WiFi 6 (802.11ax)。推荐用 WiFi 6 而非 802.11ax",
+      "synonyms": [
+        "WiFi Protocol",
+        "Wireless Standard"
+      ],
+      "platform_specific": {
+        "amazon": "Wireless Type",
+        "alibaba": "WiFi"
+      }
+    },
+    {
+      "zh": "像素",
+      "en": "Pixel",
+      "category": "3C电子",
+      "note": "Megapixel (MP) 用于描述相机分辨率。常见：12MP, 48MP, 108MP",
+      "synonyms": [
+        "Megapixel",
+        "MP"
+      ],
+      "platform_specific": {
+        "amazon": "Resolution (camera)",
+        "alibaba": "Pixel"
+      }
+    },
+    {
+      "zh": "光圈",
+      "en": "Aperture",
+      "category": "3C电子",
+      "note": "以 f/1.8 等格式标注。f 值越小，进光量越大，背景虚化越强",
+      "synonyms": [
+        "f-stop"
+      ],
+      "platform_specific": {
+        "amazon": "Aperture",
+        "alibaba": "Aperture"
+      }
+    },
+    {
+      "zh": "显卡",
+      "en": "Graphics Card",
+      "category": "3C电子",
+      "note": "GPU 是芯片层面的说法，Graphics Card 是完整硬件。Amazon 常用 Graphics Card 或 GPU",
+      "synonyms": [
+        "GPU",
+        "Video Card",
+        "Graphics Processor"
+      ],
+      "platform_specific": {
+        "amazon": "Graphics Card Description",
+        "alibaba": "Graphics Card"
+      }
+    },
+    {
+      "zh": "接口类型",
+      "en": "Interface",
+      "category": "3C电子",
+      "note": "常见接口：USB-A, USB-C, HDMI, Ethernet (RJ45), 3.5mm Audio Jack, Thunderbolt",
+      "synonyms": [
+        "Port",
+        "Connector"
+      ],
+      "platform_specific": {
+        "amazon": "Connector Type",
+        "alibaba": "Interface"
+      }
+    },
+    {
+      "zh": "屏幕类型",
+      "en": "Display Type",
+      "category": "3C电子",
+      "note": "常见类型：LCD, LED, OLED, AMOLED, IPS, TN, VA。OLED/AMOLED 通常优于 LCD",
+      "synonyms": [
+        "Panel Type",
+        "Screen Type"
+      ],
+      "platform_specific": {
+        "amazon": "Display Type",
+        "alibaba": "Display Type"
+      }
+    },
+    {
+      "zh": "刷新率",
+      "en": "Refresh Rate",
+      "category": "3C电子",
+      "note": "单位 Hz。常见：60Hz, 90Hz, 120Hz, 144Hz, 240Hz。高刷新率对游戏和视频重要",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Refresh Rate",
+        "alibaba": "Refresh Rate"
+      }
+    },
+    {
+      "zh": "响应时间",
+      "en": "Response Time",
+      "category": "3C电子",
+      "note": "单位 ms（毫秒），越低越好。显示器常见 1ms-5ms",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Response Time",
+        "alibaba": "Response Time"
+      }
+    },
+    {
+      "zh": "信噪比",
+      "en": "Signal-to-Noise Ratio",
+      "category": "3C电子",
+      "note": "缩写 SNR，单位 dB。音频设备重要指标，越高越好，通常 >90dB 为佳",
+      "synonyms": [
+        "SNR",
+        "SN Ratio"
+      ],
+      "platform_specific": {
+        "amazon": "Signal-to-Noise Ratio",
+        "alibaba": "SNR"
+      }
+    },
+    {
+      "zh": "输出功率",
+      "en": "Output Power",
+      "category": "3C电子",
+      "note": "音箱/充电器等设备的核心参数。单位 W（瓦特）。注意 RMS Power（额定功率）vs Peak Power（峰值功率）",
+      "synonyms": [
+        "Wattage Output"
+      ],
+      "platform_specific": {
+        "amazon": "Output Wattage",
+        "alibaba": "Output Power"
+      }
+    },
+    {
+      "zh": "频率响应",
+      "en": "Frequency Response",
+      "category": "3C电子",
+      "note": "音频设备参数，以 Hz-kHz 标注。人耳范围 20Hz-20kHz",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Frequency Response",
+        "alibaba": "Frequency Response"
+      }
+    },
+    {
+      "zh": "驱动程序",
+      "en": "Driver",
+      "category": "3C电子",
+      "note": "Driver 是设备驱动程序的行业标准说法，不需要翻译",
+      "synonyms": [
+        "Device Driver"
+      ],
+      "platform_specific": {
+        "amazon": "Driver",
+        "alibaba": "Driver"
+      }
+    },
+    {
+      "zh": "兼容性",
+      "en": "Compatibility",
+      "category": "3C电子",
+      "note": "Amazon 常用 Compatible Devices 字段列出兼容设备列表",
+      "synonyms": [
+        "Compatible Devices"
+      ],
+      "platform_specific": {
+        "amazon": "Compatible Devices",
+        "alibaba": "Compatibility"
+      }
+    },
+    {
+      "zh": "散热方式",
+      "en": "Cooling System",
+      "category": "3C电子",
+      "note": "常见：Fan Cooling（风扇散热）、Heat Pipe（热管）、Liquid Cooling（液冷）、Passive Cooling（被动散热）",
+      "synonyms": [
+        "Cooling Method",
+        "Thermal Solution"
+      ],
+      "platform_specific": {
+        "amazon": "Cooling Method",
+        "alibaba": "Cooling System"
+      }
+    },
+    {
+      "zh": "续航时间",
+      "en": "Battery Life",
+      "category": "3C电子",
+      "note": "Amazon 用 Battery Life 字段，单位通常为小时。Playtime 常用于耳机/音箱",
+      "synonyms": [
+        "Playtime",
+        "Working Time"
+      ],
+      "platform_specific": {
+        "amazon": "Battery Life",
+        "alibaba": "Working Time"
+      }
+    },
+    {
+      "zh": "智能家居",
+      "en": "Smart Home",
+      "category": "3C电子",
+      "note": "智能家居相关协议：WiFi, Zigbee, Z-Wave, Bluetooth Mesh, Matter（新标准）",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Smart Home",
+        "alibaba": "Smart Home"
+      }
+    },
+    {
+      "zh": "内存类型",
+      "en": "Memory Type",
+      "category": "3C电子",
+      "note": "常见：DDR4, DDR5（RAM）；SSD, HDD, NVMe（存储）。标注时需明确是 RAM 还是 Storage",
+      "synonyms": [
+        "RAM Type"
+      ],
+      "platform_specific": {
+        "amazon": "RAM Type",
+        "alibaba": "Memory Type"
+      }
+    },
+    {
+      "zh": "家具风格",
+      "en": "Furniture Style",
+      "category": "家居家具",
+      "note": "常见风格：Modern（现代）、Contemporary（当代）、Rustic（乡村）、Industrial（工业）、Scandinavian（北欧）、Mid-Century（中世纪）",
+      "synonyms": [
+        "Style"
+      ],
+      "platform_specific": {
+        "amazon": "Style",
+        "alibaba": "Furniture Style"
+      }
+    },
+    {
+      "zh": "适用空间",
+      "en": "Room Type",
+      "category": "家居家具",
+      "note": "Amazon 用 Room Type 字段，常见值：Living Room, Bedroom, Kitchen, Bathroom, Office, Outdoor",
+      "synonyms": [
+        "Applicable Room",
+        "Room"
+      ],
+      "platform_specific": {
+        "amazon": "Room Type",
+        "alibaba": "Applicable Space"
+      }
+    },
+    {
+      "zh": "安装方式",
+      "en": "Installation Type",
+      "category": "家居家具",
+      "note": "常见：Freestanding（落地式）、Wall-Mounted（壁挂式）、Ceiling-Mounted（吸顶式）、Built-in（嵌入式）",
+      "synonyms": [
+        "Mounting Type",
+        "Assembly"
+      ],
+      "platform_specific": {
+        "amazon": "Installation Type",
+        "alibaba": "Installation"
+      }
+    },
+    {
+      "zh": "承重能力",
+      "en": "Weight Capacity",
+      "category": "家居家具",
+      "note": "也叫 Load Capacity 或 Weight Limit。Amazon 用 Weight Capacity，单位 lbs 或 kg",
+      "synonyms": [
+        "Load Capacity",
+        "Weight Limit",
+        "Max Load"
+      ],
+      "platform_specific": {
+        "amazon": "Weight Capacity",
+        "alibaba": "Load Capacity"
+      }
+    },
+    {
+      "zh": "表面工艺",
+      "en": "Finish",
+      "category": "家居家具",
+      "note": "常见：Matte（哑光）、Glossy（亮面）、Satin（缎面）、Brushed（拉丝）、Polished（抛光）",
+      "synonyms": [
+        "Surface Finish",
+        "Surface Treatment"
+      ],
+      "platform_specific": {
+        "amazon": "Finish Type",
+        "alibaba": "Surface Finish"
+      }
+    },
+    {
+      "zh": "桌面材质",
+      "en": "Tabletop Material",
+      "category": "家居家具",
+      "note": "常见：Solid Wood（实木）、MDF（中密度纤维板）、Tempered Glass（钢化玻璃）、Marble（大理石）",
+      "synonyms": [
+        "Table Top Material"
+      ],
+      "platform_specific": {
+        "amazon": "Top Material",
+        "alibaba": "Tabletop Material"
+      }
+    },
+    {
+      "zh": "框架材质",
+      "en": "Frame Material",
+      "category": "家居家具",
+      "note": "常见：Steel（钢）、Aluminum（铝）、Solid Wood（实木）、Plastic（塑料）",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Frame Material",
+        "alibaba": "Frame Material"
+      }
+    },
+    {
+      "zh": "填充物",
+      "en": "Fill Material",
+      "category": "家居家具",
+      "note": "常见：Foam（泡沫）、Memory Foam（记忆棉）、Down（羽绒）、Polyester Fiber（涤纶纤维）",
+      "synonyms": [
+        "Filling",
+        "Stuffing"
+      ],
+      "platform_specific": {
+        "amazon": "Fill Material",
+        "alibaba": "Filling"
+      }
+    },
+    {
+      "zh": "组装方式",
+      "en": "Assembly Required",
+      "category": "家居家具",
+      "note": "Amazon 用 Assembly Required 字段（Yes/No）。阿里常用 Assembly Instructions",
+      "synonyms": [
+        "Assembly",
+        "Pre-assembled"
+      ],
+      "platform_specific": {
+        "amazon": "Assembly Required",
+        "alibaba": "Assembly"
+      }
+    },
+    {
+      "zh": "灯源类型",
+      "en": "Light Source Type",
+      "category": "家居家具",
+      "note": "常见：LED, Incandescent（白炽灯）、Fluorescent（荧光灯）、Halogen（卤素灯）",
+      "synonyms": [
+        "Bulb Type"
+      ],
+      "platform_specific": {
+        "amazon": "Light Source Type",
+        "alibaba": "Light Source"
+      }
+    },
+    {
+      "zh": "色温",
+      "en": "Color Temperature",
+      "category": "家居家具",
+      "note": "单位 K（开尔文）：Warm White 2700-3000K, Neutral 4000-4500K, Cool White 5000-6500K",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Color Temperature",
+        "alibaba": "Color Temperature"
+      }
+    },
+    {
+      "zh": "亮度",
+      "en": "Brightness",
+      "category": "家居家具",
+      "note": "单位 Lumens（流明）。Amazon 用 Brightness 或 Lumen",
+      "synonyms": [
+        "Lumen",
+        "Luminous Flux"
+      ],
+      "platform_specific": {
+        "amazon": "Brightness",
+        "alibaba": "Luminous Flux"
+      }
+    },
+    {
+      "zh": "适用面积",
+      "en": "Coverage Area",
+      "category": "家居家具",
+      "note": "空调、净化器等产品的适用面积。单位 sq.ft（平方英尺）或 m²",
+      "synonyms": [
+        "Room Size",
+        "Coverage"
+      ],
+      "platform_specific": {
+        "amazon": "Floor Area",
+        "alibaba": "Applicable Area"
+      }
+    },
+    {
+      "zh": "环保等级",
+      "en": "Eco Rating",
+      "category": "家居家具",
+      "note": "常见认证：FSC（森林认证）、CARB P2（甲醛标准）、GREENGUARD（绿色卫士）",
+      "synonyms": [
+        "Environmental Rating"
+      ],
+      "platform_specific": {
+        "amazon": "Eco Certification",
+        "alibaba": "Eco-Friendly"
+      }
+    },
+    {
+      "zh": "收纳容量",
+      "en": "Storage Capacity",
+      "category": "家居家具",
+      "note": "家居收纳场景下的容量，与电子产品的存储容量同词不同义",
+      "synonyms": [
+        "Storage Space"
+      ],
+      "platform_specific": {
+        "amazon": "Storage Volume",
+        "alibaba": "Storage Capacity"
+      }
+    },
+    {
+      "zh": "肤质",
+      "en": "Skin Type",
+      "category": "美妆个护",
+      "note": "常见值：All Skin Types（所有肤质）、Oily（油性）、Dry（干性）、Combination（混合）、Sensitive（敏感）",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Skin Type",
+        "alibaba": "Skin Type"
+      }
+    },
+    {
+      "zh": "功效",
+      "en": "Benefits",
+      "category": "美妆个护",
+      "note": "Amazon 用 Specific Uses For Product 或 Benefits。常见：Moisturizing（保湿）、Anti-Aging（抗衰老）、Whitening（美白）",
+      "synonyms": [
+        "Function",
+        "Effect",
+        "Efficacy"
+      ],
+      "platform_specific": {
+        "amazon": "Product Benefits",
+        "alibaba": "Function"
+      }
+    },
+    {
+      "zh": "成分",
+      "en": "Ingredients",
+      "category": "美妆个护",
+      "note": "INCI（International Nomenclature of Cosmetic Ingredients）是国际标准命名。Amazon 要求完整成分表",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Ingredients",
+        "alibaba": "Ingredients"
+      }
+    },
+    {
+      "zh": "适用部位",
+      "en": "Application Area",
+      "category": "美妆个护",
+      "note": "常见：Face（面部）、Body（身体）、Hair（头发）、Hands（手部）、Eye Area（眼周）、Lips（唇部）",
+      "synonyms": [
+        "Area of Application"
+      ],
+      "platform_specific": {
+        "amazon": "Material Feature",
+        "alibaba": "Applicable Part"
+      }
+    },
+    {
+      "zh": "净含量",
+      "en": "Net Content",
+      "category": "美妆个护",
+      "note": "Net Content / Net Weight / Net Volume 根据产品形态选择。Amazon 用 Unit Count 字段",
+      "synonyms": [
+        "Net Weight",
+        "Net Volume",
+        "Volume"
+      ],
+      "platform_specific": {
+        "amazon": "Unit Count",
+        "alibaba": "Net Content"
+      }
+    },
+    {
+      "zh": "SPF值",
+      "en": "SPF",
+      "category": "美妆个护",
+      "note": "SPF（Sun Protection Factor）防晒系数，全球通用。常见：SPF30, SPF50",
+      "synonyms": [
+        "Sun Protection Factor"
+      ],
+      "platform_specific": {
+        "amazon": "Sun Protection Factor",
+        "alibaba": "SPF"
+      }
+    },
+    {
+      "zh": "PA等级",
+      "en": "PA Rating",
+      "category": "美妆个护",
+      "note": "PA+ / PA++ / PA+++ / PA++++ 表示 UVA 防护等级。亚洲市场常见，欧美市场用 UVA/UVB Broad Spectrum",
+      "synonyms": [
+        "PA+"
+      ],
+      "platform_specific": {
+        "amazon": "PA Rating",
+        "alibaba": "PA"
+      }
+    },
+    {
+      "zh": "香型",
+      "en": "Fragrance",
+      "category": "美妆个护",
+      "note": "Scent 偏口语；Fragrance 偏正式；Aroma 偏天然/食物香气",
+      "synonyms": [
+        "Scent",
+        "Aroma",
+        "Flavor"
+      ],
+      "platform_specific": {
+        "amazon": "Scent",
+        "alibaba": "Fragrance"
+      }
+    },
+    {
+      "zh": "防晒指数",
+      "en": "SPF",
+      "category": "美妆个护",
+      "note": "SPF 数值越大防护越强。标注为 SPF50+ 表示超过 50",
+      "synonyms": [
+        "Sun Protection Factor"
+      ],
+      "platform_specific": {
+        "amazon": "SPF",
+        "alibaba": "SPF"
+      }
+    },
+    {
+      "zh": "适用肤质",
+      "en": "Skin Type",
+      "category": "美妆个护",
+      "note": "包括 Oily/Dry/Combination/Normal/Sensitive",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Skin Type",
+        "alibaba": "Skin Type"
+      }
+    },
+    {
+      "zh": "户外类型",
+      "en": "Activity Type",
+      "category": "户外运动",
+      "note": "Hiking/Camping/Cycling/Swimming/Running/Fishing/Climbing 等",
+      "synonyms": [
+        "Sport Type"
+      ],
+      "platform_specific": {
+        "amazon": "Sport",
+        "alibaba": "Activity Type"
+      }
+    },
+    {
+      "zh": "承重",
+      "en": "Load Capacity",
+      "category": "户外运动",
+      "note": "背包/帐篷/吊床等常用。注意区分 Load Capacity 和 Weight Capacity",
+      "synonyms": [
+        "Weight Capacity",
+        "Max Load"
+      ],
+      "platform_specific": {
+        "amazon": "Weight Capacity",
+        "alibaba": "Load Capacity"
+      }
+    },
+    {
+      "zh": "温度范围",
+      "en": "Temperature Range",
+      "category": "户外运动",
+      "note": "帐篷/睡袋/冲锋衣等标注适用温度范围",
+      "synonyms": [
+        "Operating Temperature"
+      ],
+      "platform_specific": {
+        "amazon": "Temperature Rating",
+        "alibaba": "Temperature Range"
+      }
+    },
+    {
+      "zh": "光源类型",
+      "en": "Light Type",
+      "category": "户外运动",
+      "note": "手电/头灯/营地灯等。LED/COB/XHP50 等",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Light Type",
+        "alibaba": "Light Source"
+      }
+    },
+    {
+      "zh": "流明",
+      "en": "Lumens",
+      "category": "户外运动",
+      "note": "亮度单位，数值越大越亮",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Lumens",
+        "alibaba": "Lumens"
+      }
+    },
+    {
+      "zh": "适用年龄",
+      "en": "Age Range",
+      "category": "母婴用品",
+      "note": "格式如 0-6 Months / 6-12 Months / 1-3 Years / 3-6 Years",
+      "synonyms": [
+        "Age Group",
+        "Applicable Age"
+      ],
+      "platform_specific": {
+        "amazon": "Age Range",
+        "alibaba": "Age"
+      }
+    },
+    {
+      "zh": "安全认证",
+      "en": "Safety Certification",
+      "category": "母婴用品",
+      "note": "EN71(欧)/ASTM F963(美)/3C(中)/CPC(美)/CPSIA 等",
+      "synonyms": [
+        "Certification"
+      ],
+      "platform_specific": {
+        "amazon": "Certification",
+        "alibaba": "Certification"
+      }
+    },
+    {
+      "zh": "适用体重",
+      "en": "Weight Range",
+      "category": "母婴用品",
+      "note": "婴儿车/安全座椅/背带等标注适用体重范围",
+      "synonyms": [
+        "Max Weight"
+      ],
+      "platform_specific": {
+        "amazon": "Maximum Weight Recommendation",
+        "alibaba": "Weight Range"
+      }
+    },
+    {
+      "zh": "产品类型",
+      "en": "Product Type",
+      "category": "母婴用品",
+      "note": "Bottle/Bib/Diaper/Car Seat/Stroller/Play Mat 等",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Item Type",
+        "alibaba": "Product Type"
+      }
+    },
+    {
+      "zh": "性别",
+      "en": "Gender",
+      "category": "母婴用品",
+      "note": "Boy/Girl/Unisex",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Target Audience",
+        "alibaba": "Gender"
+      }
+    },
+    {
+      "zh": "适用车型",
+      "en": "Fitment",
+      "category": "汽车配件",
+      "note": "Year/Make/Model 格式，如 2020-2024 Toyota Camry",
+      "synonyms": [
+        "Vehicle Fitment",
+        "Compatible Vehicle"
+      ],
+      "platform_specific": {
+        "amazon": "Fitment",
+        "alibaba": "Fit Vehicle"
+      }
+    },
+    {
+      "zh": "OE 编号",
+      "en": "OE Number",
+      "category": "汽车配件",
+      "note": "Original Equipment 编号，原厂零件编号",
+      "synonyms": [
+        "OEM Number"
+      ],
+      "platform_specific": {
+        "amazon": "OE Number",
+        "alibaba": "OE Number"
+      }
+    },
+    {
+      "zh": "安装位置",
+      "en": "Position",
+      "category": "汽车配件",
+      "note": "Front/Rear/Left/Right/Interior/Exterior",
+      "synonyms": [
+        "Installation Position"
+      ],
+      "platform_specific": {
+        "amazon": "Fit Type",
+        "alibaba": "Position"
+      }
+    },
+    {
+      "zh": "灯泡类型",
+      "en": "Bulb Type",
+      "category": "汽车配件",
+      "note": "H7/H11/9005/9006/W5W/T10 等型号",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Light Bulb Size",
+        "alibaba": "Bulb Type"
+      }
+    },
+    {
+      "zh": "滤清器类型",
+      "en": "Filter Type",
+      "category": "汽车配件",
+      "note": "Oil Filter/Air Filter/Cabin Filter/Fuel Filter",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Part Type",
+        "alibaba": "Filter Type"
+      }
+    },
+    {
+      "zh": "宝石类型",
+      "en": "Gemstone Type",
+      "category": "珠宝饰品",
+      "note": "Diamond/Ruby/Sapphire/Emerald/Amethyst/Cubic Zirconia 等",
+      "synonyms": [
+        "Stone Type"
+      ],
+      "platform_specific": {
+        "amazon": "Gemstone Type",
+        "alibaba": "Gem Type"
+      }
+    },
+    {
+      "zh": "金属纯度",
+      "en": "Metal Purity",
+      "category": "珠宝饰品",
+      "note": "925 Sterling Silver/14K/18K/24K Gold/Platinum 等",
+      "synonyms": [
+        "Metal Grade"
+      ],
+      "platform_specific": {
+        "amazon": "Metal",
+        "alibaba": "Metal Purity"
+      }
+    },
+    {
+      "zh": "切割方式",
+      "en": "Cut",
+      "category": "珠宝饰品",
+      "note": "Round/Princess/Emerald/Oval/Marquise/Pear/Cushion 等",
+      "synonyms": [
+        "Cut Style"
+      ],
+      "platform_specific": {
+        "amazon": "Gemstone Cut",
+        "alibaba": "Cut"
+      }
+    },
+    {
+      "zh": "宝石颜色",
+      "en": "Gemstone Color",
+      "category": "珠宝饰品",
+      "note": "与产品颜色 Color 区分，这是宝石本身的颜色",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Gemstone Color",
+        "alibaba": "Gem Color"
+      }
+    },
+    {
+      "zh": "链长",
+      "en": "Chain Length",
+      "category": "珠宝饰品",
+      "note": "项链/手链常用，单位 inch 或 cm",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Chain Length",
+        "alibaba": "Chain Length"
+      }
+    },
+    {
+      "zh": "宝石尺寸",
+      "en": "Stone Size",
+      "category": "珠宝饰品",
+      "note": "毫米(mm)为单位",
+      "synonyms": [
+        "Carat Weight"
+      ],
+      "platform_specific": {
+        "amazon": "Item Length",
+        "alibaba": "Stone Size"
+      }
+    },
+    {
+      "zh": "纸张规格",
+      "en": "Paper Size",
+      "category": "办公文具",
+      "note": "A4/A3/A5/Letter/Legal/B5 等",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Sheet Size",
+        "alibaba": "Paper Size"
+      }
+    },
+    {
+      "zh": "克重",
+      "en": "GSM",
+      "category": "办公文具",
+      "note": "Grams per Square Meter，纸张厚度指标，80g/70g/120g 等",
+      "synonyms": [
+        "Paper Weight"
+      ],
+      "platform_specific": {
+        "amazon": "Item Weight",
+        "alibaba": "GSM"
+      }
+    },
+    {
+      "zh": "装订方式",
+      "en": "Binding Type",
+      "category": "办公文具",
+      "note": "Spiral/Bound/Perfect/Saddle Stitch/Loose-leaf",
+      "synonyms": [
+        "Binding"
+      ],
+      "platform_specific": {
+        "amazon": "Binding",
+        "alibaba": "Binding Type"
+      }
+    },
+    {
+      "zh": "页数",
+      "en": "Page Count",
+      "category": "办公文具",
+      "note": "单页/双页标注",
+      "synonyms": [
+        "Number of Pages"
+      ],
+      "platform_specific": {
+        "amazon": "Sheet Count",
+        "alibaba": "Pages"
+      }
+    },
+    {
+      "zh": "墨水颜色",
+      "en": "Ink Color",
+      "category": "办公文具",
+      "note": "Blue/Black/Red/Green/Multi-color",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Ink Color",
+        "alibaba": "Ink Color"
+      }
+    },
+    {
+      "zh": "笔尖类型",
+      "en": "Tip Type",
+      "category": "办公文具",
+      "note": "Ballpoint/Gel/Fountain/Brush/Felt Tip/Chisel",
+      "synonyms": [
+        "Nib Type"
+      ],
+      "platform_specific": {
+        "amazon": "Tip Type",
+        "alibaba": "Tip Type"
+      }
+    },
+    {
+      "zh": "宠物类型",
+      "en": "Pet Type",
+      "category": "宠物用品",
+      "note": "Dog/Cat/Bird/Fish/Rabbit/Hamster/Reptile 等",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Target Species",
+        "alibaba": "Pet Type"
+      }
+    },
+    {
+      "zh": "宠物品种",
+      "en": "Breed Size",
+      "category": "宠物用品",
+      "note": "Small/Medium/Large/XL breed",
+      "synonyms": [
+        "Breed"
+      ],
+      "platform_specific": {
+        "amazon": "Target Species Breed Size",
+        "alibaba": "Breed"
+      }
+    },
+    {
+      "zh": "食物类型",
+      "en": "Food Type",
+      "category": "宠物用品",
+      "note": "Dry/Wet/Semi-Moist/Treats/Supplement",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Food Type",
+        "alibaba": "Food Type"
+      }
+    },
+    {
+      "zh": "玩具类型",
+      "en": "Toy Type",
+      "category": "宠物用品",
+      "note": "Chew/Interactive/Puzzle/Plush/Tug/Fetch",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Item Type",
+        "alibaba": "Toy Type"
+      }
+    },
+    {
+      "zh": "清洁方式",
+      "en": "Litter Type",
+      "category": "宠物用品",
+      "note": "猫砂专用：Clumping/Non-Clumping/Silica/Crystal/Pine",
+      "synonyms": [
+        "Litter Material"
+      ],
+      "platform_specific": {
+        "amazon": "Material",
+        "alibaba": "Litter Type"
+      }
+    },
+    {
+      "zh": "季节",
+      "en": "Season",
+      "category": "服装鞋帽",
+      "note": "Spring/Summer/Autumn/Winter/All Season",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Season",
+        "alibaba": "Season"
+      }
+    },
+    {
+      "zh": "屏幕分辨率",
+      "en": "Resolution",
+      "category": "3C电子",
+      "note": "1920x1080/2560x1440/4K/Retina 等",
+      "synonyms": [
+        "Display Resolution"
+      ],
+      "platform_specific": {
+        "amazon": "Display Resolution",
+        "alibaba": "Resolution"
+      }
+    },
+    {
+      "zh": "无线协议",
+      "en": "Wireless Technology",
+      "category": "3C电子",
+      "note": "Bluetooth 5.0/WiFi 6/NFC/5G/4G LTE",
+      "synonyms": [
+        "Connectivity"
+      ],
+      "platform_specific": {
+        "amazon": "Wireless Type",
+        "alibaba": "Wireless"
+      }
+    },
+    {
+      "zh": "音频格式",
+      "en": "Audio Format",
+      "category": "3C电子",
+      "note": "AAC/SBC/aptX/LDAC/Dolby Atmos 等",
+      "synonyms": [
+        "Sound Format"
+      ],
+      "platform_specific": {
+        "amazon": "Audio Codec",
+        "alibaba": "Audio Format"
+      }
+    },
+    {
+      "zh": "充电方式",
+      "en": "Charging Method",
+      "category": "3C电子",
+      "note": "Wired/Wireless Charging/Magnetic Charging/Solar",
+      "synonyms": [
+        "Charging Type"
+      ],
+      "platform_specific": {
+        "amazon": "Charging Method",
+        "alibaba": "Charging Type"
+      }
+    },
+    {
+      "zh": "兼容系统",
+      "en": "Compatible OS",
+      "category": "3C电子",
+      "note": "iOS/Android/Windows/macOS/Linux",
+      "synonyms": [
+        "System Requirements"
+      ],
+      "platform_specific": {
+        "amazon": "Compatible Devices",
+        "alibaba": "Compatible System"
+      }
+    },
+    {
+      "zh": "五金件",
+      "en": "Hardware",
+      "category": "家居家具",
+      "note": "包含螺丝/螺栓/支架等安装配件",
+      "synonyms": [
+        "Fittings"
+      ],
+      "platform_specific": {
+        "amazon": "Hardware Included",
+        "alibaba": "Hardware"
+      }
+    },
+    {
+      "zh": "阻燃等级",
+      "en": "Flame Retardant Rating",
+      "category": "家居家具",
+      "note": "UL 94 V-0/V-1/V-2 等阻燃等级",
+      "synonyms": [
+        "Fire Rating"
+      ],
+      "platform_specific": {
+        "amazon": "Certification",
+        "alibaba": "Flame Rating"
+      }
+    },
+    {
+      "zh": "车架材质",
+      "en": "Frame Material",
+      "category": "户外运动",
+      "note": "Aluminum/Carbon Steel/Titanium/Carbon Fiber",
+      "synonyms": [
+        "Frame"
+      ],
+      "platform_specific": {
+        "amazon": "Frame Material",
+        "alibaba": "Frame Material"
+      }
+    },
+    {
+      "zh": "轮径",
+      "en": "Wheel Size",
+      "category": "户外运动",
+      "note": "自行车/滑板常用，26/27.5/29 英寸",
+      "synonyms": [
+        "Wheel Diameter"
+      ],
+      "platform_specific": {
+        "amazon": "Wheel Size",
+        "alibaba": "Wheel Size"
+      }
+    },
+    {
+      "zh": "变速",
+      "en": "Gears",
+      "category": "户外运动",
+      "note": "自行车变速档位数，如 21 Speed / 7 Speed",
+      "synonyms": [
+        "Speed"
+      ],
+      "platform_specific": {
+        "amazon": "Number of Speeds",
+        "alibaba": "Gears"
+      }
+    },
+    {
+      "zh": "刹车类型",
+      "en": "Brake Type",
+      "category": "户外运动",
+      "note": "Disc/Rim/V-Brake/Hydraulic/Mechanical",
+      "synonyms": [
+        "Brake"
+      ],
+      "platform_specific": {
+        "amazon": "Brake Type",
+        "alibaba": "Brake Type"
+      }
+    },
+    {
+      "zh": "表壳材质",
+      "en": "Case Material",
+      "category": "珠宝饰品",
+      "note": "Stainless Steel/Titanium/Ceramic/Wood 等",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Case Material",
+        "alibaba": "Case Material"
+      }
+    },
+    {
+      "zh": "表带材质",
+      "en": "Band Material",
+      "category": "珠宝饰品",
+      "note": "Leather/Rubber/Nylon/Metal/Canvas/Link Bracelet",
+      "synonyms": [
+        "Strap Material"
+      ],
+      "platform_specific": {
+        "amazon": "Band Material",
+        "alibaba": "Strap Material"
+      }
+    },
+    {
+      "zh": "表盘形状",
+      "en": "Case Shape",
+      "category": "珠宝饰品",
+      "note": "Round/Square/Oval/Rectangle/TONNEAU",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Case Shape",
+        "alibaba": "Case Shape"
+      }
+    },
+    {
+      "zh": "机芯类型",
+      "en": "Movement",
+      "category": "珠宝饰品",
+      "note": "Quartz/Automatic/Mechanical/Solar/Eco-Drive",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Movement",
+        "alibaba": "Movement"
+      }
+    },
+    {
+      "zh": "防水性能",
+      "en": "Water Resistance",
+      "category": "珠宝饰品",
+      "note": "手表标注 30M/50M/100M/200M/300M 防水",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Water Resistance Depth",
+        "alibaba": "Water Resistance"
+      }
+    },
+    {
+      "zh": "耳环类型",
+      "en": "Earring Type",
+      "category": "珠宝饰品",
+      "note": "Stud/Drop/Dangle/Hoop/Clip-on/Threader",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Earring Type",
+        "alibaba": "Earring Type"
+      }
+    },
+    {
+      "zh": "戒指尺寸",
+      "en": "Ring Size",
+      "category": "珠宝饰品",
+      "note": "US 5-13/EU 49-63/UK F-Y",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Ring Size",
+        "alibaba": "Ring Size"
+      }
+    },
+    {
+      "zh": "线长",
+      "en": "Cord Length",
+      "category": "珠宝饰品",
+      "note": "耳机/挂件/手机链等常用",
+      "synonyms": [
+        "String Length"
+      ],
+      "platform_specific": {
+        "amazon": "Item Length",
+        "alibaba": "Cord Length"
+      }
+    },
+    {
+      "zh": "宠物年龄阶段",
+      "en": "Life Stage",
+      "category": "宠物用品",
+      "note": "Puppy/Kitten/Adult/Senior/All Life Stages",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Target Species Life Stage",
+        "alibaba": "Life Stage"
+      }
+    },
+    {
+      "zh": "牵引长度",
+      "en": "Leash Length",
+      "category": "宠物用品",
+      "note": "常用 4ft/6ft/8ft/16ft/26ft",
+      "synonyms": [
+        "Rope Length"
+      ],
+      "platform_specific": {
+        "amazon": "Item Length",
+        "alibaba": "Leash Length"
+      }
+    },
+    {
+      "zh": "项圈尺寸",
+      "en": "Collar Size",
+      "category": "宠物用品",
+      "note": "按颈部周长标注，XS(8-12in)/S(12-16in)/M(16-20in)/L(20-24in)",
+      "synonyms": [
+        "Neck Size"
+      ],
+      "platform_specific": {
+        "amazon": "Item Length",
+        "alibaba": "Collar Size"
+      }
+    },
+    {
+      "zh": "功能",
+      "en": "Features",
+      "category": "宠物用品",
+      "note": "LED/Reflective/GPS/Auto/Self-cleaning/Automatic",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Special Feature",
+        "alibaba": "Features"
+      }
+    },
+    {
+      "zh": "电池类型",
+      "en": "Battery Type",
+      "category": "宠物用品",
+      "note": "自动喂食器/饮水机等需要标注电池类型",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Batteries Required",
+        "alibaba": "Battery Type"
+      }
+    },
+    {
+      "zh": "颗粒大小",
+      "en": "Kibble Size",
+      "category": "宠物用品",
+      "note": "猫粮/狗粮颗粒大小",
+      "synonyms": [
+        "Particle Size"
+      ],
+      "platform_specific": {
+        "amazon": "Item Form",
+        "alibaba": "Kibble Size"
+      }
+    },
+    {
+      "zh": "包装方式",
+      "en": "Packaging",
+      "category": "通用属性",
+      "note": "Box/Bulk/Bag/Bottle/Tube/Pouch/Vacuum Sealed",
+      "synonyms": [
+        "Package Type"
+      ],
+      "platform_specific": {
+        "amazon": "Item Package Quantity",
+        "alibaba": "Packaging"
+      }
+    },
+    {
+      "zh": "适用人群",
+      "en": "Target Audience",
+      "category": "通用属性",
+      "note": "Men/Women/Unisex/Kids/Teen/Senior",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Target Audience",
+        "alibaba": "Target Audience"
+      }
+    },
+    {
+      "zh": "产地",
+      "en": "Country of Origin",
+      "category": "通用属性",
+      "note": "Amazon 必填，海关要求。China/Japan/Korea/USA 等",
+      "synonyms": [
+        "Origin",
+        "Made in"
+      ],
+      "platform_specific": {
+        "amazon": "Country of Origin",
+        "alibaba": "Origin"
+      }
+    },
+    {
+      "zh": "卖家商品编号",
+      "en": "Seller Part Number",
+      "category": "通用属性",
+      "note": "卖家内部编号，方便管理",
+      "synonyms": [
+        "SKU",
+        "Item Number"
+      ],
+      "platform_specific": {
+        "amazon": "Seller SKU",
+        "alibaba": "Seller Part No."
+      }
+    },
+    {
+      "zh": "商品数量",
+      "en": "Quantity",
+      "category": "通用属性",
+      "note": "套装/组合装的数量",
+      "synonyms": [
+        "Unit Count"
+      ],
+      "platform_specific": {
+        "amazon": "Number of Items",
+        "alibaba": "Quantity"
+      }
+    },
+    {
+      "zh": "奶嘴材质",
+      "en": "Nipple Material",
+      "category": "母婴用品",
+      "note": "Silicone/Latex/Rubber",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Material",
+        "alibaba": "Material"
+      }
+    },
+    {
+      "zh": "冲泡方式",
+      "en": "Bottle Type",
+      "category": "母婴用品",
+      "note": "Wide-neck/Standard/Anti-colic/Self-sterilizing",
+      "synonyms": [
+        "Bottle Style"
+      ],
+      "platform_specific": {
+        "amazon": "Bottle Type",
+        "alibaba": "Bottle Type"
+      }
+    },
+    {
+      "zh": "尿裤尺码",
+      "en": "Diaper Size",
+      "category": "母婴用品",
+      "note": "Newborn/S/M/L/XL/XXL",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Size",
+        "alibaba": "Diaper Size"
+      }
+    },
+    {
+      "zh": "婴儿车类型",
+      "en": "Stroller Type",
+      "category": "母婴用品",
+      "note": "Lightweight/Full-size/Jogger/Double/Travel System",
+      "synonyms": [
+        "Stroller Style"
+      ],
+      "platform_specific": {
+        "amazon": "Item Type",
+        "alibaba": "Stroller Type"
+      }
+    },
+    {
+      "zh": "安全座椅组别",
+      "en": "Car Seat Group",
+      "category": "母婴用品",
+      "note": "Group 0/0+/1/2/3",
+      "synonyms": [
+        "Seat Group"
+      ],
+      "platform_specific": {
+        "amazon": "Harness Type",
+        "alibaba": "Car Seat Group"
+      }
+    },
+    {
+      "zh": "辅食类型",
+      "en": "Food Type",
+      "category": "母婴用品",
+      "note": "Cereal/Puree/Snack/Formula/Teething",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Item Form",
+        "alibaba": "Food Type"
+      }
+    },
+    {
+      "zh": "床栏类型",
+      "en": "Crib Type",
+      "category": "母婴用品",
+      "note": "Convertible/Mini/Portable/Co-sleeper/Bassinet",
+      "synonyms": [
+        "Baby Bed Type"
+      ],
+      "platform_specific": {
+        "amazon": "Style",
+        "alibaba": "Crib Type"
+      }
+    },
+    {
+      "zh": "消毒方式",
+      "en": "Sterilization Method",
+      "category": "母婴用品",
+      "note": "Steam/UV/Microwave/Cold Water/Chemical",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Material",
+        "alibaba": "Sterilization"
+      }
+    },
+    {
+      "zh": "推车承重",
+      "en": "Stroller Weight Capacity",
+      "category": "母婴用品",
+      "note": "最大承重通常15-25kg",
+      "synonyms": [
+        "Max Weight"
+      ],
+      "platform_specific": {
+        "amazon": "Maximum Weight Recommendation",
+        "alibaba": "Weight Capacity"
+      }
+    },
+    {
+      "zh": "背带类型",
+      "en": "Carrier Type",
+      "category": "母婴用品",
+      "note": "Wrap/Structured/Mei Tai/Sling/Backpack",
+      "synonyms": [
+        "Baby Carrier Style"
+      ],
+      "platform_specific": {
+        "amazon": "Item Type",
+        "alibaba": "Carrier Type"
+      }
+    },
+    {
+      "zh": "学步鞋类型",
+      "en": "Shoe Type",
+      "category": "母婴用品",
+      "note": "First Walker/Pre-walker/Soft Sole",
+      "synonyms": [
+        "Walking Shoes"
+      ],
+      "platform_specific": {
+        "amazon": "Department",
+        "alibaba": "Shoe Type"
+      }
+    },
+    {
+      "zh": "湿巾类型",
+      "en": "Wipe Type",
+      "category": "母婴用品",
+      "note": "Water-based/Aloe/Vitamin E/Unscented",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Item Form",
+        "alibaba": "Wipe Type"
+      }
+    },
+    {
+      "zh": "安抚奶嘴形状",
+      "en": "Pacifier Shape",
+      "category": "母婴用品",
+      "note": "Orthodontic/Round/Butterfly/Natural",
+      "synonyms": [
+        "Nipple Shape"
+      ],
+      "platform_specific": {
+        "amazon": "Item Form",
+        "alibaba": "Pacifier Shape"
+      }
+    },
+    {
+      "zh": "围嘴材质",
+      "en": "Bib Material",
+      "category": "母婴用品",
+      "note": "Silicone/Cotton/Plastic/Bamboo",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Material",
+        "alibaba": "Material"
+      }
+    },
+    {
+      "zh": "刹车片类型",
+      "en": "Brake Pad Type",
+      "category": "汽车配件",
+      "note": "Ceramic/Semi-metallic/Organic/Sintered",
+      "synonyms": [
+        "Brake Type"
+      ],
+      "platform_specific": {
+        "amazon": "Item Type",
+        "alibaba": "Brake Pad Type"
+      }
+    },
+    {
+      "zh": "机油规格",
+      "en": "Oil Grade",
+      "category": "汽车配件",
+      "note": "SAE 5W-30/10W-40/0W-20",
+      "synonyms": [
+        "Oil Viscosity"
+      ],
+      "platform_specific": {
+        "amazon": "Item Form",
+        "alibaba": "Oil Grade"
+      }
+    },
+    {
+      "zh": "轮胎规格",
+      "en": "Tire Size",
+      "category": "汽车配件",
+      "note": "如205/55R16",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Item Dimensions",
+        "alibaba": "Tire Size"
+      }
+    },
+    {
+      "zh": "雨刮器尺寸",
+      "en": "Wiper Blade Size",
+      "category": "汽车配件",
+      "note": "单位英寸如16/18/20/22/24 inch",
+      "synonyms": [
+        "Wiper Size"
+      ],
+      "platform_specific": {
+        "amazon": "Item Length",
+        "alibaba": "Wiper Size"
+      }
+    },
+    {
+      "zh": "火花塞型号",
+      "en": "Spark Plug Type",
+      "category": "汽车配件",
+      "note": "NGK/Denso/Iridium/Platinum/Copper",
+      "synonyms": [
+        "Plug Type"
+      ],
+      "platform_specific": {
+        "amazon": "Item Type",
+        "alibaba": "Spark Plug Type"
+      }
+    },
+    {
+      "zh": "刹车盘类型",
+      "en": "Brake Rotor Type",
+      "category": "汽车配件",
+      "note": "Drilled/Slotted/Drilled & Slotted/Solid",
+      "synonyms": [
+        "Rotor Type"
+      ],
+      "platform_specific": {
+        "amazon": "Item Type",
+        "alibaba": "Rotor Type"
+      }
+    },
+    {
+      "zh": "悬挂类型",
+      "en": "Suspension Type",
+      "category": "汽车配件",
+      "note": "Coilover/Air/Leaf Spring/MacPherson",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Item Type",
+        "alibaba": "Suspension Type"
+      }
+    },
+    {
+      "zh": "排气管类型",
+      "en": "Exhaust Type",
+      "category": "汽车配件",
+      "note": "Axle-back/Cat-back/Resonator Delete",
+      "synonyms": [
+        "Exhaust System"
+      ],
+      "platform_specific": {
+        "amazon": "Item Type",
+        "alibaba": "Exhaust Type"
+      }
+    },
+    {
+      "zh": "LED灯色温",
+      "en": "Color Temperature",
+      "category": "汽车配件",
+      "note": "3000K(暖白)/4000K/6000K(正白)/8000K",
+      "synonyms": [
+        "Kelvin"
+      ],
+      "platform_specific": {
+        "amazon": "Color Temperature",
+        "alibaba": "Color Temperature"
+      }
+    },
+    {
+      "zh": "皮带类型",
+      "en": "Belt Type",
+      "category": "汽车配件",
+      "note": "Serpentine/V-belt/Timing Belt",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Item Type",
+        "alibaba": "Belt Type"
+      }
+    },
+    {
+      "zh": "减震器类型",
+      "en": "Shock Absorber Type",
+      "category": "汽车配件",
+      "note": "Gas/Hydraulic/Air/Magnetic",
+      "synonyms": [
+        "Shocks"
+      ],
+      "platform_specific": {
+        "amazon": "Item Type",
+        "alibaba": "Shock Type"
+      }
+    },
+    {
+      "zh": "制动液规格",
+      "en": "Brake Fluid Type",
+      "category": "汽车配件",
+      "note": "DOT3/DOT4/DOT5/DOT5.1",
+      "synonyms": [
+        "Brake Fluid"
+      ],
+      "platform_specific": {
+        "amazon": "Item Form",
+        "alibaba": "Brake Fluid"
+      }
+    },
+    {
+      "zh": "轮胎类型",
+      "en": "Tire Type",
+      "category": "汽车配件",
+      "note": "All-season/Summer/Winter/Performance/All-terrain",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Item Style",
+        "alibaba": "Tire Type"
+      }
+    },
+    {
+      "zh": "笔芯型号",
+      "en": "Refill Type",
+      "category": "办公文具",
+      "note": "如G2/RTX/Schneider",
+      "synonyms": [
+        "Ink Refill"
+      ],
+      "platform_specific": {
+        "amazon": "Item Type",
+        "alibaba": "Refill Type"
+      }
+    },
+    {
+      "zh": "纸张材质",
+      "en": "Paper Material",
+      "category": "办公文具",
+      "note": "Wood-free/Recycled/Cotton/Bamboo",
+      "synonyms": [
+        "Material"
+      ],
+      "platform_specific": {
+        "amazon": "Material",
+        "alibaba": "Paper Material"
+      }
+    },
+    {
+      "zh": "打印类型",
+      "en": "Print Type",
+      "category": "办公文具",
+      "note": "Laser/Inkjet/Thermal/Matrix",
+      "synonyms": [
+        "Printer Compatibility"
+      ],
+      "platform_specific": {
+        "amazon": "Compatible Devices",
+        "alibaba": "Print Type"
+      }
+    },
+    {
+      "zh": "标签尺寸",
+      "en": "Label Size",
+      "category": "办公文具",
+      "note": "24x15mm/29x42mm/38x90mm",
+      "synonyms": [
+        "Sticker Size"
+      ],
+      "platform_specific": {
+        "amazon": "Item Dimensions",
+        "alibaba": "Label Size"
+      }
+    },
+    {
+      "zh": "胶水类型",
+      "en": "Adhesive Type",
+      "category": "办公文具",
+      "note": "Liquid/Stick/Paste/Double-sided/Tape",
+      "synonyms": [
+        "Glue Type"
+      ],
+      "platform_specific": {
+        "amazon": "Item Form",
+        "alibaba": "Adhesive Type"
+      }
+    },
+    {
+      "zh": "尺子类型",
+      "en": "Ruler Type",
+      "category": "办公文具",
+      "note": "Straight/Triangle/Curves/Measuring Tape",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Item Type",
+        "alibaba": "Ruler Type"
+      }
+    },
+    {
+      "zh": "文件夹类型",
+      "en": "Folder Type",
+      "category": "办公文具",
+      "note": "L-shaped/Pocket/Binders/Hanging/Display",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Item Type",
+        "alibaba": "Folder Type"
+      }
+    },
+    {
+      "zh": "印泥颜色",
+      "en": "Stamp Pad Color",
+      "category": "办公文具",
+      "note": "Blue/Red/Black/Purple/Green",
+      "synonyms": [
+        "Ink Color"
+      ],
+      "platform_specific": {
+        "amazon": "Color",
+        "alibaba": "Ink Color"
+      }
+    },
+    {
+      "zh": "订书钉规格",
+      "en": "Staple Size",
+      "category": "办公文具",
+      "note": "No.10/No.12/No.13/No.23",
+      "synonyms": [
+        "Staple Type"
+      ],
+      "platform_specific": {
+        "amazon": "Item Form",
+        "alibaba": "Staple Size"
+      }
+    },
+    {
+      "zh": "便利贴尺寸",
+      "en": "Sticky Note Size",
+      "category": "办公文具",
+      "note": "3x3/2x2/4x6 inch",
+      "synonyms": [
+        "Post-it Size"
+      ],
+      "platform_specific": {
+        "amazon": "Item Dimensions",
+        "alibaba": "Note Size"
+      }
+    },
+    {
+      "zh": "白板尺寸",
+      "en": "Whiteboard Size",
+      "category": "办公文具",
+      "note": "A4/A3/20x30cm",
+      "synonyms": [
+        "Board Size"
+      ],
+      "platform_specific": {
+        "amazon": "Item Dimensions",
+        "alibaba": "Board Size"
+      }
+    },
+    {
+      "zh": "计算器类型",
+      "en": "Calculator Type",
+      "category": "办公文具",
+      "note": "Basic/Scientific/Financial/Printing/Graphing",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Item Type",
+        "alibaba": "Calculator Type"
+      }
+    },
+    {
+      "zh": "荧光笔颜色",
+      "en": "Highlighter Color",
+      "category": "办公文具",
+      "note": "Yellow/Pink/Orange/Green/Blue/Purple",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Color",
+        "alibaba": "Color"
+      }
+    },
+    {
+      "zh": "橡皮类型",
+      "en": "Eraser Type",
+      "category": "办公文具",
+      "note": "Plastic/Kneaded/Vinyl/Wooden",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Material",
+        "alibaba": "Eraser Type"
+      }
+    },
+    {
+      "zh": "帐篷人数",
+      "en": "Tent Capacity",
+      "category": "户外运动",
+      "note": "2-Person/3-Person/4-Person",
+      "synonyms": [
+        "Occupancy"
+      ],
+      "platform_specific": {
+        "amazon": "Capacity",
+        "alibaba": "Tent Capacity"
+      }
+    },
+    {
+      "zh": "睡袋温标",
+      "en": "Sleeping Bag Temperature Rating",
+      "category": "户外运动",
+      "note": "标注舒适温度和极限温度",
+      "synonyms": [
+        "Temp Rating"
+      ],
+      "platform_specific": {
+        "amazon": "Temperature Rating",
+        "alibaba": "Temperature Range"
+      }
+    },
+    {
+      "zh": "背包容量",
+      "en": "Backpack Capacity",
+      "category": "户外运动",
+      "note": "20L/35L/50L/70L",
+      "synonyms": [
+        "Volume"
+      ],
+      "platform_specific": {
+        "amazon": "Item Volume",
+        "alibaba": "Capacity"
+      }
+    },
+    {
+      "zh": "登山杖节数",
+      "en": "Trekking Pole Sections",
+      "category": "户外运动",
+      "note": "2/3/4-Section",
+      "synonyms": [
+        "Sections"
+      ],
+      "platform_specific": {
+        "amazon": "Item Type",
+        "alibaba": "Sections"
+      }
+    },
+    {
+      "zh": "滑雪板长度",
+      "en": "Ski Length",
+      "category": "户外运动",
+      "note": "按身高体重推荐",
+      "synonyms": [
+        "Ski Size"
+      ],
+      "platform_specific": {
+        "amazon": "Item Length",
+        "alibaba": "Ski Length"
+      }
+    },
+    {
+      "zh": "头盔认证",
+      "en": "Helmet Certification",
+      "category": "户外运动",
+      "note": "CE EN1078/CPSC/ASTM/MIPS",
+      "synonyms": [
+        "Safety Rating"
+      ],
+      "platform_specific": {
+        "amazon": "Certification",
+        "alibaba": "Certification"
+      }
+    },
+    {
+      "zh": "泳镜度数",
+      "en": "Goggle Prescription",
+      "category": "户外运动",
+      "note": "平光/近视-2.0~-6.0",
+      "synonyms": [
+        "Lens Power"
+      ],
+      "platform_specific": {
+        "amazon": "Item Form",
+        "alibaba": "Goggle Degree"
+      }
+    },
+    {
+      "zh": "钓鱼竿类型",
+      "en": "Fishing Rod Type",
+      "category": "户外运动",
+      "note": "Spinning/Casting/Telescopic/Travel/Fly",
+      "synonyms": [
+        "Rod Type"
+      ],
+      "platform_specific": {
+        "amazon": "Item Type",
+        "alibaba": "Rod Type"
+      }
+    },
+    {
+      "zh": "钓鱼竿长度",
+      "en": "Fishing Rod Length",
+      "category": "户外运动",
+      "note": "如5'6\"/6'6\"/7'",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Item Length",
+        "alibaba": "Rod Length"
+      }
+    },
+    {
+      "zh": "登山扣承重",
+      "en": "Carabiner Load Rating",
+      "category": "户外运动",
+      "note": "kN为单位如25kN",
+      "synonyms": [
+        "Breaking Strength"
+      ],
+      "platform_specific": {
+        "amazon": "Item Weight",
+        "alibaba": "Load Rating"
+      }
+    },
+    {
+      "zh": "冲锋衣厚度",
+      "en": "Jacket Weight",
+      "category": "户外运动",
+      "note": "轻量/中量/重型",
+      "synonyms": [
+        "Insulation Level"
+      ],
+      "platform_specific": {
+        "amazon": "Item Weight",
+        "alibaba": "Jacket Weight"
+      }
+    },
+    {
+      "zh": "质地",
+      "en": "Texture",
+      "category": "美妆个护",
+      "note": "Cream/Liquid/Gel/Powder/Serum/Spray",
+      "synonyms": [
+        "Consistency"
+      ],
+      "platform_specific": {
+        "amazon": "Item Form",
+        "alibaba": "Texture"
+      }
+    },
+    {
+      "zh": "色号",
+      "en": "Shade",
+      "category": "美妆个护",
+      "note": "粉底/口红/眼影等的色号",
+      "synonyms": [
+        "Color"
+      ],
+      "platform_specific": {
+        "amazon": "Color",
+        "alibaba": "Shade"
+      }
+    },
+    {
+      "zh": "刷头类型",
+      "en": "Brush Type",
+      "category": "美妆个护",
+      "note": "Mascara/Eyeliner/Lip/Brow",
+      "synonyms": [
+        "Applicator"
+      ],
+      "platform_specific": {
+        "amazon": "Item Form",
+        "alibaba": "Brush Type"
+      }
+    },
+    {
+      "zh": "工具类型",
+      "en": "Tool Type",
+      "category": "美妆个护",
+      "note": "Brush/Sponge/Blender/Comb/Curler",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Item Type",
+        "alibaba": "Tool Type"
+      }
+    },
+    {
+      "zh": "洗发水类型",
+      "en": "Shampoo Type",
+      "category": "美妆个护",
+      "note": "Anti-dandruff/Moisturizing/Volumizing/Clarifying",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Item Form",
+        "alibaba": "Shampoo Type"
+      }
+    },
+    {
+      "zh": "牙刷类型",
+      "en": "Toothbrush Type",
+      "category": "美妆个护",
+      "note": "Manual/Electric/Sonic/Interdental",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Item Type",
+        "alibaba": "Toothbrush Type"
+      }
+    },
+    {
+      "zh": "牙膏功效",
+      "en": "Toothpaste Benefit",
+      "category": "美妆个护",
+      "note": "Whitening/Sensitivity/Cavity Protection",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Item Form",
+        "alibaba": "Toothpaste Type"
+      }
+    },
+    {
+      "zh": "指甲油类型",
+      "en": "Nail Polish Type",
+      "category": "美妆个护",
+      "note": "Regular/Gel/Shellac/Peel-off/Magnetic",
+      "synonyms": [
+        "Nail Lacquer"
+      ],
+      "platform_specific": {
+        "amazon": "Item Form",
+        "alibaba": "Nail Polish Type"
+      }
+    },
+    {
+      "zh": "卸妆方式",
+      "en": "Removal Method",
+      "category": "美妆个护",
+      "note": "Water-based/Oil-based/Biphase/Wipe-off",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Item Form",
+        "alibaba": "Removal Type"
+      }
+    },
+    {
+      "zh": "床架类型",
+      "en": "Bed Frame Type",
+      "category": "家居家具",
+      "note": "Platform/Adjustable/Storage/Sleigh",
+      "synonyms": [
+        "Bed Type"
+      ],
+      "platform_specific": {
+        "amazon": "Style",
+        "alibaba": "Bed Frame Type"
+      }
+    },
+    {
+      "zh": "床垫硬度",
+      "en": "Mattress Firmness",
+      "category": "家居家具",
+      "note": "Soft/Medium/Firm/Extra Firm",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Mattress Firmness Level",
+        "alibaba": "Firmness"
+      }
+    },
+    {
+      "zh": "窗帘悬挂方式",
+      "en": "Curtain Hanging Method",
+      "category": "家居家具",
+      "note": "Rod Pocket/Tab Top/Grommet/Clip Rings",
+      "synonyms": [
+        "Header Type"
+      ],
+      "platform_specific": {
+        "amazon": "Material",
+        "alibaba": "Hanging Type"
+      }
+    },
+    {
+      "zh": "浴巾尺寸",
+      "en": "Bath Towel Size",
+      "category": "家居家具",
+      "note": "Bath Sheet/Bath Towel/Hand Towel/Washcloth",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Item Dimensions",
+        "alibaba": "Towel Size"
+      }
+    },
+    {
+      "zh": "袖型",
+      "en": "Sleeve Type",
+      "category": "服装鞋帽",
+      "note": "Long/Short/Three-quarter/Cap/Sleeveless",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Sleeve Type",
+        "alibaba": "Sleeve Type"
+      }
+    },
+    {
+      "zh": "裤型",
+      "en": "Pants Type",
+      "category": "服装鞋帽",
+      "note": "Straight/Skinny/Bootcut/Relaxed/Wide-Leg",
+      "synonyms": [
+        "Fit Type"
+      ],
+      "platform_specific": {
+        "amazon": "Pants Type",
+        "alibaba": "Pants Type"
+      }
+    },
+    {
+      "zh": "下摆",
+      "en": "Hem Type",
+      "category": "服装鞋帽",
+      "note": "Straight/Asymmetric/Ruffled/Scalloped",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Style",
+        "alibaba": "Hem Type"
+      }
+    },
+    {
+      "zh": "鞋跟类型",
+      "en": "Heel Type",
+      "category": "服装鞋帽",
+      "note": "Flat/Block/Wedge/Stiletto/Platform",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "Heel Type",
+        "alibaba": "Heel Type"
+      }
+    },
+    {
+      "zh": "鞋带类型",
+      "en": "Lace Type",
+      "category": "服装鞋帽",
+      "note": "Lace-up/Slip-on/Zip/Buckle/Velcro",
+      "synonyms": [
+        "Closure Type"
+      ],
+      "platform_specific": {
+        "amazon": "Lacing",
+        "alibaba": "Closure Type"
+      }
+    },
+    {
+      "zh": "包装尺寸",
+      "en": "Package Dimensions",
+      "category": "通用属性",
+      "note": "发货包装的长宽高",
+      "synonyms": [
+        "Shipping Size"
+      ],
+      "platform_specific": {
+        "amazon": "Package Dimensions",
+        "alibaba": "Package Size"
+      }
+    },
+    {
+      "zh": "毛利率",
+      "en": "Gross Margin",
+      "category": "通用属性",
+      "note": "内部数据不应出现在导出CSV中",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "N/A",
+        "alibaba": "N/A"
+      }
+    },
+    {
+      "zh": "成本价",
+      "en": "Cost Price",
+      "category": "通用属性",
+      "note": "内部数据仅admin可见",
+      "synonyms": [],
+      "platform_specific": {
+        "amazon": "N/A",
+        "alibaba": "N/A"
+      }
+    },
+    {
+      "zh": "零售价",
+      "en": "Retail Price",
+      "category": "通用属性",
+      "note": "面向消费者的建议零售价",
+      "synonyms": [
+        "MSRP",
+        "List Price"
+      ],
+      "platform_specific": {
+        "amazon": "List Price",
+        "alibaba": "Retail Price"
+      }
+    }
+  ]
+}

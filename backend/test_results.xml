@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="4" skipped="0" tests="60" time="29.953" timestamp="2026-07-23T13:52:37.502146+08:00" hostname="DESKTOP-7LKG3EQ"><testcase classname="tests.test_auth.TestAuth" name="test_register_success" time="0.653" /><testcase classname="tests.test_auth.TestAuth" name="test_register_role_escalation_prevention" time="0.912" /><testcase classname="tests.test_auth.TestAuth" name="test_register_duplicate_email" time="0.510" /><testcase classname="tests.test_auth.TestAuth" name="test_login_success" time="0.868" /><testcase classname="tests.test_auth.TestAuth" name="test_login_wrong_password" time="0.800" /><testcase classname="tests.test_auth.TestAuth" name="test_login_nonexistent_user" time="0.161" /><testcase classname="tests.test_auth.TestAuth" name="test_get_me_success" time="0.488" /><testcase classname="tests.test_auth.TestAuth" name="test_get_me_no_token" time="0.152" /><testcase classname="tests.test_auth.TestAuth" name="test_get_me_invalid_token" time="0.157" /><testcase classname="tests.test_consistency.TestConsistency" name="test_check_product_no_issues" time="0.475" /><testcase classname="tests.test_consistency.TestConsistency" name="test_check_product_inconsistent_terms" time="0.509" /><testcase classname="tests.test_consistency.TestConsistency" name="test_consistency_status_levels" time="0.138" /><testcase classname="tests.test_consistency.TestConsistency" name="test_auto_fix_info_issues" time="0.459" /><testcase classname="tests.test_consistency.TestConsistency" name="test_auto_fix_skips_errors" time="0.514" /><testcase classname="tests.test_csv_utils.TestCsvUtils" name="test_sanitize_formula_equals" time="0.140" /><testcase classname="tests.test_csv_utils.TestCsvUtils" name="test_sanitize_formula_plus" time="0.143" /><testcase classname="tests.test_csv_utils.TestCsvUtils" name="test_sanitize_formula_minus" time="0.132" /><testcase classname="tests.test_csv_utils.TestCsvUtils" name="test_sanitize_formula_at" time="0.134" /><testcase classname="tests.test_csv_utils.TestCsvUtils" name="test_sanitize_formula_tab" time="0.123" /><testcase classname="tests.test_csv_utils.TestCsvUtils" name="test_sanitize_formula_carriage_return" time="0.133" /><testcase classname="tests.test_csv_utils.TestCsvUtils" name="test_sanitize_normal_text" time="0.157" /><testcase classname="tests.test_csv_utils.TestCsvUtils" name="test_sanitize_empty_string" time="0.148" /><testcase classname="tests.test_csv_utils.TestCsvUtils" name="test_sanitize_none_value" time="0.118" /><testcase classname="tests.test_csv_utils.TestCsvUtils" name="test_sanitize_numeric_string" time="0.139" /><testcase classname="tests.test_csv_utils.TestCsvUtils" name="test_sanitize_webservice_injection" time="0.135" /><testcase classname="tests.test_export.TestExport" name="test_export_amazon_csv" time="0.545" /><testcase classname="tests.test_export.TestExport" name="test_export_alibaba_csv" time="0.511" /><testcase classname="tests.test_export.TestExport" name="test_export_invalid_platform" time="0.538" /><testcase classname="tests.test_export.TestExport" name="test_export_no_products" time="0.530" /><testcase classname="tests.test_export.TestExport" name="test_export_viewer_forbidden" time="0.817" /><testcase classname="tests.test_import.TestImport" name="test_upload_csv" time="0.592"><failure message="assert 400 == 200&#10; +  where 400 = &lt;Response [400 Bad Request]&gt;.status_code">self = &lt;tests.test_import.TestImport object at 0x0000025D9F8039D0&gt;
+client = &lt;starlette.testclient.TestClient object at 0x0000025D9FA152B0&gt;
+editor_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NmM0YTczZi1hMWU5LTQ2Y2QtYTFmYy1kMGQ5NjQ4MzI3NTYiLCJleHAiOjE3ODQ4NzIzNjksInR5cGUiOiJhY2Nlc3MifQ.qqXWAIzmYMc-E9NBRVCNnHpP3Ll8TfYqIuH-i_M7l0o'
+
+    def test_upload_csv(self, client, editor_token):
+        """测试上传 CSV 文件"""
+        # 创建测试 CSV
+        csv_content = "SKU,中文名称,英文名称,品类,颜色\nIMPORT-001,测试产品,Test Product,通用属性,红色\nIMPORT-002,测试产品2,Test Product 2,通用属性,蓝色"
+        file_path = os.path.join(tempfile.gettempdir(), "test_import.csv")
+        with open(file_path, "w", encoding="utf-8", newline="") as f:
+            f.write(csv_content)
+    
+        with open(file_path, "rb") as f:
+            response = client.post(
+                "/api/v1/import/upload",
+                files={"file": ("test.csv", f, "text/csv")},
+                headers={"Authorization": f"Bearer {editor_token}"},
+            )
+    
+        os.unlink(file_path)
+&gt;       assert response.status_code == 200
+E       assert 400 == 200
+E        +  where 400 = &lt;Response [400 Bad Request]&gt;.status_code
+
+tests\test_import.py:28: AssertionError</failure></testcase><testcase classname="tests.test_import.TestImport" name="test_upload_invalid_format" time="0.503" /><testcase classname="tests.test_import.TestImport" name="test_preview_import" time="0.525"><failure message="KeyError: 'file_id'">self = &lt;tests.test_import.TestImport object at 0x0000025D9F813490&gt;
+client = &lt;starlette.testclient.TestClient object at 0x0000025D9FB859B0&gt;
+editor_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwNGRiMjc1Mi1mMjg4LTRlNDMtYTkzZi1jMWZmZTVjZjgyZmUiLCJleHAiOjE3ODQ4NzIzNzAsInR5cGUiOiJhY2Nlc3MifQ.t7gEjlVSBI_KYkb0DkVPgDyYIyrHROvS5GhALK3pavA'
+
+    def test_preview_import(self, client, editor_token):
+        """测试预览导入"""
+        # 先上传
+        csv_content = "SKU,中文名称,英文名称,品类\nPREVIEW-001,预览产品,Preview Product,通用属性"
+        file_path = os.path.join(tempfile.gettempdir(), "test_preview.csv")
+        with open(file_path, "w", encoding="utf-8", newline="") as f:
+            f.write(csv_content)
+    
+        with open(file_path, "rb") as f:
+            upload_response = client.post(
+                "/api/v1/import/upload",
+                files={"file": ("test.csv", f, "text/csv")},
+                headers={"Authorization": f"Bearer {editor_token}"},
+            )
+        os.unlink(file_path)
+&gt;       file_id = upload_response.json()["file_id"]
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'file_id'
+
+tests\test_import.py:59: KeyError</failure></testcase><testcase classname="tests.test_import.TestImport" name="test_execute_import_create" time="0.512"><failure message="KeyError: 'file_id'">self = &lt;tests.test_import.TestImport object at 0x0000025D9F811F30&gt;
+client = &lt;starlette.testclient.TestClient object at 0x0000025D9FA17E70&gt;
+editor_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmYjU4MTU2Zi0yNzQ0LTQzYTMtYjEwYS1lZTQ5MDFjMTNhZTQiLCJleHAiOjE3ODQ4NzIzNzEsInR5cGUiOiJhY2Nlc3MifQ.evptRIvVDPLq7AtS2xF-iEOiiRIXeqYxhgWlUeBY2TY'
+
+    def test_execute_import_create(self, client, editor_token):
+        """测试执行导入（创建模式）"""
+        csv_content = "SKU,中文名称,英文名称,品类,价格\nEXEC-001,导入产品,Import Product,通用属性,9.99"
+        file_path = os.path.join(tempfile.gettempdir(), "test_exec.csv")
+        with open(file_path, "w", encoding="utf-8", newline="") as f:
+            f.write(csv_content)
+    
+        with open(file_path, "rb") as f:
+            upload_response = client.post(
+                "/api/v1/import/upload",
+                files={"file": ("test.csv", f, "text/csv")},
+                headers={"Authorization": f"Bearer {editor_token}"},
+            )
+        os.unlink(file_path)
+&gt;       file_id = upload_response.json()["file_id"]
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'file_id'
+
+tests\test_import.py:85: KeyError</failure></testcase><testcase classname="tests.test_import.TestImport" name="test_execute_import_duplicate_sku" time="0.521"><failure message="KeyError: 'file_id'">self = &lt;tests.test_import.TestImport object at 0x0000025D9F81F650&gt;
+client = &lt;starlette.testclient.TestClient object at 0x0000025D9FBB6A50&gt;
+editor_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0MjEzNDNmMy05Zjg5LTRlOTAtYTUxZC03Y2YzY2ViMGViOTIiLCJleHAiOjE3ODQ4NzIzNzEsInR5cGUiOiJhY2Nlc3MifQ.FsdWaqrCodETOury1htaVTDPbp7oOvn_zxVm4ny7shA'
+
+    def test_execute_import_duplicate_sku(self, client, editor_token):
+        """测试导入时 SKU 重复跳过"""
+        csv_content = "SKU,中文名称,英文名称,品类\nDUP-001,重复产品,Duplicate Product,通用属性"
+        file_path = os.path.join(tempfile.gettempdir(), "test_dup.csv")
+        with open(file_path, "w", encoding="utf-8", newline="") as f:
+            f.write(csv_content)
+    
+        with open(file_path, "rb") as f:
+            upload_response = client.post(
+                "/api/v1/import/upload",
+                files={"file": ("test.csv", f, "text/csv")},
+                headers={"Authorization": f"Bearer {editor_token}"},
+            )
+        os.unlink(file_path)
+&gt;       file_id = upload_response.json()["file_id"]
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'file_id'
+
+tests\test_import.py:126: KeyError</failure></testcase><testcase classname="tests.test_import.TestImport" name="test_import_viewer_forbidden" time="0.475" /><testcase classname="tests.test_products.TestProducts" name="test_create_product_success" time="0.520" /><testcase classname="tests.test_products.TestProducts" name="test_create_product_duplicate_sku" time="0.812" /><testcase classname="tests.test_products.TestProducts" name="test_create_product_viewer_forbidden" time="0.477" /><testcase classname="tests.test_products.TestProducts" name="test_list_products" time="0.494" /><testcase classname="tests.test_products.TestProducts" name="test_list_products_search" time="0.553" /><testcase classname="tests.test_products.TestProducts" name="test_list_products_search_no_result" time="0.486" /><testcase classname="tests.test_products.TestProducts" name="test_get_product_success" time="0.491" /><testcase classname="tests.test_products.TestProducts" name="test_get_product_not_found" time="0.473" /><testcase classname="tests.test_products.TestProducts" name="test_update_product_success" time="0.829" /><testcase classname="tests.test_products.TestProducts" name="test_delete_product_success" time="0.572" /><testcase classname="tests.test_products.TestProducts" name="test_delete_product_editor_forbidden" time="0.867" /><testcase classname="tests.test_products.TestProducts" name="test_pagination" time="1.400" /><testcase classname="tests.test_security.TestSecurity" name="test_password_hash" time="0.804" /><testcase classname="tests.test_security.TestSecurity" name="test_password_verify_wrong" time="0.782" /><testcase classname="tests.test_security.TestSecurity" name="test_access_token_create_decode" time="0.120" /><testcase classname="tests.test_security.TestSecurity" name="test_refresh_token_create_decode" time="0.124" /><testcase classname="tests.test_security.TestSecurity" name="test_decode_invalid_token" time="0.129" /><testcase classname="tests.test_security.TestSecurity" name="test_decode_expired_token" time="0.139" /><testcase classname="tests.test_terms.TestTerms" name="test_list_terms" time="0.486" /><testcase classname="tests.test_terms.TestTerms" name="test_list_terms_search" time="0.524" /><testcase classname="tests.test_terms.TestTerms" name="test_list_terms_by_category" time="0.546" /><testcase classname="tests.test_terms.TestTerms" name="test_create_custom_term" time="0.532" /><testcase classname="tests.test_terms.TestTerms" name="test_create_term_viewer_forbidden" time="0.496" /><testcase classname="tests.test_terms.TestTerms" name="test_terms_pagination" time="0.518" /></testsuite></testsuites>

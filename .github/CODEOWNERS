@@ -1,0 +1,31 @@
+# CODEOWNERS — 代码审查自动路由
+# 语法：<路径模式> <负责人> [<第二负责人>]
+# 安全敏感路径需双审批（普通 Reviewer + Security Reviewer）。
+# 团队用户名/组请在 GitHub 侧维护；此处用占位团队名，落地时替换为实际 handle。
+
+# 安全与认证（双审批：需 1 名 Security Reviewer）
+/backend/app/auth/            @security-team @backend-lead
+/backend/app/security/         @security-team @backend-lead
+/backend/app/db/               @security-team @backend-lead
+
+# 导出 / 导入（CSV 注入专项）
+/backend/app/export/          @backend-lead
+/backend/app/import/          @backend-lead
+
+# 后端其余
+/backend/                      @backend-lead
+
+# 前端
+/frontend/                     @frontend-lead
+
+# 文档
+/docs/                         @docs-lead
+
+# 部署 / 监控 / CI（DevOps 双审批）
+/deploy/                       @devops-lead
+/monitoring/                   @devops-lead
+/.github/workflows/            @devops-lead
+/docker-compose*.yml           @devops-lead
+
+# 兜底
+*                             @maintainer

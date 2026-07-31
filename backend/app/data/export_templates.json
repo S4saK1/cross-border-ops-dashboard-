@@ -1,0 +1,37 @@
+﻿{
+  "amazon": {
+    "headers": ["item_type", "item_name", "external_product_id", "external_product_id_type", "brand_name", "standard_price", "currency", "quantity", "description", "color_name", "material_type", "item_weight", "item_weight_unit_of_measure", "country_of_origin", "condition_type"],
+    "field_mapping": [
+      {"field": "category", "sanitize": true},
+      {"field": "product_name_en", "sanitize": true},
+      {"field": "sku", "sanitize": true},
+      {"static": "ASIN"},
+      {"field": "brand", "sanitize": true},
+      {"field": "price", "sanitize": true},
+      {"field": "currency", "sanitize": true},
+      {"field": "stock", "sanitize": true, "default": 0},
+      {"field": "description_en", "sanitize": true},
+      {"field": "color_en", "sanitize": true},
+      {"field": "material_en", "sanitize": true},
+      {"field": "weight", "sanitize": true},
+      {"field": "weight_unit", "sanitize": true, "default": "kg"},
+      {"field": "origin", "sanitize": true, "default": "China"},
+      {"static": "New"}
+    ]
+  },
+  "alibaba": {
+    "headers": ["Subject", "Model Number", "Price", "MOQ", "Color", "Material", "Weight", "Weight Unit", "Place of Origin", "Image 1"],
+    "field_mapping": [
+      {"field": "product_name_en", "sanitize": true},
+      {"field": "model_number", "sanitize": true},
+      {"field": "price", "sanitize": true},
+      {"static": "1"},
+      {"field": "color_en", "sanitize": true},
+      {"field": "material_en", "sanitize": true},
+      {"field": "weight", "sanitize": true},
+      {"field": "weight_unit", "sanitize": true, "default": "kg"},
+      {"field": "origin", "sanitize": true, "default": "China"},
+      {"static": ""}
+    ]
+  }
+}

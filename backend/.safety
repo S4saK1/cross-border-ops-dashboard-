@@ -1,0 +1,4 @@
+[safety]
+ignore = 
+    # 这里可以添加已知的安全警告
+    # CVE-XXXX-XXXXX

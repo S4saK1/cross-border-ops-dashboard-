@@ -1,0 +1,40 @@
+﻿version: "3.8"
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      args:
+        - ENVIRONMENT=staging
+    container_name: bilingual-cms-backend-staging
+    ports:
+      - "8001:8000"
+    volumes:
+      - ./data:/app/data:ro
+      - cms-data-staging:/app/data/runtime
+    environment:
+      - DATABASE_URL=sqlite:///./data/runtime/bilingual_cms.db
+      - SECRET_KEY=${SECRET_KEY:?}
+      - ALLOWED_ORIGINS=["http://localhost:3001"]
+      - ENVIRONMENT=staging
+      - LOG_LEVEL=DEBUG
+      - DEBUG=false
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: bilingual-cms-frontend-staging
+    ports:
+      - "3001:3000"
+    environment:
+      - API_BASE_URL=http://backend:8000
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  cms-data-staging:
+    driver: local

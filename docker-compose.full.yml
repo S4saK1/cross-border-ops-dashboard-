@@ -1,0 +1,47 @@
+# 全栈 Docker 编排（前端 + 后端），用于本地一键启动
+# 用法：docker compose -f docker-compose.full.yml up -d --build
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: cms-backend:local
+    container_name: cms-backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data:ro            # 术语词典等静态数据（只读）
+      - cms-data:/app/runtime          # SQLite 数据库持久化（独立于只读挂载，避免嵌套挂载冲突）
+    environment:
+      - DATABASE_URL=sqlite:////app/runtime/bilingual_cms.db
+      - SECRET_KEY=${SECRET_KEY:?SECRET_KEY is required}
+      - ALLOWED_ORIGINS=["http://localhost:3000"]
+      - ADMIN_EMAIL=admin@bilingual-product-cms.com
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-CmsAdmin2026!}
+      - ENVIRONMENT=production
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    image: cms-frontend:local
+    container_name: cms-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      # 前端通过 rewrite 把 /api 转发到后端容器
+      - API_BASE_URL=http://backend:8000
+    depends_on:
+      backend:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  cms-data:

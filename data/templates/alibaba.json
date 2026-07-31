@@ -1,0 +1,55 @@
+{
+  "platform": "alibaba",
+  "version": "2026-07",
+  "description": "Alibaba.com Product Listing CSV Export Template",
+  "fields": [
+    {"platform_field": "Subject", "local_field": "product_name_en", "required": true, "type": "string", "max_length": 128, "description": "Product title"},
+    {"platform_field": "Brand Name", "local_field": "brand", "required": false, "type": "string", "max_length": 50, "description": "Brand name"},
+    {"platform_field": "Model Number", "local_field": "model_number", "required": true, "type": "string", "description": "Model number"},
+    {"platform_field": "Product Description", "local_field": "description_en", "required": true, "type": "html", "max_length": 10000, "description": "Product description"},
+    {"platform_field": "Price", "local_field": "price", "required": true, "type": "decimal", "description": "Unit price"},
+    {"platform_field": "MOQ", "local_field": "moq", "required": true, "type": "integer", "description": "Minimum order quantity"},
+    {"platform_field": "Unit", "local_field": "unit", "required": true, "type": "enum", "description": "Pricing unit"},
+    {"platform_field": "Supply Ability", "local_field": "supply_ability", "required": false, "type": "string", "description": "Monthly supply ability"},
+    {"platform_field": "Payment Terms", "local_field": "payment_terms", "required": true, "type": "enum", "description": "Payment methods"},
+    {"platform_field": "Delivery Time", "local_field": "delivery_time", "required": true, "type": "string", "description": "Delivery days"},
+    {"platform_field": "Port", "local_field": "port", "required": false, "type": "string", "description": "Shipping port"},
+    {"platform_field": "Color", "local_field": "color_en", "required": true, "type": "string", "description": "Color"},
+    {"platform_field": "Material", "local_field": "material_en", "required": true, "type": "string", "description": "Material"},
+    {"platform_field": "Size", "local_field": "size", "required": true, "type": "string", "description": "Size"},
+    {"platform_field": "Weight", "local_field": "weight", "required": false, "type": "decimal", "description": "Product weight"},
+    {"platform_field": "Weight Unit", "local_field": "weight_unit", "required": false, "type": "enum", "description": "Weight unit"},
+    {"platform_field": "Certification", "local_field": "certification", "required": false, "type": "string", "description": "Product certifications"},
+    {"platform_field": "Usage", "local_field": "usage", "required": false, "type": "string", "description": "Product usage"},
+    {"platform_field": "Place of Origin", "local_field": "origin", "required": true, "type": "string", "description": "Country of origin"},
+    {"platform_field": "Image 1", "local_field": "main_image_url", "required": true, "type": "url", "description": "Main product image URL"},
+    {"platform_field": "Image 2", "local_field": "image_url_1", "required": false, "type": "url", "description": "Additional image 1"},
+    {"platform_field": "Image 3", "local_field": "image_url_2", "required": false, "type": "url", "description": "Additional image 2"},
+    {"platform_field": "Category", "local_field": "category", "required": true, "type": "string", "description": "Alibaba category"},
+    {"platform_field": "Feature", "local_field": "features", "required": false, "type": "string", "max_length": 1000, "description": "Product features"},
+    {"platform_field": "Style Number", "local_field": "style_number", "required": false, "type": "string", "description": "Style/item number"},
+    {"platform_field": "Size Range", "local_field": "size_range", "required": false, "type": "string", "description": "Available size range"},
+    {"platform_field": "Logo", "local_field": "logo", "required": false, "type": "string", "description": "Logo customization"},
+    {"platform_field": "After-sales Service", "local_field": "warranty", "required": false, "type": "string", "description": "Warranty info"},
+    {"platform_field": "Sample", "local_field": "sample_info", "required": false, "type": "string", "description": "Sample availability"}
+  ],
+  "enums": {
+    "Payment Terms": [
+      "T/T", "PayPal", "L/C", "D/A", "D/P",
+      "Western Union", "MoneyGram", "Credit Card",
+      "Alipay", "WeChat Pay"
+    ],
+    "Unit": ["Piece/Pieces", "Set", "Meter", "Kilogram", "Ton", "Square Meter", "Liter", "Pair", "Box", "Carton"],
+    "Weight Unit": ["g", "kg", "oz", "lb"],
+    "Unit of Measure": ["Meter", "Feet", "Yard", "Centimeter", "Inch", "Millimeter"]
+  },
+  "required_fields_count": 12,
+  "total_fields_count": 29,
+  "notes": [
+    "Alibaba fields are case-sensitive — use exact casing as listed",
+    "Price should be in USD for international listings",
+    "MOQ is critical for B2B — Alibaba buyers filter by MOQ",
+    "Product Description supports HTML formatting",
+    "Image URLs must be publicly accessible"
+  ]
+}

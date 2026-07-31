@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  backend-test:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      args:
+        - ENVIRONMENT=test
+    container_name: bilingual-product-cms-backend-test
+    ports:
+      - "8001:8000"
+    volumes:
+      - ./data:/app/data:ro
+      - cms-data-test:/app/data/runtime
+    environment:
+      - DATABASE_URL=sqlite:///./data/runtime/bilingual_cms_test.db
+      - SECRET_KEY=${SECRET_KEY:-test-secret-key-change-in-production}
+      - ALLOWED_ORIGINS=["http://localhost:3000", "http://localhost:3001"]
+      - ENVIRONMENT=test
+      - LOG_LEVEL=DEBUG
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  cms-data-test:
+    driver: local

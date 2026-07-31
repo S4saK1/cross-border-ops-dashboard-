@@ -1,0 +1,146 @@
+﻿groups:
+  - name: bilingual-product-cms-alerts
+    rules:
+      # 服务可用性告警
+      - alert: ServiceDown
+        expr: up{job="backend"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          team: sre
+        annotations:
+          summary: "Backend service is down"
+          description: "The bilingual-product-cms backend service has been down for more than 1 minute."
+
+      # 错误率告警
+      - alert: HighErrorRate
+        expr: rate(app_errors_total[5m]) / rate(app_requests_total[5m]) > 0.05
+        for: 2m
+        labels:
+          severity: warning
+          team: sre
+        annotations:
+          summary: "High error rate detected"
+          description: "Error rate is {{ $value | humanizePercentage }} (threshold: 5%)"
+
+      # 严重错误率告警
+      - alert: CriticalErrorRate
+        expr: rate(app_errors_total[5m]) / rate(app_requests_total[5m]) > 0.1
+        for: 1m
+        labels:
+          severity: critical
+          team: sre
+        annotations:
+          summary: "Critical error rate detected"
+          description: "Error rate is {{ $value | humanizePercentage }} (threshold: 10%)"
+
+      # 响应时间告警
+      - alert: HighResponseTime
+        expr: app_response_time_seconds > 2
+        for: 3m
+        labels:
+          severity: warning
+          team: sre
+        annotations:
+          summary: "High response time detected"
+          description: "Average response time is {{ $value }}s (threshold: 2s)"
+
+      # 严重响应时间告警
+      - alert: CriticalResponseTime
+        expr: app_response_time_seconds > 5
+        for: 1m
+        labels:
+          severity: critical
+          team: sre
+        annotations:
+          summary: "Critical response time detected"
+          description: "Average response time is {{ $value }}s (threshold: 5s)"
+
+      # 数据库连接告警
+      # 内存使用告警
+      - alert: HighMemoryUsage
+        expr: system_memory_percent > 80
+        for: 5m
+        labels:
+          severity: warning
+          team: sre
+        annotations:
+          summary: "High memory usage detected"
+          description: "Memory usage is {{ $value }}% (threshold: 80%)"
+
+      # 严重内存使用告警
+      - alert: CriticalMemoryUsage
+        expr: system_memory_percent > 90
+        for: 2m
+        labels:
+          severity: critical
+          team: sre
+        annotations:
+          summary: "Critical memory usage detected"
+          description: "Memory usage is {{ $value }}% (threshold: 90%)"
+
+      # CPU使用告警
+      - alert: HighCpuUsage
+        expr: system_cpu_percent > 80
+        for: 5m
+        labels:
+          severity: warning
+          team: sre
+        annotations:
+          summary: "High CPU usage detected"
+          description: "CPU usage is {{ $value }}% (threshold: 80%)"
+
+      # 严重CPU使用告警
+      - alert: CriticalCpuUsage
+        expr: system_cpu_percent > 90
+        for: 2m
+        labels:
+          severity: critical
+          team: sre
+        annotations:
+          summary: "Critical CPU usage detected"
+          description: "CPU usage is {{ $value }}% (threshold: 90%)"
+
+      # 磁盘空间告警
+      - alert: LowDiskSpace
+        expr: system_disk_percent > 80
+        for: 5m
+        labels:
+          severity: warning
+          team: sre
+        annotations:
+          summary: "Low disk space detected"
+          description: "Disk usage is {{ $value }}% (threshold: 80%)"
+
+      # 严重磁盘空间告警
+      - alert: CriticalDiskSpace
+        expr: system_disk_percent > 90
+        for: 2m
+        labels:
+          severity: critical
+          team: sre
+        annotations:
+          summary: "Critical disk space detected"
+          description: "Disk usage is {{ $value }}% (threshold: 90%)"
+
+      # 应用重启告警
+      - alert: ApplicationRestart
+        expr: changes(app_uptime_seconds[5m]) > 1
+        for: 1m
+        labels:
+          severity: warning
+          team: sre
+        annotations:
+          summary: "Application restarted"
+          description: "Application has restarted {{ $value }} times in the last 5 minutes"
+
+      # 长时间无请求告警
+      - alert: NoTraffic
+        expr: rate(app_requests_total[10m]) == 0
+        for: 15m
+        labels:
+          severity: warning
+          team: sre
+        annotations:
+          summary: "No traffic detected"
+          description: "No requests received for 15 minutes"
