@@ -6,8 +6,8 @@
 
 ```bash
 # 1. 克隆项目
-git clone https://github.com/your-username/bilingual-product-cms.git
-cd bilingual-product-cms
+git clone https://github.com/S4saK1/cross-border-ops-dashboard-.git
+cd cross-border-ops-dashboard-
 
 # 2. 配置环境变量（必做！）
 cp .env.example .env

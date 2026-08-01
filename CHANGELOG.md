@@ -5,20 +5,21 @@
 格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/)，
 并且本项目遵循 [语义化版本控制](https://semver.org/lang/zh-CN/)。
 
-## [未发布]
+## [2.0.0] - 2026-08-01
 
-### 新增
-- 添加MIT许可证文件
-- 创建变更日志文件
+### Added
+- 第二版本正式发布，CI 全绿：171 测试通过（2 跳过），覆盖率 72.45%
+- 完善项目介绍：README 重写（技术架构图、安全设计、项目结构），clone 与 Issue 链接统一
+- 默认管理员凭证环境变量化管理，密码强度验证
 
-### 修复
-- 修复README.md中的目录名不一致问题
-- 修复backup-strategy.md中的systemctl命令
-- 修复monitoring-guide.md中的数据库类型不一致
-
-### 安全
-- 改进默认管理员凭证管理机制
-- 增强密码强度验证
+### Fixed
+- 文档示例令牌脱敏，gitleaks 密钥扫描零命中
+- 移除测试产物 backend/test_results.xml（含测试 JWT）
+- flake8 规范清零：修复 215 处违规（空白、未用导入、布尔比较、裸 except 等）
+- redis-py 3.0.1 → 8.0.1，兼容 Python 3.12（distutils 已移除）
+- Docker 镜像名修正（ghcr 拒绝仓库名结尾连字符）
+- 移除内部交付报告 deliverables/ 与 P1_P2_Issue_Report.md
+- 废弃 GitHub 网页上传指南，仓库改为纯 Git 管理
 
 ## [1.1.0] - 2026-07-30
 

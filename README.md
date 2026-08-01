@@ -1,6 +1,7 @@
-﻿# 跨境产品资料中英对照系统
+# 跨境产品资料中英对照系统
 
-[![Build Status](https://img.shields.io/github/actions/workflow/status/S4saK1/bilingual-product-cms-/ci-cd.yml?label=build)](https://github.com/S4saK1/bilingual-product-cms-/actions)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/S4saK1/cross-border-ops-dashboard-/ci-cd.yml?label=build)](https://github.com/S4saK1/cross-border-ops-dashboard-/actions)
+[![Release](https://img.shields.io/github/v/release/S4saK1/cross-border-ops-dashboard-?label=release)](https://github.com/S4saK1/cross-border-ops-dashboard-/releases)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
 [![Node.js 18+](https://img.shields.io/badge/node.js-18+-green.svg)](https://nodejs.org/)
@@ -9,309 +10,163 @@
 
 ## 项目简介
 
-这是一个专为跨境卖家设计的产品资料一致性管理系统，帮助卖家维护产品参数的中英文对照关系，确保在全球电商平台上的产品资料准确、一致、专业。
+跨境产品资料中英对照系统（Cross-Border Product CMS）是面向跨境卖家的一站式产品资料管理平台，帮助卖家集中维护产品参数的中英文对照关系，并在导出到全球电商平台（Amazon、AliExpress 等）之前自动校验一致性，确保产品资料准确、统一、专业。
 
-### 项目特点
+**v2.0.0（2026-08-01）** 在 v1.0.0 基础上完成安全加固与工程化收尾：Redis 限流、CSRF 防护、JWT 令牌黑名单、Alembic 数据库迁移、统一审计日志，并让 CI 管道全绿（171 项测试通过、覆盖率 72.45%、flake8/bandit/gitleaks 零问题）。
 
-- **术语一致性**：通过术语词典确保产品参数的中英文翻译一致性
-- **批量管理**：支持CSV批量导入产品数据，提高工作效率
-- **质量检测**：自动检测产品资料的中英文对照一致性
-- **权限管理**：基于角色的访问控制（RBAC），支持多用户协作
-- **审计追踪**：完整记录所有操作日志，便于追溯和审计
-- **现代化界面**：基于React/Next.js的响应式Web界面
+### 核心特性
 
-## 技术栈
+- **术语一致性**：内置 100+ 专业术语词典，产品参数自动对照校验（L1 精确匹配 + 同义词匹配），导出前一致性阻断
+- **批量管理**：CSV / Excel 批量导入，导入前预览与字段映射，导出支持 Amazon、AliExpress 模板
+- **质量检测**：自动检测产品资料的中英文对照一致性，输出问题报告与修复建议
+- **权限管理**：基于角色的访问控制（admin / editor / reviewer / viewer），多用户协作
+- **审计追踪**：完整记录登录、登出、导入、导出、用户管理等操作日志
+- **现代化界面**：基于 Next.js 14 + React 18 的响应式 Web 界面
+
+## 技术架构
+
+```mermaid
+flowchart LR
+    A[Next.js 前端] -->|HTTPS / JSON| B[FastAPI 后端]
+    B --> C[(PostgreSQL 生产 / SQLite 开发)]
+    B --> D[(Redis：令牌黑名单 / 限流 / 会话)]
+    B --> E[Prometheus 指标]
+    B --> F[结构化 JSON 日志]
+```
 
 ### 后端
+
 - **框架**：Python FastAPI
-- 数据库：PostgreSQL（生产环境） / SQLite（默认开发环境）
-- **缓存**：Redis（Token黑名单、会话存储）
-- **认证**：JWT（JSON Web Tokens）+ httpOnly Cookie
-- **密码加密**：bcrypt
-- **API文档**：自动生成的OpenAPI/Swagger文档
+- **数据库**：PostgreSQL（生产）/ SQLite（开发默认），SQLAlchemy 2.0 ORM + Alembic 迁移
+- **缓存**：Redis（Token 黑名单、限流、会话存储）
+- **认证**：JWT（access / refresh 分离）+ httpOnly Cookie + CSRF Token
+- **密码加密**：bcrypt + 强度校验
+- **API 文档**：自动生成 OpenAPI / Swagger
 
 ### 前端
+
 - **框架**：Next.js 14 + React 18
 - **样式**：Tailwind CSS
-- **语言**：TypeScript
+- **语言**：TypeScript（严格模式）
 - **状态管理**：React Context + Hooks
 
-### 部署
-- **容器化**：Docker + Docker Compose
-- **反向代理**：Nginx（生产环境推荐）
-- **监控**：Prometheus + Grafana
-- **日志**：结构化JSON日志
+### 部署与可观测
 
-### 测试
-- **后端测试**：pytest + httpx
-- **前端测试**：Jest + React Testing Library
-- **端到端测试**：Playwright
-- **性能测试**：Locust/k6
-- **图标**：Lucide React
+- **容器化**：Docker + Docker Compose（开发 / 测试 / 预发布 / 生产多套编排）
+- **反向代理**：Nginx + TLS
+- **监控**：Prometheus + Grafana + Alertmanager
+- **备份**：`scripts/backup.sh`（pg_dump / SQLite 双模式 + GPG 加密 + S3/SFTP）
 
+## 项目结构
+
+```text
+.
+├── backend/          # FastAPI 后端（app/、alembic/、tests/）
+├── frontend/         # Next.js 前端
+├── deploy/           # 生产部署：nginx、监控、备份编排
+├── docs/             # PRD、API 参考、实施指南、ADR、监控指南
+├── monitoring/       # Prometheus / Grafana / Alertmanager 配置
+├── scripts/          # 运维与工具脚本
+├── docker-compose*.yml
+└── README.md
+```
 
 ## 快速开始
 
 ### 本地开发
 
-#### 1. 克隆项目
 ```bash
-git clone <repository-url>
-cd bilingual-product-cms
-```
+# 1. 克隆项目
+git clone https://github.com/S4saK1/cross-border-ops-dashboard-.git
+cd cross-border-ops-dashboard-
 
-#### 2. 启动后端服务
-```bash
+# 2. 启动后端
 cd backend
 pip install -r requirements.txt
+cp ../.env.example ../.env   # 并设置 SECRET_KEY / ADMIN_PASSWORD
 python init_db.py
 python -m uvicorn app.main:app --reload --port 8000
-```
 
-#### 3. 启动前端开发服务器
-```bash
-cd frontend
+# 3. 启动前端
+cd ../frontend
 npm install
 npm run dev
 ```
 
-#### 4. 访问系统
+访问地址：
+
 - 前端界面：http://localhost:3000
-- API文档：http://localhost:8000/docs
-- 默认管理员：admin@bilingual-product-cms.com（密码由环境变量ADMIN_PASSWORD设置，首次登录需修改密码）
+- API 文档：http://localhost:8000/docs
+- 默认管理员：`admin@bilingual-product-cms.com`（密码由环境变量 `ADMIN_PASSWORD` 指定，首次登录请修改）
 
-### Docker部署
-
-#### 前置条件
-- Docker Desktop 已安装
-- Docker Compose v2+ 已安装
-
-#### 环境配置
-
-`docker compose` 启动时需要 `SECRET_KEY` 环境变量。从 `.env.example` 创建 `.env` 文件：
+### Docker 一键部署
 
 ```bash
-# 复制环境变量模板
 cp .env.example .env
-
-# 生成安全密钥（Linux/Mac）
+# 生成 SECRET_KEY（Linux/Mac）
 sed -i "s/^SECRET_KEY=.*/SECRET_KEY=$(openssl rand -hex 32)/" .env
 
-# Windows PowerShell
-(Get-Content .env) -replace '^SECRET_KEY=.*', ('SECRET_KEY=' + -join ((48..57)+(65..90)+(97..122) | Get-Random -Count 64 | ForEach-Object {[char]$_})) | Set-Content .env
-```
-
-#### 一键启动
-```bash
 docker compose up -d --build
-```
 
-#### 验证部署
-```bash
-# 检查容器状态
-docker compose ps
-
-# 查看日志
-docker compose logs -f backend
-
-# 测试健康检查
+# 验证
 curl http://localhost:8000/health
+docker compose ps
 ```
 
-#### 停止服务
-```bash
-docker compose down
-```
+更详细的步骤见 [QUICKSTART.md](QUICKSTART.md) 与 [DEPLOY.md](DEPLOY.md)。
 
-#### 数据持久化
-开发环境默认使用 SQLite（`bilingual_cms.db`），生产环境可配置为 PostgreSQL。
+## 安全设计
 
-## 功能特性
+- **令牌安全**：JWT access / refresh 分离，refresh token 仅存 httpOnly Cookie（ADR-007），令牌可吊销（Redis + DB 双写黑名单），启动时自动清理过期条目
+- **CSRF 防护**：Cookie 认证场景下的 CSRF Token 中间件
+- **限流**：登录 / 注册接口 Redis 滑动窗口限流（5 次 / 60 秒）
+- **权限**：RBAC 四角色，注册强制 viewer 角色防提权，refresh token 不可冒充 access token
+- **密钥管理**：`SECRET_KEY` 等敏感配置仅从环境变量读取，不写入仓库；生产环境 Cookie 自动启用 `Secure`
+- **输入防护**：CSV 公式注入清洗，导入路径穿越防护，异常响应不泄露内部路径
 
-### 1. 产品参数管理
-- 产品参数的中英文对照CRUD操作
-- 支持产品分类和标签管理
-- 产品图片和附件上传
+## API 概览
 
-### 2. 术语词典管理
-- 专业术语的中英文对照维护
-- 术语分类和标签系统
-- 内置术语词典支持
+- 认证：`POST /api/v1/auth/login`、`register`、`refresh`、`logout`、`me`、`change-password`
+- 产品：`GET/POST /api/v1/products`、`GET/PUT/DELETE /api/v1/products/{id}`
+- 术语：`GET/POST /api/v1/terms`
+- 用户（管理员）：`/api/v1/users` CRUD、角色变更、密码重置、批量操作
+- 导入：`POST /api/v1/import/upload`、`preview`、`execute`
+- 导出：`POST /api/v1/export/csv`（Amazon / Alibaba）
+- 审计：`GET /api/v1/audit-logs`
+- 指标：`/metrics/prometheus`（受保护）
 
-### 3. 术语一致性检测
-- 自动检测产品参数与术语词典的一致性
-- 一致性评分和问题报告
-- 修复建议和批量更新
+完整端点与请求示例见 [docs/api-reference.md](docs/api-reference.md) 和运行中的 `/docs`。
 
-### 4. CSV数据导入导出
-- 支持CSV格式批量导入产品数据
-- 产品数据导出为CSV格式
-- 数据模板下载功能
+## 测试与质量
 
-### 5. 用户权限管理
-- 多角色权限控制（admin/editor/reviewer/viewer）
-- 用户注册和登录系统
-- 个人资料管理
-
-### 6. 审计日志
-- 操作日志记录
-- 用户行为追踪
-- 系统变更历史
-
-## API文档
-
-### 认证API
-- `POST /api/v1/auth/login` - 用户登录
-- `POST /api/v1/auth/register` - 用户注册
-- `POST /api/v1/auth/refresh` - 刷新令牌
-- `POST /api/v1/auth/logout` - 用户登出
-- `POST /api/v1/auth/logout-all` - 撤销所有令牌
-- `GET /api/v1/auth/me` - 获取当前用户信息
-- `POST /api/v1/auth/change-password` - 修改密码
-
-### 产品管理API
-- `GET /api/v1/products` - 产品列表查询
-- `POST /api/v1/products` - 创建产品
-- `GET /api/v1/products/{id}` - 产品详情
-- `PUT /api/v1/products/{id}` - 更新产品
-- `DELETE /api/v1/products/{id}` - 删除产品
-
-### 术语词典API
-- `GET /api/v1/terms` - 术语列表查询
-- `POST /api/v1/terms` - 创建术语
-
-### 用户管理API (Admin only)
-- `GET /api/v1/users` - 用户列表
-- `POST /api/v1/users` - 创建用户
-- `GET /api/v1/users/me` - 当前用户信息
-- `GET /api/v1/users/{id}` - 用户详情
-- `PUT /api/v1/users/{id}` - 更新用户
-- `DELETE /api/v1/users/{id}` - 删除用户
-- `PUT /api/v1/users/{id}/role` - 更改用户角色
-- `POST /api/v1/users/{id}/reset-password` - 重置用户密码
-- `POST /api/v1/users/bulk` - 批量用户操作
-
-### 导出API
-- `POST /api/v1/export/csv` - 导出产品数据为CSV (Amazon/Alibaba)
-
-### 导入API
-- `POST /api/v1/import/upload` - 上传导入文件
-- `POST /api/v1/import/preview` - 预览导入数据
-- `POST /api/v1/import/execute` - 执行批量导入
-
-### 审计日志API
-- `GET /api/v1/audit-logs` - 审计日志查询
-
-## 测试说明
-
-### 后端测试
 ```bash
 cd backend
-pytest
+pytest                                    # 171 passed / 2 skipped，覆盖率 72.45%
+flake8 app/ --max-complexity=10 --max-line-length=127
+bandit -r app/ -ll
 ```
 
-### 前端测试
-```bash
-cd frontend
-npm run lint
-```
+CI 管道（[.github/workflows/ci-cd.yml](.github/workflows/ci-cd.yml)）依次执行：gitleaks 密钥扫描 → flake8 → bandit → safety → pytest（PostgreSQL + Redis 服务，覆盖率门禁 70%）→ Docker 镜像构建并推送 GHCR。
 
-### 端到端测试
-```bash
-# 启动服务后运行测试
-docker compose up -d
-python test_password_validation.py
-```
+## 生产部署
+
+- **安全配置**：设置强 `SECRET_KEY` 与 `ADMIN_PASSWORD`，配置 CORS 白名单，Nginx 启用 HTTPS
+- **数据库迁移**：`alembic upgrade head`（v2.0 起由 Alembic 统一管理 schema）
+- **数据备份**：`scripts/backup.sh`，支持 pg_dump / SQLite 双模式与远端加密备份
+- **监控告警**：Prometheus + Grafana + Alertmanager，配置见 [monitoring/](monitoring/) 与 [docs/monitoring-guide.md](docs/monitoring-guide.md)
+- **部署检查清单**：[deploy/deployment-checklist.md](deploy/deployment-checklist.md)
+
+## 版本历史
+
+- [CHANGELOG.md](CHANGELOG.md)：v2.0.0（2026-08-01）、v1.1.0（2026-07-30）、v1.0.0（2026-07-23）
 
 ## 贡献指南
 
-我们欢迎任何形式的贡献！请阅读 [CONTRIBUTING.md](CONTRIBUTING.md) 了解详细信息。
-
-### 快速开始
-1. Fork 项目仓库
-2. 克隆到本地：`git clone https://github.com/your-username/bilingual-product-cms.git`
-3. 安装依赖：`pip install -r requirements.txt && cd frontend && npm install`
-4. 创建功能分支：`git checkout -b feature/your-feature`
-5. 提交更改：`git commit -m 'feat: Add some feature'`
-6. 推送到分支：`git push origin feature/your-feature`
-7. 创建 Pull Request
-
-### 开发环境
-```bash
-# 后端开发
-cd backend
-python -m venv venv
-source venv/bin/activate  # Linux/Mac
-# venv\Scripts\activate   # Windows
-pip install -r requirements.txt
-python init_db.py
-uvicorn app.main:app --reload
-
-# 前端开发
-cd frontend
-npm install
-npm run dev
-```
-
-### 代码规范
-- **Python**：遵循 PEP 8，使用类型注解
-- **TypeScript**：严格模式，ESLint + Prettier
-- **提交信息**：遵循 [Conventional Commits](https://www.conventionalcommits.org/)
-- **测试**：新功能必须包含测试用例
-
-### 问题反馈
-- 使用 [GitHub Issues](https://github.com/your-username/bilingual-product-cms/issues) 报告问题
-- 提供详细的问题描述和复现步骤
-- 附上相关日志和错误信息
-- 使用提供的Issue模板
-
-### 行为准则
-本项目遵循 [Contributor Covenant 行为准则](CODE_OF_CONDUCT.md)。参与本项目即表示您同意遵守此准则。
-
-## 生产环境部署
-
-### 安全配置
-1. **替换默认密钥**：
-   ```bash
-   export SECRET_KEY=$(python -c "import secrets; print(secrets.token_urlsafe(32))")
-   ```
-
-2. **配置CORS白名单**：修改 `docker-compose.yml` 中的 `ALLOWED_ORIGINS`
-
-3. **使用HTTPS**：配置Nginx反向代理并启用SSL
-
-### 数据备份
-```bash
-# 备份SQLite数据库
-docker compose exec backend python -c "
-import shutil
-shutil.copy('/app/data/runtime/bilingual_cms.db', '/app/data/runtime/backup.db')
-print('Backup created')
-"
-```
-
-### 数据库迁移
-### 数据库切换
-开发环境默认使用 SQLite。如需切换到 PostgreSQL：
-2. 安装 `psycopg2-binary` 驱动
-3. 运行数据库迁移脚本
+欢迎任何形式的贡献。请先阅读 [CONTRIBUTING.md](CONTRIBUTING.md) 与 [行为准则](CODE_OF_CONDUCT.md)，通过 [GitHub Issues](https://github.com/S4saK1/cross-border-ops-dashboard-/issues) 反馈问题。
 
 ## 许可证
 
-本项目采用 MIT 许可证。详情请查看 [LICENSE](LICENSE) 文件。
-
-## 相关文档
-
-- [部署指南](DEPLOY.md)
-- [产品需求文档](docs/PRD.md)
-- [部署检查清单](docs/deployment-checklist.md)
-- [运行手册](docs/runbooks/)
-
-## 联系方式
-
-如有任何问题或建议，请通过以下方式联系：
-- 提交 GitHub Issue
-- 发送邮件至项目维护者
+本项目采用 [MIT 许可证](LICENSE)。
 
 ---
 
