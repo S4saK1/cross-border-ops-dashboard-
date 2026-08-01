@@ -327,7 +327,7 @@ def _parse_excel(file_path: str) -> tuple[list[str], list[dict]]:
 
 
 @router.post("/upload")
-async def upload_file(
+def upload_file(
     file: UploadFile = File(...),
     current_user=Depends(require_editor),
 ):
@@ -358,7 +358,7 @@ async def upload_file(
         raise HTTPException(status_code=400, detail="Invalid file path")
 
     # 读取文件内容并保存
-    content = await file.read()
+    content = file.file.read()
 
     # 验证文件大小（可选：限制最大10MB）
     max_size = 10 * 1024 * 1024  # 10MB

@@ -16,13 +16,17 @@ sed -i "s/^SECRET_KEY=.*/SECRET_KEY=$(openssl rand -hex 32)/" .env
 # Windows PowerShell:
 # (Get-Content .env) -replace '^SECRET_KEY=.*', ('SECRET_KEY=' + -join ((48..57)+(65..90)+(97..122) | Get-Random -Count 64 | ForEach-Object {[char]$_})) | Set-Content .env
 
-# 3. 启动服务
+# 3. 启动服务（基础 compose：仅 backend API + PostgreSQL，不含前端/nginx/Grafana）
 docker compose up -d
 
 # 4. 访问系统
-# 前端界面: https://localhost (nginx 反向代理)
-# API文档: https://localhost/api/docs (nginx 反向代理)
-# 监控面板: https://localhost/grafana (nginx 反向代理, admin/admin)
+# API 服务: http://localhost:8000
+# API 文档: http://localhost:8000/docs
+# 健康检查: http://localhost:8000/health
+
+# 如需完整前端 UI，请使用全栈 compose：
+# docker compose -f docker-compose.full.yml up -d --build
+# 详见 docker-compose.full.yml 注释
 ```
 
 ### 方式二：本地开发环境

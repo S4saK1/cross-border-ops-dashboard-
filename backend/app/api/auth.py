@@ -1,5 +1,5 @@
 ﻿from datetime import datetime
-from fastapi import APIRouter, Depends, HTTPException, Response
+from fastapi import APIRouter, Depends, HTTPException, Response, Request
 from sqlalchemy.orm import Session
 from app.database import get_db
 from app.models.user import UserProfile
@@ -13,6 +13,7 @@ from app.core.security import (
     create_refresh_token,
     decode_token,
     get_current_user,
+    get_refresh_token_from_cookie,
     is_token_blacklisted,
     blacklist_refresh_token,
     revoke_all_user_tokens,
@@ -96,7 +97,6 @@ def login(data: UserLogin, response: Response, db: Session = Depends(get_db)):
         set_auth_cookies(response, access_token, refresh_token)
         return TokenResponse(
             access_token=access_token,
-            refresh_token=refresh_token,
             expires_in=settings.ACCESS_TOKEN_EXPIRE_MINUTES * 60,
             user={"id": user.id, "email": user.email, "display_name": user.display_name, "role": user.role},
             force_password_change=True,
@@ -107,15 +107,18 @@ def login(data: UserLogin, response: Response, db: Session = Depends(get_db)):
     set_auth_cookies(response, access_token, refresh_token)
     return TokenResponse(
         access_token=access_token,
-        refresh_token=refresh_token,
         expires_in=settings.ACCESS_TOKEN_EXPIRE_MINUTES * 60,
         user={"id": user.id, "email": user.email, "display_name": user.display_name, "role": user.role},
     )
 
 
 @router.post("/refresh", response_model=TokenResponse)
-def refresh_token(request: RefreshTokenRequest, response: Response, db: Session = Depends(get_db)):
-    payload = decode_token(request.token)
+def refresh_token(req: Request, data: RefreshTokenRequest, response: Response, db: Session = Depends(get_db)):
+    # P0-5: 优先从 cookie 中读取 refresh_token，fallback 到 JSON body
+    token = get_refresh_token_from_cookie(req) or data.token
+    if not token:
+        raise HTTPException(status_code=400, detail="No refresh token provided")
+    payload = decode_token(token)
     if payload.get("type") != "refresh":
         raise HTTPException(status_code=401, detail="Invalid token type")
     
@@ -142,7 +145,7 @@ def refresh_token(request: RefreshTokenRequest, response: Response, db: Session 
         
         # 解码token获取过期时间
         try:
-            token_payload = jwt.get_unverified_claims(request.token)
+            token_payload = jwt.get_unverified_claims(token)
             exp_timestamp = token_payload.get("exp")
             if exp_timestamp:
                 expires_at = datetime.utcfromtimestamp(exp_timestamp)
@@ -157,16 +160,19 @@ def refresh_token(request: RefreshTokenRequest, response: Response, db: Session 
     set_auth_cookies(response, access_token, new_refresh)
     return TokenResponse(
         access_token=access_token,
-        refresh_token=new_refresh,
         expires_in=settings.ACCESS_TOKEN_EXPIRE_MINUTES * 60,
         user={"id": user.id, "email": user.email, "display_name": user.display_name, "role": user.role},
     )
 
 
 @router.post("/logout")
-def logout(request: RefreshTokenRequest, response: Response, db: Session = Depends(get_db)):
+def logout(req: Request, data: RefreshTokenRequest, response: Response, db: Session = Depends(get_db)):
     """用户登出，撤销当前refresh token"""
-    payload = decode_token(request.token)
+    # P0-5: 优先从 cookie 中读取 refresh_token
+    token = get_refresh_token_from_cookie(req) or data.token
+    if not token:
+        raise HTTPException(status_code=400, detail="No refresh token provided")
+    payload = decode_token(token)
     if payload.get("type") != "refresh":
         raise HTTPException(status_code=401, detail="Invalid token type")
     
@@ -177,7 +183,7 @@ def logout(request: RefreshTokenRequest, response: Response, db: Session = Depen
         
         # 解码token获取过期时间
         try:
-            token_payload = jwt.get_unverified_claims(request.token)
+            token_payload = jwt.get_unverified_claims(token)
             exp_timestamp = token_payload.get("exp")
             if exp_timestamp:
                 expires_at = datetime.utcfromtimestamp(exp_timestamp)
@@ -192,6 +198,11 @@ def logout(request: RefreshTokenRequest, response: Response, db: Session = Depen
     from app.core.audit import write_audit_log
     user_id = payload.get('sub')
     if user_id:
+        # Bump token_version to invalidate all issued tokens immediately
+        user = db.query(UserProfile).filter(UserProfile.id == user_id).first()
+        if user:
+            user.token_version += 1
+
         write_audit_log(
             db=db,
             actor_id=user_id,
@@ -218,7 +229,7 @@ async def get_me(current_user=Depends(get_current_user)):
 
 
 @router.post("/change-password")
-async def change_password(
+def change_password(
     data: ChangePasswordRequest,
     current_user=Depends(get_current_user),
     db: Session = Depends(get_db),

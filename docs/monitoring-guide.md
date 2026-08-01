@@ -115,33 +115,35 @@
 ### Prometheus配置
 
 ```yaml
-# prometheus.yml
+# prometheus.yml（与 monitoring/prometheus.yml 同步）
 global:
   scrape_interval: 15s
   evaluation_interval: 15s
 
+# 告警规则文件
+rule_files:
+  - "alerts.yml"
+
+# 告警管理器配置
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          - alertmanager:9093
+
 scrape_configs:
-  - job_name: 'bilingual-product-cms-backend'
+  - job_name: 'backend'
     static_configs:
       - targets: ['backend:8000']
-    metrics_path: '/metrics'
-    scrape_interval: 10s
-    
-  - job_name: 'bilingual-product-cms-frontend'
-    static_configs:
-      - targets: ['frontend:3000']
-    metrics_path: '/metrics'
-    scrape_interval: 30s
+    metrics_path: '/metrics/prometheus'
     
   - job_name: 'node-exporter'
     static_configs:
       - targets: ['node-exporter:9100']
-    scrape_interval: 30s
-    
-  - job_name: 'backend app metrics (via /metrics/prometheus)'
+      
+  - job_name: 'cadvisor'
     static_configs:
-      - targets: ['backend app metrics (via /metrics/prometheus):9187']
-    scrape_interval: 30s
+      - targets: ['cadvisor:8080']
 ```
 
 ### Grafana仪表板

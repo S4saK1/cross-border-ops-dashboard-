@@ -117,21 +117,21 @@ with engine.connect() as conn:
 pip install psycopg2-binary
 
 修改 .env 或环境变量：
-`
+```bash
 DATABASE_URL=postgresql://postgres:postgres@localhost:5432/bilingual_product_cms
-`
+```
 
 使用 Alembic 管理迁移：
-`ash
+```bash
 cd backend
 alembic revision --autogenerate -m "initial_migration"
 alembic upgrade head
-`
+```
 
 验证连接：
-`ash
+```bash
 python -c "from app.database import engine; engine.connect()"
-`
+```
 
 生产环境使用 Docker Compose，确保 postgres 服务启用了 DATABASE_URL 环境变量。
 

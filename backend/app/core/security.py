@@ -258,4 +258,11 @@ async def get_current_user(
             detail="Token has been revoked",
         )
     
+    # P0-7: 强制改密服务端拦截
+    if payload.get("force_password_change"):
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Password change required",
+        )
+    
     return user

@@ -9,7 +9,6 @@ from app.middleware.exception_handler import GlobalExceptionHandlerMiddleware
 from app.middleware.csrf import CSRFTokenMiddleware
 from app.core.deps import require_admin
 from logging_config import setup_logging
-from collections import defaultdict
 import time
 import logging
 import signal
@@ -27,10 +26,7 @@ logger = logging.getLogger(__name__)
 shutdown_event = asyncio.Event()
 active_requests = 0
 
-# P0-6: In-memory rate limiter for login + register endpoints
-_rate_limit_store: dict = defaultdict(list)
-_RATE_LIMIT_WINDOW = 60
-_RATE_LIMIT_MAX = 5
+# P0-6: In-memory rate limiter for login + register endpoints (now delegated to Redis RateLimiter)
 
 
 def signal_handler(signum, frame):
@@ -145,21 +141,11 @@ app.add_middleware(
 async def login_rate_limiter(request: Request, call_next):
     if request.url.path in ("/api/v1/auth/login", "/api/v1/auth/register") and request.method == "POST":
         client_ip = request.client.host if request.client else "unknown"
-        window = _RATE_LIMIT_WINDOW
-        max_req = _RATE_LIMIT_MAX
+        window = 60
+        max_req = 5
 
-        allowed = True
-        try:
-            from app.core.redis import RateLimiter
-            allowed = RateLimiter.check(client_ip, max_requests=max_req, window_seconds=window)
-        except Exception:
-            now = time.time()
-            window_start = now - window
-            _rate_limit_store[client_ip] = [ts for ts in _rate_limit_store[client_ip] if ts > window_start]
-            if len(_rate_limit_store[client_ip]) >= max_req:
-                allowed = False
-            else:
-                _rate_limit_store[client_ip].append(now)
+        from app.core.redis import RateLimiter
+        allowed = RateLimiter.check(client_ip, max_requests=max_req, window_seconds=window)
 
         if not allowed:
             return JSONResponse(

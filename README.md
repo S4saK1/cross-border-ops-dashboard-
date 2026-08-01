@@ -1,7 +1,6 @@
 ﻿# 跨境产品资料中英对照系统
 
-[![Build Status](https://img.shields.io/github/workflow/status/liaogengqin-creator/bilingual-product-cms/CI?label=build)](https://github.com/liaogengqin-creator/bilingual-product-cms/actions)
-[![Test Coverage](https://img.shields.io/codecov/c/github/liaogengqin-creator/bilingual-product-cms?label=coverage)](https://codecov.io/gh/liaogengqin-creator/bilingual-product-cms)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/S4saK1/bilingual-product-cms-/ci-cd.yml?label=build)](https://github.com/S4saK1/bilingual-product-cms-/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
 [![Node.js 18+](https://img.shields.io/badge/node.js-18+-green.svg)](https://nodejs.org/)

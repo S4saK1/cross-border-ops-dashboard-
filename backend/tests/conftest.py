@@ -28,23 +28,27 @@ def disable_redis(monkeypatch):
 
 # ── Database engine: DATABASE_URL env → PostgreSQL, else SQLite fallback ──
 _database_url = os.environ.get("DATABASE_URL")
+_is_ci = os.environ.get("CI", "").lower() in ("true", "1", "yes")
 
-if _database_url and _database_url.startswith("postgresql://"):
+if _database_url:
+    # DATABASE_URL explicitly set — must use it, fail hard if unreachable
     try:
         _test_engine = create_engine(_database_url)
-        # Quick connectivity check — raises if PostgreSQL is unreachable
         with _test_engine.connect():
             pass
     except Exception as e:
-        logger.warning(
-            "DATABASE_URL=%s connection failed (%s), falling back to SQLite. "
-            "Verify the CI PostgreSQL service is running and accessible.",
-            _database_url, e,
-        )
-        _database_url = None  # trigger SQLite fallback
-
-if not _database_url or not _database_url.startswith("postgresql://"):
-    # SQLite fallback (local dev or when PostgreSQL is unavailable)
+        raise RuntimeError(
+            f"DATABASE_URL={_database_url} connection failed: {e}. "
+            "DATABASE_URL is explicitly set; refusing to silently downgrade to SQLite."
+        ) from e
+elif _is_ci:
+    raise RuntimeError(
+        "CI=true but DATABASE_URL is not set. "
+        "CI must connect to a real PostgreSQL instance. "
+        "Set DATABASE_URL in your CI configuration."
+    )
+else:
+    # SQLite fallback — only for local dev without DATABASE_URL and not in CI
     _tmpdir = tempfile.mkdtemp(prefix="test_cms_")
     _test_db = os.path.join(_tmpdir, "test.db")
     atexit.register(lambda: shutil.rmtree(_tmpdir, ignore_errors=True))
@@ -76,9 +80,9 @@ def setup_database():
 
 
 @pytest.fixture(autouse=True)
-def clear_rate_limiter():
-    from app.main import _rate_limit_store
-    _rate_limit_store.clear()
+def clear_rate_limiter(monkeypatch):
+    # P0: Mock RateLimiter.check to always allow in tests (Redis is disabled)
+    monkeypatch.setattr("app.core.redis.RateLimiter.check", lambda *a, **kw: True)
     yield
 
 

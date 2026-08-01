@@ -1,3 +1,8 @@
+# Engineering assurance reports (internal only, not for release)
+deliverables/
+P1_P2_Issue_Report.md
+temp-engineering-review/
+
 # Python
 __pycache__/
 *.py[cod]
@@ -270,3 +275,11 @@ test_results/
 
 # Windows reserved device name
 nul
+
+# Local test-run scratch output (not for release)
+pytest_fix.txt
+pytest_fix_result.txt
+pytest_full.txt
+pytest_out.txt
+backend/pytest_full_result.txt
+backend/pytest_result_full.txt

@@ -66,7 +66,7 @@ class TestAuth:
         assert response.status_code == 200
         data = response.json()
         assert "access_token" in data
-        assert "refresh_token" in data
+        # P0-5: refresh_token is now httpOnly cookie only, not in JSON body
         assert data["user"]["email"] == "admin@test.com"
 
     def test_login_wrong_password(self, client, admin_user):

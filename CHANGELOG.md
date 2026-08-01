@@ -1,30 +1,3 @@
-﻿## [1.1.0] - 2026-07-30
-
-### Fixed
-- Login session断裂：普通登录分支补 set_auth_cookies，前端补 setToken (F-01)
-- 密码重置死代码：补 eturn 临时密码，删除不可达代码 (F-02)
-- Alembic 迁移空壳：生成初始迁移，移除 create_all，支持 --skip-create-tables (F-03)
-- Prometheus 可观测性：无鉴权 /metrics/prometheus，修复 scrape 路径和告警规则 (F-06/F-07/F-20)
-- 生产端口暴露：移除 Postgres/Redis 宿主机映射，Nginx TLS 配置 (F-08/F-22)
-- 文档事实源对齐：删除 11 个虚构 API 端点，修复 README 矛盾 (F-04/F-05/F-30)
-- 导出一致性阻断 + 审计补充：export 前调用 ConsistencyEngine，登录/登出/导出写审计 (F-10/F-13)
-- CI 门禁：--cov-fail-under=70 + gitleaks 密钥扫描 + PG/Redis 测试服务 (F-24/F-58)
-- 安全测试：禁用用户/令牌吊销/XSS/SQL注入等 12 个新用例 (F-25~F-29)
-- 两套审计实现合并为统一 core.audit.write_audit_log (F-61)
-- 模型 FK 补全：audit_logs/token_blacklist 加 ForeignKey (F-38)
-- JSON 方言统一：sqlalchemy.dialects.sqlite.JSON → sqlalchemy.JSON (F-14)
-- CSV 注入防护覆盖到所有数值字段 (F-31)
-- backup.sh 增强：pg_dump/SQLite 双模式 + GPG 加密 + S3/SFTP 远端 (F-21)
-- SECRET_KEY 不再写入 .env 文件 (F-43/F-64)
-- 调试脚本移出源码树 (F-60)
-- 文档日期 2024→2026，README 重复小节清理 (F-50/F-52/F-57)
-
-### Security
-- get_current_user 增加 token type 校验（拒绝 refresh token 冒充 access token）
-- COOKIE_SECURE 生产环境自动置 True
-- 黑名单清理 startup 时自动执行 (F-39)
-- 生产环境 Grafana 密码变强口令 (F-08)
-
 # 变更日志
 
 本文件记录跨境产品资料中英对照系统的所有重要变更。
@@ -46,6 +19,33 @@
 ### 安全
 - 改进默认管理员凭证管理机制
 - 增强密码强度验证
+
+## [1.1.0] - 2026-07-30
+
+### Fixed
+- Login session断裂：普通登录分支补 set_auth_cookies，前端补 setToken (F-01)
+- 密码重置死代码：补 return 临时密码，删除不可达代码 (F-02)
+- Alembic 迁移空壳：生成初始迁移，移除 create_all，支持 --skip-create-tables (F-03)
+- Prometheus 可观测性：无鉴权 /metrics/prometheus，修复 scrape 路径和告警规则 (F-06/F-07/F-20)
+- 生产端口暴露：移除 Postgres/Redis 宿主机映射，Nginx TLS 配置 (F-08/F-22)
+- 文档事实源对齐：删除 11 个虚构 API 端点，修复 README 矛盾 (F-04/F-05/F-30)
+- 导出一致性阻断 + 审计补充：export 前调用 ConsistencyEngine，登录/登出/导出写审计 (F-10/F-13)
+- CI 门禁：--cov-fail-under=70 + gitleaks 密钥扫描 + PG/Redis 测试服务 (F-24/F-58)
+- 安全测试：禁用用户/令牌吊销/XSS/SQL注入等 12 个新用例 (F-25~F-29)
+- 两套审计实现合并为统一 core.audit.write_audit_log (F-61)
+- 模型 FK 补全：audit_logs/token_blacklist 加 ForeignKey (F-38)
+- JSON 方言统一：sqlalchemy.dialects.sqlite.JSON → sqlalchemy.JSON (F-14)
+- CSV 注入防护覆盖到所有数值字段 (F-31)
+- backup.sh 增强：pg_dump/SQLite 双模式 + GPG 加密 + S3/SFTP 远端 (F-21)
+- JWT token type 校验：get_current_user 拒绝 refresh token 冒充 access token (F-11)
+- SECRET_KEY 不再写入 .env 文件 (F-43/F-64)
+- 调试脚本移出源码树 (F-60)
+- 文档日期 2024→2026，README 重复小节清理 (F-50/F-52/F-57)
+
+### Security
+- COOKIE_SECURE 生产环境自动置 True
+- 黑名单清理 startup 时自动执行 (F-39)
+- 生产环境 Grafana 密码变强口令 (F-08)
 
 ## [1.0.0] - 2026-07-23
 

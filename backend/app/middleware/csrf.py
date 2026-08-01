@@ -55,10 +55,27 @@ class CSRFTokenMiddleware(BaseHTTPMiddleware):
             return await call_next(request)
 
         if referer:
-            referer_clean = referer.rstrip("/").lower().split("?")[0].split("#")[0]
-            if not any(referer_clean.startswith(a) for a in allowed):
+            from urllib.parse import urlparse
+            try:
+                referer_host = urlparse(referer).hostname
+                if referer_host:
+                    allowed_hosts = [urlparse(o).hostname for o in allowed]
+                    if referer_host not in allowed_hosts:
+                        logger.warning(
+                            f"CSRF blocked: referer={referer} for {request.method} {request.url.path}"
+                        )
+                        return JSONResponse(
+                            status_code=403,
+                            content={
+                                "error": True,
+                                "message": "Cross-origin request blocked",
+                                "status_code": 403,
+                            },
+                        )
+            except Exception:
+                # URL parsing failed — block as safety measure
                 logger.warning(
-                    f"CSRF blocked: referer={referer} for {request.method} {request.url.path}"
+                    f"CSRF blocked: unparseable referer={referer} for {request.method} {request.url.path}"
                 )
                 return JSONResponse(
                     status_code=403,

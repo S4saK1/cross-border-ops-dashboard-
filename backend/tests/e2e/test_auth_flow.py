@@ -27,7 +27,8 @@ class TestAuthFlow:
         assert login_response.status_code == 200
         login_data = login_response.json()
         assert "access_token" in login_data
-        assert "refresh_token" in login_data
+        # P0-5: refresh_token is now httpOnly cookie only, not in JSON body
+        assert "refresh_token" in login_response.cookies
         
         # 3. 获取用户信息
         me_response = client.get("/api/v1/auth/me", headers={
@@ -37,18 +38,17 @@ class TestAuthFlow:
         me_data = me_response.json()
         assert me_data["email"] == "e2e@test.com"
         
-        # 4. 刷新令牌
-        refresh_response = client.post("/api/v1/auth/refresh", json={
-            "token": login_data["refresh_token"]
-        })
+        # 4. 刷新令牌 (P0-5: refresh_token via cookie)
+        refresh_response = client.post("/api/v1/auth/refresh", json={},
+                                       cookies=login_response.cookies)
         assert refresh_response.status_code == 200
         refresh_data = refresh_response.json()
         assert "access_token" in refresh_data
         
-        # 5. 登出
-        logout_response = client.post("/api/v1/auth/logout", json={
-            "token": login_data["refresh_token"]
-        }, headers={
+        # 5. 登出 (P0-5: refresh_token via cookie)
+        logout_response = client.post("/api/v1/auth/logout", json={},
+                                      cookies=login_response.cookies,
+                                      headers={
             "Authorization": f"Bearer {login_data['access_token']}"
         })
         assert logout_response.status_code == 200

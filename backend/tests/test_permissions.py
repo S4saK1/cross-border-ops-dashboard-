@@ -168,22 +168,23 @@ class TestTokenLifecycle:
         assert r.status_code == 200
         data = r.json()
         assert "access_token" in data
-        assert "refresh_token" in data
+        # P0-5: refresh_token is now httpOnly cookie only, not in JSON body
+        assert "refresh_token" in r.cookies
 
     def test_refresh_token_works(self, client, admin_user):
         login = client.post("/api/v1/auth/login", json={
             "email": "admin@test.com", "password": "admin123"
         })
-        refresh = login.json()["refresh_token"]
-        r = client.post("/api/v1/auth/refresh", json={"token": refresh})
+        # P0-5: refresh_token is now httpOnly cookie, pass via cookies
+        r = client.post("/api/v1/auth/refresh", json={}, cookies=login.cookies)
         assert r.status_code == 200
         assert "access_token" in r.json()
 
     def test_refresh_with_access_token_fails(self, client, admin_user):
-        login = client.post("/api/v1/auth/login", json={
-            "email": "admin@test.com", "password": "admin123"
-        })
-        access = login.json()["access_token"]
+        # Generate an access token directly (no cookie context)
+        from app.core.security import create_access_token
+        access = create_access_token({"sub": admin_user.id})
+        # P0-5: Pass access token as JSON body (no refresh_token cookie) — must be rejected
         r = client.post("/api/v1/auth/refresh", json={"token": access})
         assert r.status_code == 401
 
@@ -191,11 +192,11 @@ class TestTokenLifecycle:
         login = client.post("/api/v1/auth/login", json={
             "email": "admin@test.com", "password": "admin123"
         })
-        refresh = login.json()["refresh_token"]
-        r = client.post("/api/v1/auth/logout", json={"token": refresh})
+        # P0-5: refresh_token is now httpOnly cookie, pass via cookies
+        r = client.post("/api/v1/auth/logout", json={}, cookies=login.cookies)
         assert r.status_code == 200
         # Using same refresh should now fail
-        r2 = client.post("/api/v1/auth/refresh", json={"token": refresh})
+        r2 = client.post("/api/v1/auth/refresh", json={}, cookies=login.cookies)
         assert r2.status_code == 401
 
     def test_password_reset_revokes_all_tokens(self, client, admin_token, viewer_user):

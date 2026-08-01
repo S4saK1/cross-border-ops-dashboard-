@@ -57,15 +57,17 @@ class Settings(BaseSettings):
         if v and len(v) >= 32:
             return v
 
-        env_file = Path(".env")
-        if env_file.exists():
-            with open(env_file, "r", encoding="utf-8") as f:
-                for line in f:
-                    line = line.strip()
-                    if line.startswith("SECRET_KEY="):
-                        key_value = line.split("=", 1)[1].strip()
-                        if key_value and len(key_value) >= 32:
-                            return key_value
+        # Only fall back to .env in development; never in production (A-N1)
+        if os.getenv("ENVIRONMENT", "development") != "production":
+            env_file = Path(".env")
+            if env_file.exists():
+                with open(env_file, "r", encoding="utf-8") as f:
+                    for line in f:
+                        line = line.strip()
+                        if line.startswith("SECRET_KEY="):
+                            key_value = line.split("=", 1)[1].strip()
+                            if key_value and len(key_value) >= 32:
+                                return key_value
 
         # Generate a new key for this session - DO NOT write to .env (F-43/F-64)
         new_key = secrets.token_urlsafe(32)

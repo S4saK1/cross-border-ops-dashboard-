@@ -152,7 +152,7 @@ class RateLimiter:
             client.expire(key, window_seconds)
             return True
         except Exception:
-            return True  # Fail open when Redis is unavailable
+            raise  # P0: fail-closed — let caller decide, do not silently allow all
 
     @staticmethod
     def remaining(client_key: str, max_requests: int = 5, window_seconds: int = 60) -> int:

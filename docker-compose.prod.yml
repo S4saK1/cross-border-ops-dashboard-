@@ -238,10 +238,13 @@ services:
           memory: 128M
 
 
-  # P0-4: ofelia 备份调度器
+  # P0-4: ofelia 备份调度器（自定义镜像含 pg_dump + gzip）
   ofelia:
-    image: mcuadros/ofelia:latest
+    build:
+      context: ./deploy/backup
+      dockerfile: ofelia.Dockerfile
     container_name: bilingual-product-cms-ofelia
+    command: ["/usr/local/bin/ofelia", "daemon", "--config", "/etc/ofelia/config.ini"]
     depends_on:
       - postgres
     volumes:

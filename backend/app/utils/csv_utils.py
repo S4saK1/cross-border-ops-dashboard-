@@ -18,6 +18,6 @@ def sanitize_csv_cell(value: str) -> str:
     """
     if not isinstance(value, str):
         return value
-    if value and value[0] in ("=", "+", "-", "@", "\t", "\r"):
+    if value and value[0] in ("=", "+", "-", "@", "\t", "\r", "\n"):
         return "'" + value
     return value

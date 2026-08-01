@@ -32,16 +32,7 @@ class UserLogin(BaseModel):
 
 
 class RefreshTokenRequest(BaseModel):
-    token: Optional[str] = None  # P0-5: 优先从 cookie 读取
-    token: str
-    
-    @field_validator('token')
-    @classmethod
-    def validate_token(cls, v: str) -> str:
-        """验证token格式"""
-        if not v or not v.strip():
-            raise ValueError('Token不能为空')
-        return v.strip()
+    token: Optional[str] = None  # P0-5: 优先从 cookie 读取，JSON body 为 fallback
 
 
 class TokenResponse(BaseModel):

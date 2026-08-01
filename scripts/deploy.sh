@@ -32,6 +32,18 @@ print_error() {
     echo -e "${RED}[ERROR]${NC} $1"
 }
 
+# P0-2: 占位符密钥检测 —— 拒绝使用占位符密钥的生产部署
+check_no_placeholders() {
+    local placeholder_patterns=("PLACEHOLDER_REQUIRED" "change-me" "changeme" "your-secret" "replace-me" "your-production" "your-secure" "your-redis" "your-grafana" "your-smtp")
+    for pattern in "${placeholder_patterns[@]}"; do
+        if grep -qi "$pattern" .env.production 2>/dev/null; then
+            print_error "检测到占位符密钥 ($pattern)，请先在 .env.production 中设置真实值"
+            exit 1
+        fi
+    done
+    print_success "占位符密钥检测通过"
+}
+
 # 检查参数
 ENVIRONMENT=${1:-"test"}
 ACTION=${2:-"deploy"}
@@ -100,7 +112,20 @@ case $ACTION in
                 print_error "FATAL: TLS 私钥缺失 (deploy/nginx/ssl/privkey.pem)"
                 exit 1
             fi
+            # P0-2: 自签名证书检测
+            if openssl x509 -in deploy/nginx/ssl/fullchain.pem -noout -subject 2>/dev/null | grep -qi "CN\s*=\s*localhost"; then
+                print_error "FATAL: TLS 证书为 localhost 自签名证书，请替换为正式证书"
+                exit 1
+            fi
+            if openssl x509 -in deploy/nginx/ssl/fullchain.pem -noout -issuer 2>/dev/null | grep -qi "CN\s*=\s*localhost"; then
+                print_warning "警告: TLS 证书签发者包含 localhost，可能是自签名证书"
+            fi
             print_success "TLS 证书预检通过"
+        fi
+
+        # P0-2: 占位符密钥检测（生产环境必须）
+        if [ "$ENVIRONMENT" = "production" ]; then
+            check_no_placeholders
         fi
         # 启动服务
         print_info "启动服务..."
