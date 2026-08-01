@@ -678,7 +678,7 @@ curl -X POST http://localhost:8000/api/v1/auth/login \
 # 测试CSRF防护
 curl -X POST http://localhost:8000/api/v1/products \
   -H "Content-Type: application/json" \
-  -H "X-CSRF-Token: invalid-token" \
+  -H "X-CSRF-Token: $CSRF_TOKEN" \
   -d '{"name": "Test Product"}'
 ```
 

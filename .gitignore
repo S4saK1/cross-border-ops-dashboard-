@@ -283,3 +283,4 @@ pytest_full.txt
 pytest_out.txt
 backend/pytest_full_result.txt
 backend/pytest_result_full.txt
+test_results.xml

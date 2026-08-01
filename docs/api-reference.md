@@ -60,8 +60,8 @@
 **响应**:
 ```json
 {
-  "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...",
-  "refresh_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...",
+  "access_token": "<access_token>",
+  "refresh_token": "<refresh_token>",
   "token_type": "Bearer",
   "expires_in": 86400,
   "user": {

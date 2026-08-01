@@ -246,14 +246,14 @@ curl -X POST http://localhost:8000/api/v1/auth/login \
 
 # 获取用户信息
 curl -X GET http://localhost:8000/api/v1/auth/me \
-  -H "Authorization: Bearer YOUR_TOKEN"
+  -H "Authorization: Bearer $ACCESS_TOKEN"
 ```
 
 ### 产品管理
 ```bash
 # 创建产品
 curl -X POST http://localhost:8000/api/v1/products \
-  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Authorization: Bearer $ACCESS_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "sku": "TEST-001",
@@ -264,7 +264,7 @@ curl -X POST http://localhost:8000/api/v1/products \
 
 # 获取产品列表
 curl -X GET http://localhost:8000/api/v1/products \
-  -H "Authorization: Bearer YOUR_TOKEN"
+  -H "Authorization: Bearer $ACCESS_TOKEN"
 ```
 
 ## 🤝 贡献指南

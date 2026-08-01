@@ -78,7 +78,7 @@ services:
 ✅ **配置正确**
 
 ```env
-SECRET_KEY=iG3F3hV-Xwel6aN06qny5j8aJ-sE3U_N8uo3OvKhF_Q
+SECRET_KEY=<redacted>
 ```
 
 ### 2.3 环境变量优先级分析
