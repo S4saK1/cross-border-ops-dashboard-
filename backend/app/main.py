@@ -1,8 +1,8 @@
-﻿from fastapi import FastAPI, Request, Depends, HTTPException, status
+from fastapi import FastAPI, Request, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import PlainTextResponse, JSONResponse
 from app.config import settings
-from app.database import engine, Base
+from app.database import engine
 from app.api import auth, products, terms, export, audit, import_, users
 from app.monitoring import PerformanceMonitoringMiddleware, get_all_metrics, get_prometheus_metrics
 from app.middleware.exception_handler import GlobalExceptionHandlerMiddleware
@@ -12,7 +12,6 @@ from logging_config import setup_logging
 import time
 import logging
 import signal
-import sys
 import asyncio
 from contextlib import asynccontextmanager
 
@@ -39,7 +38,7 @@ signal.signal(signal.SIGINT, signal_handler)
 
 
 @asynccontextmanager
-async def lifespan(app: FastAPI):
+async def lifespan(app: FastAPI):  # noqa: C901
     logger.info("Application starting up...")
     # ── 清理过期黑名单条目（F-39）──
     try:
@@ -101,14 +100,14 @@ async def lifespan(app: FastAPI):
 
     yield
     logger.info("Application shutting down...")
-    
+
     timeout = 30
     start_time = time.time()
-    
+
     while active_requests > 0 and (time.time() - start_time) < timeout:
         logger.info(f"Waiting for {active_requests} active requests to complete...")
         await asyncio.sleep(1)
-    
+
     if active_requests > 0:
         logger.warning(f"Forcefully shutting down with {active_requests} active requests remaining")
     else:
@@ -164,20 +163,21 @@ async def login_rate_limiter(request: Request, call_next):
 @app.middleware("http")
 async def add_process_time_header(request: Request, call_next):
     global active_requests
-    
+
     active_requests += 1
-    
+
     try:
         if shutdown_event.is_set():
             return JSONResponse(
                 status_code=503,
                 content={"error": True, "message": "Service is shutting down", "status_code": 503}
             )
-        
+
         start_time = time.time()
         response = await call_next(request)
         process_time = time.time() - start_time
-        logger.info(f"Path: {request.url.path} Method: {request.method} Status: {response.status_code} Duration: {process_time:.4f}s")
+        logger.info(
+            f"Path: {request.url.path} Method: {request.method} Status: {response.status_code} Duration: {process_time:.4f}s")
         return response
     finally:
         active_requests -= 1
@@ -202,7 +202,7 @@ async def root():
 async def health():
     from fastapi.responses import JSONResponse
     health_status = {"status": "healthy", "timestamp": time.time()}
-    
+
     try:
         from sqlalchemy import text
         with engine.connect() as conn:
@@ -213,7 +213,7 @@ async def health():
         health_status["database"] = f"error: {str(e)}"
         logger.error(f"Health check failed - database error: {e}")
         return JSONResponse(content=health_status, status_code=503)
-    
+
     return health_status
 
 
@@ -227,7 +227,6 @@ async def prometheus_metrics_public():
     """Prometheus metrics endpoint (unauthenticated for scraping)"""
     metrics_text = get_prometheus_metrics()
     return PlainTextResponse(content=metrics_text, media_type="text/plain")
-
 
 
 @app.get("/shutdown-status")

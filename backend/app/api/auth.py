@@ -1,9 +1,12 @@
-﻿from datetime import datetime
+from datetime import datetime
 from fastapi import APIRouter, Depends, HTTPException, Response, Request
 from sqlalchemy.orm import Session
 from app.database import get_db
 from app.models.user import UserProfile
-from app.schemas.auth import UserCreate, UserLogin, RefreshTokenRequest, TokenResponse, UserOut, ChangePasswordRequest, PasswordStrengthRequest
+from app.schemas.auth import (
+    UserCreate, UserLogin, RefreshTokenRequest, TokenResponse, UserOut,
+    ChangePasswordRequest, PasswordStrengthRequest,
+)
 from app.core.security import (
     set_auth_cookies,
     clear_auth_cookies,
@@ -17,9 +20,7 @@ from app.core.security import (
     is_token_blacklisted,
     blacklist_refresh_token,
     revoke_all_user_tokens,
-    cleanup_expired_blacklist_entries,
 )
-from app.core.deps import require_admin
 from app.models.role import Role
 from app.core.audit import write_audit_log
 from app.config import settings
@@ -32,7 +33,7 @@ router = APIRouter()
 def register(data: UserCreate, db: Session = Depends(get_db)):
     """
     Register a new user with role escalation prevention and password strength validation.
-    
+
     Security note: This endpoint ignores the role field from user input
     and forces all new users to have "viewer" role to prevent privilege escalation.
     Also validates password strength to prevent weak passwords.
@@ -41,7 +42,7 @@ def register(data: UserCreate, db: Session = Depends(get_db)):
     existing = db.query(UserProfile).filter(UserProfile.email == data.email).first()
     if existing:
         raise HTTPException(status_code=400, detail="Email already registered")
-    
+
     # 验证密码强度（双重验证：Pydantic验证 + API层验证）
     is_valid, errors = validate_password_strength(data.password)
     if not is_valid:
@@ -54,7 +55,7 @@ def register(data: UserCreate, db: Session = Depends(get_db)):
                 "requirements": get_password_requirements()
             }
         )
-    
+
     # Security: Force all new users to have "viewer" role
     # This prevents privilege escalation through the registration endpoint
     user = UserProfile(
@@ -88,7 +89,6 @@ def login(data: UserLogin, response: Response, db: Session = Depends(get_db)):
         after={"force_password_change": user.force_password_change},
     )
 
-    
     # 检查是否需要强制修改密码
     if user.force_password_change:
         # 返回特殊token，表示需要修改密码
@@ -101,7 +101,7 @@ def login(data: UserLogin, response: Response, db: Session = Depends(get_db)):
             user={"id": user.id, "email": user.email, "display_name": user.display_name, "role": user.role},
             force_password_change=True,
         )
-    
+
     access_token = create_access_token({"sub": user.id}, token_version=user.token_version)
     refresh_token = create_refresh_token({"sub": user.id}, token_version=user.token_version)
     set_auth_cookies(response, access_token, refresh_token)
@@ -121,28 +121,27 @@ def refresh_token(req: Request, data: RefreshTokenRequest, response: Response, d
     payload = decode_token(token)
     if payload.get("type") != "refresh":
         raise HTTPException(status_code=401, detail="Invalid token type")
-    
+
     # 检查token是否在黑名单中
     token_id = payload.get("token_id")
     user_id = payload.get("sub")
     if token_id and is_token_blacklisted(token_id, db, user_id=user_id):
         raise HTTPException(status_code=401, detail="Token has been revoked")
-    
+
     user = db.query(UserProfile).filter(UserProfile.id == user_id).first()
     if not user or not user.is_active:
         raise HTTPException(status_code=401, detail="User not found")
-    
+
     # Verify token version
     token_ver = payload.get("ver")
     if token_ver is not None and token_ver != user.token_version:
         raise HTTPException(status_code=401, detail="Token has been revoked")
-    
+
     # 将旧token加入黑名单
     if token_id:
-        from datetime import datetime, timedelta
+        from datetime import datetime
         from jose import jwt
-        from jose.utils import base64url_decode
-        
+
         # 解码token获取过期时间
         try:
             token_payload = jwt.get_unverified_claims(token)
@@ -154,7 +153,7 @@ def refresh_token(req: Request, data: RefreshTokenRequest, response: Response, d
             import logging
             logger = logging.getLogger(__name__)
             logger.warning(f"Failed to blacklist old token during refresh: {e}")
-    
+
     access_token = create_access_token({"sub": user.id}, token_version=user.token_version)
     new_refresh = create_refresh_token({"sub": user.id}, token_version=user.token_version)
     set_auth_cookies(response, access_token, new_refresh)
@@ -175,12 +174,12 @@ def logout(req: Request, data: RefreshTokenRequest, response: Response, db: Sess
     payload = decode_token(token)
     if payload.get("type") != "refresh":
         raise HTTPException(status_code=401, detail="Invalid token type")
-    
+
     token_id = payload.get("token_id")
     if token_id:
         from datetime import datetime
         from jose import jwt
-        
+
         # 解码token获取过期时间
         try:
             token_payload = jwt.get_unverified_claims(token)
@@ -193,7 +192,7 @@ def logout(req: Request, data: RefreshTokenRequest, response: Response, db: Sess
             import logging
             logger = logging.getLogger(__name__)
             logger.warning(f"Failed to blacklist token during logout: {e}")
-    
+
     # ── 审计日志 ──
     from app.core.audit import write_audit_log
     user_id = payload.get('sub')
@@ -238,7 +237,7 @@ def change_password(
     # 验证当前密码
     if not verify_password(data.current_password, current_user.password_hash):
         raise HTTPException(status_code=400, detail="Current password is incorrect")
-    
+
     # 验证新密码强度
     is_valid, errors = validate_password_strength(data.new_password)
     if not is_valid:
@@ -251,12 +250,12 @@ def change_password(
                 "requirements": get_password_requirements()
             }
         )
-    
+
     # 更新密码
     old_force_flag = current_user.force_password_change
     current_user.password_hash = get_password_hash(data.new_password)
     current_user.force_password_change = False  # 解除强制修改密码状态
-    
+
     write_audit_log(
         db=db,
         actor_id=current_user.id,
@@ -266,7 +265,7 @@ def change_password(
         before={"force_password_change": old_force_flag},
         after={"force_password_change": False},
     )
-    
+
     # 先提交密码变更+审计，再撤销token（revoke_all 自行 commit）
     db.commit()
     revoke_all_user_tokens(current_user.id, db)
@@ -278,7 +277,7 @@ def change_password(
 def get_password_requirements_endpoint():
     """
     获取密码要求信息
-    
+
     Returns:
         dict: 密码要求和建议
     """
@@ -289,10 +288,10 @@ def get_password_requirements_endpoint():
 def check_password_strength(data: PasswordStrengthRequest):
     """
     检查密码强度
-    
+
     Args:
         password: 要检查的密码
-        
+
     Returns:
         dict: 密码强度信息和建议
     """

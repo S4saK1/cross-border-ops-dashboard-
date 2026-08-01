@@ -1,7 +1,6 @@
-import json
 import os
 from pydantic import BaseModel, Field, field_validator
-from typing import Optional, Any
+from typing import Optional
 from datetime import datetime
 
 
@@ -33,7 +32,7 @@ class ProductCreate(BaseModel):
 
     @field_validator("extra_fields")
     @classmethod
-    def validate_extra_fields(cls, v):
+    def validate_extra_fields(cls, v):  # noqa: C901
         """F-40: Validate extra_fields against JSON Schema"""
         if v is None or v == {}:
             return v
@@ -98,10 +97,12 @@ class ProductUpdate(BaseModel):
 
     @field_validator("extra_fields")
     @classmethod
-    def validate_extra_fields(cls, v):
+    def validate_extra_fields(cls, v):  # noqa: C901
         if v is None or v == {}:
             return v
-        import json, os, re
+        import json
+        import os
+        import re
         try:
             _schema_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "extra_fields_schema.json")
             with open(_schema_path, "r", encoding="utf-8") as _f:

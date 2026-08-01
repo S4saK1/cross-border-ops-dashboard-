@@ -13,7 +13,7 @@ redis_client = None
 def get_redis_client():
     """Get Redis client instance"""
     global redis_client, redis_pool
-    
+
     if redis_client is None:
         try:
             redis_pool = redis.ConnectionPool.from_url(
@@ -31,14 +31,14 @@ def get_redis_client():
             logger.error(f"Redis connection failed: {e}")
             redis_client = None
             raise
-    
+
     return redis_client
 
 
 def close_redis_client():
     """Close Redis client connection"""
     global redis_client, redis_pool
-    
+
     if redis_client:
         try:
             redis_client.close()
@@ -47,7 +47,7 @@ def close_redis_client():
             logger.error(f"Failed to close Redis connection: {e}")
         finally:
             redis_client = None
-    
+
     if redis_pool:
         try:
             redis_pool.disconnect()
@@ -62,14 +62,14 @@ def is_redis_available():
     try:
         client = get_redis_client()
         return client.ping()
-    except:
+    except Exception:
         return False
 
 
 # Token blacklist operations
 class TokenBlacklist:
     """Token blacklist management"""
-    
+
     @staticmethod
     def add_to_blacklist(token_id: str, user_id: str, expires_in: int):
         """Add token to blacklist"""
@@ -82,7 +82,7 @@ class TokenBlacklist:
         except Exception as e:
             logger.error(f"Failed to add token to blacklist: {e}")
             return False
-    
+
     @staticmethod
     def is_blacklisted(token_id: str) -> bool:
         """Check if token is blacklisted"""
@@ -93,7 +93,7 @@ class TokenBlacklist:
         except Exception as e:
             logger.error(f"Failed to check token blacklist: {e}")
             return False
-    
+
     @staticmethod
     def remove_from_blacklist(token_id: str):
         """Remove token from blacklist"""
@@ -106,7 +106,7 @@ class TokenBlacklist:
         except Exception as e:
             logger.error(f"Failed to remove token from blacklist: {e}")
             return False
-    
+
     @staticmethod
     def blacklist_all_user_tokens(user_id: str, expires_in: int):
         """Blacklist all tokens for a user"""
@@ -119,7 +119,7 @@ class TokenBlacklist:
         except Exception as e:
             logger.error(f"Failed to blacklist all user tokens: {e}")
             return False
-    
+
     @staticmethod
     def is_user_blacklisted(user_id: str) -> bool:
         """Check if user is blacklisted"""

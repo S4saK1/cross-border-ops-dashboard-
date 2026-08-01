@@ -1,8 +1,6 @@
 """批量导入模块"""
 import csv
-import io
 import os
-import json
 import logging
 import uuid
 import tempfile
@@ -14,7 +12,6 @@ from sqlalchemy.orm import Session
 from app.database import get_db
 from app.models.product import Product
 from app.core.deps import require_editor
-from app.core.consistency import ConsistencyEngine
 from app.config import settings
 
 
@@ -24,34 +21,36 @@ logger = logging.getLogger(__name__)
 router = APIRouter()
 
 # 带TTL的缓存用于存储上传文件的解析结果
+
+
 class TTLCache:
     """带TTL的缓存，防止内存泄漏"""
-    
+
     def __init__(self, ttl_seconds: int = 3600, max_size: int = 100):
         self.ttl_seconds = ttl_seconds
         self.max_size = max_size
         self.cache = {}
         self.timestamps = {}
-    
+
     def __setitem__(self, key: str, value: any):
         """设置缓存值（支持字典语法）"""
         self.set(key, value)
-    
+
     def __getitem__(self, key: str) -> any:
         """获取缓存值（支持字典语法）"""
         value = self.get(key)
         if value is None:
             raise KeyError(key)
         return value
-    
+
     def __contains__(self, key: str) -> bool:
         """检查键是否存在（支持in操作符）"""
         return self.get(key) is not None
-    
+
     def __delitem__(self, key: str):
         """删除缓存条目（支持del操作符）"""
         self.delete(key)
-    
+
     def set(self, key: str, value: any):
         """设置缓存值"""
         # 检查缓存大小限制
@@ -62,44 +61,36 @@ class TTLCache:
                 oldest_key = min(self.timestamps.keys(), key=lambda k: self.timestamps[k])
                 del self.cache[oldest_key]
                 del self.timestamps[oldest_key]
-        
+
         self.cache[key] = value
         self.timestamps[key] = datetime.now()
-    
+
     def get(self, key: str) -> Optional[any]:
         """获取缓存值，检查是否过期"""
         if key not in self.cache:
             return None
-        
+
         # 检查是否过期
         if datetime.now() - self.timestamps[key] > timedelta(seconds=self.ttl_seconds):
             self.delete(key)
             return None
-        
+
         return self.cache[key]
-    
+
     def delete(self, key: str):
         """删除缓存条目"""
         if key in self.cache:
             del self.cache[key]
         if key in self.timestamps:
             del self.timestamps[key]
-    
+
     def _cleanup_expired(self):
         """清理过期条目"""
         now = datetime.now()
-        expired_keys = [k for k, v in self.timestamps.items() 
-                       if now - v > timedelta(seconds=self.ttl_seconds)]
+        expired_keys = [k for k, v in self.timestamps.items()
+                        if now - v > timedelta(seconds=self.ttl_seconds)]
         for key in expired_keys:
             self.delete(key)
-    
-    def __contains__(self, key: str):
-        """支持 in 操作符"""
-        return self.get(key) is not None
-    
-    def __delitem__(self, key: str):
-        """支持 del 操作符"""
-        self.delete(key)
 
 
 # F-11: Redis-backed cross-worker upload cache (falls back to in-memory)
@@ -110,6 +101,7 @@ try:
 except ImportError:
     logging.getLogger(__name__).error("Redis not available, upload cache disabled")
 
+
 def _cache_set(file_id: str, data: dict) -> None:
     """跨 worker 缓存写入，优先 Redis"""
     _upload_cache[file_id] = data
@@ -118,6 +110,7 @@ def _cache_set(file_id: str, data: dict) -> None:
             _redis_upload_cache.set(file_id, data, ttl_seconds=settings.UPLOAD_CACHE_TTL)
         except Exception:
             pass
+
 
 def _cache_get(file_id: str) -> dict | None:
     """跨 worker 缓存读取，优先 Redis"""
@@ -134,6 +127,7 @@ def _cache_get(file_id: str) -> dict | None:
             pass
     return cached
 
+
 def _cache_delete(file_id: str) -> None:
     """跨 worker 缓存删除"""
     try:
@@ -145,6 +139,8 @@ def _cache_delete(file_id: str) -> None:
             _redis_upload_cache.delete(file_id)
         except Exception:
             pass
+
+
 # 创建缓存实例：使用配置中的TTL和最大大小
 _upload_cache = TTLCache(
     ttl_seconds=settings.UPLOAD_CACHE_TTL,
@@ -153,6 +149,7 @@ _upload_cache = TTLCache(
 
 # 安全的文件扩展名白名单
 ALLOWED_EXTENSIONS = {".csv", ".xlsx", ".xls"}
+
 
 def _sanitize_filename(filename: str) -> str:
     """
@@ -189,6 +186,7 @@ def _sanitize_filename(filename: str) -> str:
 
     return sanitized
 
+
 def _validate_file_extension(filename: str) -> tuple[bool, str]:
     """
     验证文件扩展名是否在白名单中
@@ -213,6 +211,7 @@ def _validate_file_extension(filename: str) -> tuple[bool, str]:
         return False, f"File extension '{ext}' not allowed. Supported: {', '.join(sorted(ALLOWED_EXTENSIONS))}"
 
     return True, ext
+
 
 def _validate_file_path(file_path: str) -> bool:
     """
@@ -268,6 +267,7 @@ def _validate_file_path(file_path: str) -> bool:
             return False
 
     return True
+
 
 # 系统支持的字段
 SYSTEM_FIELDS = {
@@ -327,7 +327,7 @@ def _parse_excel(file_path: str) -> tuple[list[str], list[dict]]:
 
 
 @router.post("/upload")
-def upload_file(
+def upload_file(  # noqa: C901
     file: UploadFile = File(...),
     current_user=Depends(require_editor),
 ):
@@ -376,7 +376,6 @@ def upload_file(
             headers, rows = _parse_excel(file_path)
     except Exception as e:
         # 清洗错误信息，移除内部路径，防止信息泄露
-        import traceback
         error_msg = str(e)
         # 移除文件路径信息
         import re
@@ -386,7 +385,7 @@ def upload_file(
         # 移除目录路径
         error_msg = re.sub(r'[A-Za-z]:\\[^\s]+', '[path]', error_msg)
         error_msg = re.sub(r'/[^\s]+', '[path]', error_msg)
-        
+
         logger.error(f"File parse error: {str(e)}")
         raise HTTPException(status_code=400, detail=f"Failed to parse file: {error_msg}")
 
@@ -424,7 +423,7 @@ def upload_file(
 
 
 @router.post("/preview")
-def preview_import(
+def preview_import(  # noqa: C901
     file_id: str,
     field_mapping: Optional[dict] = None,
     db: Session = Depends(get_db),
@@ -488,7 +487,7 @@ def preview_import(
 
 
 @router.post("/execute")
-def execute_import(
+def execute_import(  # noqa: C901
     file_id: str,
     field_mapping: dict,
     mode: str = "create",
@@ -526,7 +525,7 @@ def execute_import(
             all_rows = [r for r in _reparse_reader if r]
     except Exception:
         all_rows = cached.get("rows", [])
-    
+
     for i, row in enumerate(all_rows):
         try:
             # 提取字段值

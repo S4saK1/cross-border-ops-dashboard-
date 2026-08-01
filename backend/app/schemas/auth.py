@@ -1,6 +1,6 @@
-﻿from pydantic import BaseModel, EmailStr, Field, field_validator, model_validator
+from pydantic import BaseModel, Field, field_validator, model_validator
 from datetime import datetime
-from typing import Optional, List, Any, Literal
+from typing import Optional, Literal
 from app.utils.password_validator import validate_password_strength
 
 
@@ -9,20 +9,20 @@ class UserCreate(BaseModel):
     password: str
     display_name: str
     role: str = "viewer"
-    
+
     @field_validator('password')
     @classmethod
     def validate_password(cls, v: str) -> str:
         """验证密码强度"""
         if not v:
             raise ValueError('密码不能为空')
-        
+
         is_valid, errors = validate_password_strength(v)
         if not is_valid:
             # 返回第一个错误信息
             error_messages = [error.message for error in errors]
             raise ValueError('; '.join(error_messages))
-        
+
         return v
 
 
@@ -109,7 +109,6 @@ class UserUpdate(BaseModel):
         if v not in Role.values():
             raise ValueError(f"Invalid role. Must be one of: {Role.values()}")
         return v
-
 
 
 class AdminResetPasswordRequest(BaseModel):

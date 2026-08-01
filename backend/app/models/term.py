@@ -1,4 +1,4 @@
-﻿import uuid
+import uuid
 from datetime import datetime
 from sqlalchemy import Column, String, Text, Boolean, DateTime, Index
 from sqlalchemy import JSON
@@ -24,4 +24,3 @@ class TermDictionary(Base):
     __table_args__ = (
         Index("idx_term_zh_en", "zh", "en", unique=True),
     )
-

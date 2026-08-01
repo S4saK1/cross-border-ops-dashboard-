@@ -1,11 +1,11 @@
-﻿import secrets
+import secrets
 import os
 import json
 import logging
 from pathlib import Path
 from pydantic_settings import BaseSettings
 from pydantic import field_validator, model_validator
-from typing import List, Optional
+from typing import List
 
 logger = logging.getLogger(__name__)
 
@@ -21,26 +21,26 @@ class Settings(BaseSettings):
     COOKIE_SAMESITE: str = "lax"
     COOKIE_DOMAIN: str = ""  # Empty = current domain
     ALLOWED_ORIGINS: List[str] = ["http://localhost:3000"]
-    
+
     ENABLE_MONITORING: bool = True
     MONITORING_INTERVAL: int = 60
-    
+
     UPLOAD_CACHE_TTL: int = 3600
     UPLOAD_CACHE_MAX_SIZE: int = 100
-    
+
     DB_POOL_SIZE: int = 5
     DB_MAX_OVERFLOW: int = 10
     DB_POOL_TIMEOUT: int = 30
     DB_POOL_RECYCLE: int = 1800
-    
+
     REDIS_URL: str = "redis://localhost:6379/0"
     REDIS_PASSWORD: str = ""
-    
+
     ENVIRONMENT: str = "development"
     LOG_LEVEL: str = "INFO"
     DEBUG: bool = False
     API_BASE_URL: str = "http://localhost:8000"
-    
+
     @field_validator("DATABASE_URL")
     @classmethod
     def validate_database_url(cls, v: str) -> str:
@@ -50,7 +50,7 @@ class Settings(BaseSettings):
                 "Set DATABASE_URL to a PostgreSQL connection string."
             )
         return v
-    
+
     @field_validator("SECRET_KEY")
     @classmethod
     def validate_secret_key(cls, v: str) -> str:
@@ -77,7 +77,7 @@ class Settings(BaseSettings):
             "Set SECRET_KEY in environment for production."
         )
         return new_key
-    
+
     @model_validator(mode='before')
     @classmethod
     def parse_allowed_origins(cls, values):

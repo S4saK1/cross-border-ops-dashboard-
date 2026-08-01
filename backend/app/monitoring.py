@@ -4,7 +4,7 @@ import psutil
 import logging
 from datetime import datetime
 from typing import Dict, Any
-from fastapi import Request, Response
+from fastapi import Request
 from starlette.middleware.base import BaseHTTPMiddleware
 
 # F-19: Redis cross-worker metrics aggregator
@@ -28,10 +28,11 @@ _metrics_cache = {
     "response_time_buckets": {"0.1": 0, "0.5": 0, "1.0": 0, "2.0": 0, "5.0": 0, "+Inf": 0},
 }
 
+
 class PerformanceMonitoringMiddleware(BaseHTTPMiddleware):
     """Performance monitoring middleware"""
 
-    async def dispatch(self, request: Request, call_next):
+    async def dispatch(self, request: Request, call_next):  # noqa: C901
         start_time = time.time()
 
         _metrics_cache["request_count"] += 1

@@ -22,7 +22,7 @@ class ExportRequest(BaseModel):
 
 
 @router.post("/csv")
-def export_csv(
+def export_csv(  # noqa: C901
     req: ExportRequest,
     db: Session = Depends(get_db),
     current_user=Depends(require_reviewer),
@@ -34,7 +34,7 @@ def export_csv(
 
     products = db.query(Product).filter(
         Product.id.in_(product_ids),
-        Product.is_deleted == False,
+        Product.is_deleted.is_(False),
     ).all()
 
     # ── 导出一致性阻断（F-10） ──
@@ -46,7 +46,7 @@ def export_csv(
     # 跨产品一致性检查
     cross_issues = engine.check_all_products()
     all_issues.extend(cross_issues)
-    
+
     if get_consistency_status(all_issues) == 'error':
         # HTTPException already imported at top of file
         error_details = [i for i in all_issues if i['severity'] == 'ERROR']
@@ -67,7 +67,6 @@ def export_csv(
     )
     db.commit()
 
-    
     if not products:
         raise HTTPException(status_code=404, detail="No products found")
 
@@ -115,5 +114,3 @@ def export_csv(
         media_type="text/csv; charset=utf-8",
         headers={"Content-Disposition": f"attachment; filename={platform}_export.csv"},
     )
-
-

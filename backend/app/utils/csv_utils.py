@@ -1,15 +1,15 @@
 def sanitize_csv_cell(value: str) -> str:
     """
     防止 CSV 公式注入
-    
+
     对以 =, +, -, @, \\t, \\r 开头的值加单引号前缀，防止Excel等软件将其解析为公式。
-    
+
     Args:
         value: 需要清洗的单元格值
-        
+
     Returns:
         清洗后的安全值
-        
+
     Examples:
         >>> sanitize_csv_cell("=SUM(A1:A10)")
         "'=SUM(A1:A10)"

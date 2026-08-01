@@ -1,4 +1,4 @@
-﻿import uuid
+import uuid
 from datetime import datetime
 from sqlalchemy import Column, String, Text, Boolean, DateTime, Integer, ForeignKey, Numeric, Index
 from sqlalchemy import JSON
@@ -49,4 +49,3 @@ class Product(Base):
         Index("idx_product_created_by", "created_by"),
         Index("idx_product_is_deleted", "is_deleted"),
     )
-

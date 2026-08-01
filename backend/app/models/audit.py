@@ -1,4 +1,4 @@
-﻿import uuid
+import uuid
 from datetime import datetime
 from sqlalchemy import Column, String, DateTime, Index, ForeignKey
 from sqlalchemy import JSON
@@ -20,5 +20,3 @@ class AuditLog(Base):
     __table_args__ = (
         Index("idx_audit_resource", "resource_type", "resource_id"),
     )
-
-

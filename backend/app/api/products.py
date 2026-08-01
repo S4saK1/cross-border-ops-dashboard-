@@ -28,7 +28,6 @@ DEFAULT_PAGE: int = 1
 logger = logging.getLogger(__name__)
 
 
-
 @router.get("", response_model=ProductListResponse)
 def list_products(
     page: int = Query(DEFAULT_PAGE, ge=1),
@@ -41,10 +40,10 @@ def list_products(
 ):
     """
     获取产品列表
-    
+
     支持分页、搜索和筛选功能
     """
-    q = db.query(Product).filter(Product.is_deleted == False)
+    q = db.query(Product).filter(Product.is_deleted.is_(False))
     if search:
         q = q.filter(
             or_(
@@ -102,7 +101,7 @@ def get_product(
     db: Session = Depends(get_db),
     current_user=Depends(require_viewer),
 ):
-    product = db.query(Product).filter(Product.id == product_id, Product.is_deleted == False).first()
+    product = db.query(Product).filter(Product.id == product_id, Product.is_deleted.is_(False)).first()
     if not product:
         raise HTTPException(status_code=404, detail="Product not found")
     return product
@@ -116,7 +115,7 @@ def update_product(
     db: Session = Depends(get_db),
     current_user=Depends(require_editor),
 ):
-    product = db.query(Product).filter(Product.id == product_id, Product.is_deleted == False).first()
+    product = db.query(Product).filter(Product.id == product_id, Product.is_deleted.is_(False)).first()
     if not product:
         raise HTTPException(status_code=404, detail="Product not found")
     changed_fields = [k for k, v in data.model_dump(exclude_unset=True).items()
@@ -144,7 +143,7 @@ def delete_product(
     db: Session = Depends(get_db),
     current_user=Depends(require_admin),
 ):
-    product = db.query(Product).filter(Product.id == product_id, Product.is_deleted == False).first()
+    product = db.query(Product).filter(Product.id == product_id, Product.is_deleted.is_(False)).first()
     if not product:
         raise HTTPException(status_code=404, detail="Product not found")
     product.is_deleted = True

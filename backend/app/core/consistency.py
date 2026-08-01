@@ -1,7 +1,6 @@
 """术语一致性检测引擎"""
 import json
 import os
-from typing import Optional
 from sqlalchemy.orm import Session
 from app.models.product import Product
 from app.models.term import TermDictionary
@@ -59,7 +58,7 @@ class ConsistencyEngine:
     def check_all_products(self) -> list[dict]:
         """检测所有产品的一致性问题，返回跨产品的问题"""
         issues = []
-        products = self.db.query(Product).filter(Product.is_deleted == False).all()
+        products = self.db.query(Product).filter(Product.is_deleted.is_(False)).all()
 
         # 按中文术语分组统计英文翻译
         term_groups = {}
@@ -108,7 +107,7 @@ class ConsistencyEngine:
             # 查询词典中的标准翻译
             term = self.db.query(TermDictionary).filter(
                 TermDictionary.zh == zh_term,
-                TermDictionary.is_builtin == True
+                TermDictionary.is_builtin.is_(True)
             ).first()
 
             if term and term.en != en_val:
@@ -204,7 +203,7 @@ class ConsistencyEngine:
         terms = {
             t.zh: t
             for t in self.db.query(TermDictionary)
-            .filter(TermDictionary.is_builtin == True)
+            .filter(TermDictionary.is_builtin.is_(True))
             .all()
         }
 

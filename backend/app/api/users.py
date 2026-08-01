@@ -1,4 +1,4 @@
-﻿"""
+"""
 用户管理API模块
 
 提供用户管理功能，包括：
@@ -192,7 +192,7 @@ def create_user(
 
 
 @router.put("/{user_id}", response_model=UserOut)
-def update_user(
+def update_user(  # noqa: C901
     user_id: str,
     data: UserUpdate,
     request: Request,
@@ -402,11 +402,15 @@ def reset_user_password(
         logger.warning(f"Failed to revoke tokens after password reset for user {user_id}: {e}")
 
     logger.info(f"Admin {current_user.id} reset password for user {user_id}")
-    return {"message": "Password reset successfully. User must change password on next login.", "temporary_password": temp_password, "user_id": user_id}
+    return {
+        "message": "Password reset successfully. User must change password on next login.",
+        "temporary_password": temp_password,
+        "user_id": user_id,
+    }
 
 
 @router.post("/bulk")
-def bulk_user_operations(
+def bulk_user_operations(  # noqa: C901
     data: BulkUserActionRequest,
     request: Request,
     db: Session = Depends(get_db),
@@ -475,7 +479,8 @@ def bulk_user_operations(
                     user_ids_to_revoke.add(op.user_id)
                 else:
                     # 幂等，跳过但记录
-                    results.append({"index": idx, "user_id": op.user_id, "action": action, "status": "skipped", "reason": "Already deactivated"})
+                    results.append({"index": idx, "user_id": op.user_id, "action": action,
+                                   "status": "skipped", "reason": "Already deactivated"})
                     continue
 
             elif action == "enable":
@@ -484,7 +489,8 @@ def bulk_user_operations(
                     after_state["is_active"] = True
                     user.is_active = True
                 else:
-                    results.append({"index": idx, "user_id": op.user_id, "action": action, "status": "skipped", "reason": "Already active"})
+                    results.append({"index": idx, "user_id": op.user_id, "action": action,
+                                   "status": "skipped", "reason": "Already active"})
                     continue
 
             write_audit_log(
@@ -512,7 +518,10 @@ def bulk_user_operations(
         except Exception as e:
             logger.warning(f"Failed to revoke tokens for user {uid} after bulk operation: {e}")
 
-    logger.info(f"Admin {current_user.id} executed bulk operation: {len(results)} items, {len(user_ids_to_revoke)} tokens revoked")
+    logger.info(
+        f"Admin {current_user.id} executed bulk operation: {len(results)} items, "
+        f"{len(user_ids_to_revoke)} tokens revoked"
+    )
     return {
         "message": f"Bulk operation completed: {len(results)} items processed",
         "results": results,
