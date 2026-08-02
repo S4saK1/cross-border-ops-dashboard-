@@ -49,6 +49,19 @@ class TestExport:
         }, headers={"Authorization": f"Bearer {admin_token}"})
         assert response.status_code == 404
 
+    def test_export_failure_does_not_write_audit(self, client, admin_token, db):
+        """Failed exports (404) must not be recorded as successful (ADR-013)."""
+        from app.models.audit import AuditLog
+
+        response = client.post("/api/v1/export/csv", json={
+            "platform": "amazon",
+            "product_ids": ["nonexistent-id"],
+        }, headers={"Authorization": f"Bearer {admin_token}"})
+        assert response.status_code == 404
+
+        logs = db.query(AuditLog).filter(AuditLog.action == "export_csv").all()
+        assert len(logs) == 0
+
     def test_export_409_cross_product_consistency_block(self, client, admin_token, admin_user, db):
         """Export must return 409 when cross-product colour inconsistency exists.
 

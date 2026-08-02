@@ -94,7 +94,7 @@ Thumbs.db
 monitoring/data/
 
 # Backup
-backup/
+/backup/
 *.bak
 *.tmp
 
@@ -238,7 +238,7 @@ Thumbs.db
 monitoring/data/
 
 # Backup
-backup/
+/backup/
 *.bak
 *.tmp
 

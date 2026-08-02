@@ -281,3 +281,34 @@ class TestImport:
         assert after["succeeded"] == 1
         assert after["attempted"] == 1
         assert after["failed"] == 0
+
+    def test_execute_import_duplicate_sku_in_file(self, client, editor_token):
+        """Duplicate SKUs inside one file must skip, not crash with a 500."""
+        csv_content = (
+            "SKU,product_name_zh,product_name_en,category\n"
+            "INFILE-001,One ZH,One EN,General\n"
+            "INFILE-001,Two ZH,Two EN,General"
+        )
+        csv_bytes = csv_content.encode("utf-8")
+        upload_response = client.post(
+            "/api/v1/import/upload",
+            files={"file": ("dup.csv", io.BytesIO(csv_bytes), "text/csv")},
+            headers={"Authorization": f"Bearer {editor_token}"},
+        )
+        file_id = upload_response.json()["file_id"]
+
+        response = client.post(
+            f"/api/v1/import/execute?file_id={file_id}&mode=create",
+            json={
+                "SKU": "sku",
+                "product_name_zh": "product_name_zh",
+                "product_name_en": "product_name_en",
+                "category": "category",
+            },
+            headers={"Authorization": f"Bearer {editor_token}"},
+        )
+        assert response.status_code == 200
+        data = response.json()
+        assert data["success_count"] == 1
+        assert data["skip_count"] == 1
+        assert data["error_count"] == 0

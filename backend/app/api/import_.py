@@ -529,6 +529,7 @@ def execute_import(  # noqa: C901
     skip_count = 0
     error_count = 0
     errors = []
+    seen_skus = set()
 
     # 重新解析全部行 (缓存仅保存前100行用于预览)
     all_rows = _reparse_rows(cached)
@@ -557,9 +558,11 @@ def execute_import(  # noqa: C901
             if mode == "create":
                 # 检查 SKU 是否已存在
                 existing = existing_products.get(product_data["sku"])
-                if existing:
+                # P3: 同一文件内重复 SKU 直接跳过，避免提交时唯一索引冲突整批 500
+                if existing or product_data["sku"] in seen_skus:
                     skip_count += 1
                     continue
+                seen_skus.add(product_data["sku"])
 
                 product = Product(
                     **product_data,

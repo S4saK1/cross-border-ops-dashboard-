@@ -42,7 +42,7 @@ def _generate_temp_password(length: int = 16) -> str:
     return ''.join(chars)
 
 
-@router.get("", response_model=list[UserOut])
+@router.get("")
 def list_users(
     page: int = Query(1, ge=1),
     page_size: int = Query(20, ge=1, le=100),
@@ -57,8 +57,14 @@ def list_users(
     if role:
         q = q.filter(UserProfile.role == role)
 
+    total = q.count()
     users = q.offset((page - 1) * page_size).limit(page_size).all()
-    return [UserOut.model_validate(user) for user in users]
+    return {
+        "items": [UserOut.model_validate(user) for user in users],
+        "total": total,
+        "page": page,
+        "page_size": page_size,
+    }
 
 
 @router.get("/me", response_model=UserOut)

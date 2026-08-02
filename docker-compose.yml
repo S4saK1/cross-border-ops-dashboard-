@@ -34,6 +34,7 @@ services:
   postgres:
     image: postgres:15-alpine
     container_name: bilingual-product-cms-postgres
+    # 注意：仅开发环境暴露端口，且默认口令 postgres/postgres，切勿用于生产
     environment:
       - POSTGRES_DB=${POSTGRES_DB:-bilingual_product_cms}
       - POSTGRES_USER=${POSTGRES_USER:-postgres}

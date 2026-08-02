@@ -117,7 +117,7 @@ async def lifespan(app: FastAPI):  # noqa: C901
 app = FastAPI(
     title=settings.PROJECT_NAME,
     description="not a translation tool, a consistency management system for cross-border sellers",
-    version="1.0.0",
+    version="2.0.0",
     lifespan=lifespan,
 )
 
@@ -215,6 +215,22 @@ async def health():
         return JSONResponse(content=health_status, status_code=503)
 
     return health_status
+
+
+@app.get("/health/db")
+async def health_db():
+    """数据库健康检查端点（供运维脚本使用）"""
+    try:
+        from sqlalchemy import text
+        with engine.connect() as conn:
+            conn.execute(text("SELECT 1"))
+        return {"status": "healthy", "database": "connected", "timestamp": time.time()}
+    except Exception as e:
+        logger.error(f"DB health check failed: {e}")
+        return JSONResponse(
+            content={"status": "unhealthy", "database": "error", "timestamp": time.time()},
+            status_code=503,
+        )
 
 
 @app.get("/metrics")

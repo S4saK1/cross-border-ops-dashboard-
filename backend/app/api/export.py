@@ -55,18 +55,6 @@ def export_csv(  # noqa: C901
             detail={"message": "Export blocked due to consistency errors", "issues": error_details},
         )
 
-    # ── 审计日志 ──
-    from app.core.audit import write_audit_log
-    write_audit_log(
-        db=db,
-        actor_id=current_user.id,
-        action='export_csv',
-        subject_type='product',
-        subject_id=','.join(product_ids),
-        after={"platform": platform, "product_count": len(products), "product_ids": product_ids},
-    )
-    db.commit()
-
     if not products:
         raise HTTPException(status_code=404, detail="No products found")
 
@@ -83,6 +71,19 @@ def export_csv(  # noqa: C901
 
     headers = template["headers"]
     mapping = template["field_mapping"]
+
+    # ── 审计日志 ──
+    # P3: 所有校验通过后才写审计，失败导出不再记为成功（ADR-013）
+    from app.core.audit import write_audit_log
+    write_audit_log(
+        db=db,
+        actor_id=current_user.id,
+        action='export_csv',
+        subject_type='product',
+        subject_id=','.join(product_ids),
+        after={"platform": platform, "product_count": len(products), "product_ids": product_ids},
+    )
+    db.commit()
 
     # F-32: True streaming CSV
     def _generate_csv():

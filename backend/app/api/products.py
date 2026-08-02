@@ -13,6 +13,7 @@ from datetime import datetime
 from fastapi import APIRouter, Depends, HTTPException, Query, Request
 from sqlalchemy.orm import Session
 from sqlalchemy import or_
+from sqlalchemy.exc import IntegrityError
 from app.database import get_db
 from app.models.product import Product
 from app.core.audit import write_audit_log
@@ -79,7 +80,12 @@ def create_product(
         raise HTTPException(status_code=400, detail="SKU already exists")
     product = Product(**data.model_dump(), created_by=current_user.id)
     db.add(product)
-    db.commit()
+    try:
+        db.commit()
+    except IntegrityError:
+        # 并发下预检可能失效（唯一索引兜底），返回 409 而非 500
+        db.rollback()
+        raise HTTPException(status_code=409, detail="SKU already exists")
     db.refresh(product)
     logger.info(f"Product created: {product.sku} by user {current_user.id}")
     write_audit_log(

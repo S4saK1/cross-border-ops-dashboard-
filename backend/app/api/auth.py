@@ -20,6 +20,7 @@ from app.core.security import (
     is_token_blacklisted,
     blacklist_refresh_token,
     revoke_all_user_tokens,
+    decode_token_unverified,
 )
 from app.models.role import Role
 from app.core.audit import write_audit_log
@@ -115,7 +116,12 @@ def login(data: UserLogin, response: Response, db: Session = Depends(get_db)):
 
 
 @router.post("/refresh", response_model=TokenResponse)
-def refresh_token(req: Request, data: RefreshTokenRequest, response: Response, db: Session = Depends(get_db)):
+def refresh_token(
+    req: Request,
+    response: Response,
+    data: RefreshTokenRequest = RefreshTokenRequest(),
+    db: Session = Depends(get_db),
+):
     # P0-5: 优先从 cookie 中读取 refresh_token，fallback 到 JSON body
     token = get_refresh_token_from_cookie(req) or data.token
     if not token:
@@ -142,11 +148,10 @@ def refresh_token(req: Request, data: RefreshTokenRequest, response: Response, d
     # 将旧token加入黑名单
     if token_id:
         from datetime import datetime
-        from jose import jwt
 
         # 解码token获取过期时间
         try:
-            token_payload = jwt.get_unverified_claims(token)
+            token_payload = decode_token_unverified(token)
             exp_timestamp = token_payload.get("exp")
             if exp_timestamp:
                 expires_at = datetime.utcfromtimestamp(exp_timestamp)
@@ -167,7 +172,12 @@ def refresh_token(req: Request, data: RefreshTokenRequest, response: Response, d
 
 
 @router.post("/logout")
-def logout(req: Request, data: RefreshTokenRequest, response: Response, db: Session = Depends(get_db)):
+def logout(
+    req: Request,
+    response: Response,
+    data: RefreshTokenRequest = RefreshTokenRequest(),
+    db: Session = Depends(get_db),
+):
     """用户登出，撤销当前refresh token"""
     # P0-5: 优先从 cookie 中读取 refresh_token
     token = get_refresh_token_from_cookie(req) or data.token
@@ -180,11 +190,10 @@ def logout(req: Request, data: RefreshTokenRequest, response: Response, db: Sess
     token_id = payload.get("token_id")
     if token_id:
         from datetime import datetime
-        from jose import jwt
 
         # 解码token获取过期时间
         try:
-            token_payload = jwt.get_unverified_claims(token)
+            token_payload = decode_token_unverified(token)
             exp_timestamp = token_payload.get("exp")
             if exp_timestamp:
                 expires_at = datetime.utcfromtimestamp(exp_timestamp)
