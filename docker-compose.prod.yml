@@ -42,7 +42,7 @@ services:
     #   - "8000:8000"
     volumes:
       - ./data:/app/data:ro
-      - cms-data-prod:/app/data/runtime
+      - cms-data-prod:/app/runtime
     environment:
       - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
       - SECRET_KEY=${SECRET_KEY:?}
@@ -243,7 +243,6 @@ services:
       context: ./deploy/backup
       dockerfile: ofelia.Dockerfile
     container_name: bilingual-product-cms-ofelia
-    command: ["/usr/local/bin/ofelia", "daemon", "--config", "/etc/ofelia/config.ini"]
     depends_on:
       - postgres
     volumes:

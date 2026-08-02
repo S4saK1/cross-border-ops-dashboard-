@@ -1,0 +1,9 @@
+# 统一行尾：shell 脚本与 Dockerfile 强制 LF（Windows 检出 CRLF 会破坏容器内执行）
+*.sh text eol=lf
+*.bash text eol=lf
+Dockerfile text eol=lf
+*.Dockerfile text eol=lf
+docker-entrypoint.sh text eol=lf
+*.py text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
