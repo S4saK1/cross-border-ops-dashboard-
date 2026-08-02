@@ -88,6 +88,8 @@ def login(data: UserLogin, response: Response, db: Session = Depends(get_db)):
         subject_id=user.id,
         after={"force_password_change": user.force_password_change},
     )
+    # P1: 登录审计与 last_login_at 必须在同一事务中提交（ADR-013 选项 B）
+    db.commit()
 
     # 检查是否需要强制修改密码
     if user.force_password_change:
