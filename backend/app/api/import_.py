@@ -12,6 +12,7 @@ from sqlalchemy.orm import Session
 from app.database import get_db
 from app.models.product import Product
 from app.core.deps import require_editor
+from app.core.audit import write_audit_log
 from app.config import settings
 
 
@@ -148,7 +149,8 @@ _upload_cache = TTLCache(
 )
 
 # 安全的文件扩展名白名单
-ALLOWED_EXTENSIONS = {".csv", ".xlsx", ".xls"}
+# 注意：.xls（旧版二进制格式）不支持 — openpyxl 仅能解析 .xlsx
+ALLOWED_EXTENSIONS = {".csv", ".xlsx"}
 
 
 def _sanitize_filename(filename: str) -> str:
@@ -326,6 +328,24 @@ def _parse_excel(file_path: str) -> tuple[list[str], list[dict]]:
     return headers, rows
 
 
+def _reparse_rows(cached: dict) -> list[dict]:
+    """重新解析完整文件（按扩展名分发），避免只使用预览缓存的前 100 行。"""
+    file_path = cached.get("file_path")
+    ext = (cached.get("ext") or "").lower()
+    if not file_path:
+        return cached.get("rows", [])
+    try:
+        if ext == ".csv":
+            _, rows = _parse_csv(file_path)
+        elif ext == ".xlsx":
+            _, rows = _parse_excel(file_path)
+        else:
+            return cached.get("rows", [])
+        return rows
+    except Exception:
+        return cached.get("rows", [])
+
+
 @router.post("/upload")
 def upload_file(  # noqa: C901
     file: UploadFile = File(...),
@@ -405,6 +425,7 @@ def upload_file(  # noqa: C901
     _cache_set(file_id, {
         "file_path": file_path,
         "filename": sanitized_filename,
+        "ext": ext,
         "headers": headers,
         "rows": rows[:100],  # 最多预览 100 行
         "total_rows": len(rows),
@@ -445,14 +466,7 @@ def preview_import(  # noqa: C901
     # 检查 SKU 重复
     sku_set = set()
     sku_duplicates = []
-    all_validate_rows = []
-    try:
-        with open(cached["file_path"], "r", encoding="utf-8-sig") as _vf:
-            import csv as _csv_val
-            _v_reader = _csv_val.DictReader(_vf)
-            all_validate_rows = [r for r in _v_reader if r]
-    except Exception:
-        all_validate_rows = cached.get("rows", [])
+    all_validate_rows = _reparse_rows(cached)
     for row in all_validate_rows:
         sku = None
         for header, field in mapping.items():
@@ -517,14 +531,7 @@ def execute_import(  # noqa: C901
     errors = []
 
     # 重新解析全部行 (缓存仅保存前100行用于预览)
-    all_rows = []
-    try:
-        with open(cached["file_path"], "r", encoding="utf-8-sig") as _reparse_f:
-            import csv as _csv_reparse
-            _reparse_reader = _csv_reparse.DictReader(_reparse_f)
-            all_rows = [r for r in _reparse_reader if r]
-    except Exception:
-        all_rows = cached.get("rows", [])
+    all_rows = _reparse_rows(cached)
 
     for i, row in enumerate(all_rows):
         try:
@@ -583,6 +590,31 @@ def execute_import(  # noqa: C901
             error_count += 1
             errors.append({"row": i + 1, "error": str(e)})
 
+    # ADR-013: 导入审计 — 数据变更与审计日志在同一事务中提交
+    import hashlib
+    file_hash = ""
+    try:
+        with open(cached["file_path"], "rb") as _hash_f:
+            file_hash = hashlib.sha256(_hash_f.read()).hexdigest()
+    except OSError:
+        pass
+
+    write_audit_log(
+        db=db,
+        actor_id=current_user.id,
+        action="import_execute",
+        subject_type="product",
+        subject_id=file_hash or "unknown",
+        after={
+            "mode": mode,
+            "file_id": file_id,
+            "attempted": len(all_rows),
+            "succeeded": success_count,
+            "skipped": skip_count,
+            "failed": error_count,
+            "errors": errors[:50],
+        },
+    )
     db.commit()
 
     # 清理缓存

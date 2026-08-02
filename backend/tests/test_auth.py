@@ -107,3 +107,21 @@ class TestAuth:
             "Authorization": "Bearer invalid_token_here"
         })
         assert response.status_code == 401
+
+    def test_login_persists_audit_log_and_last_login(self, client, admin_user, db):
+        """Login audit log and last_login_at must be persisted (ADR-013)."""
+        from app.models.audit import AuditLog
+
+        response = client.post("/api/v1/auth/login", json={
+            "email": "admin@test.com",
+            "password": "admin123",
+        })
+        assert response.status_code == 200
+
+        logs = db.query(AuditLog).filter(AuditLog.action == "user_login").all()
+        assert len(logs) == 1
+        assert logs[0].resource_type == "user"
+
+        db.expire_all()
+        user = db.query(UserProfile).filter(UserProfile.email == "admin@test.com").first()
+        assert user.last_login_at is not None
