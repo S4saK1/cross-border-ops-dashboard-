@@ -168,10 +168,12 @@ export default function UsersPage() {
     setLoading(false);
   };
 
+  /* eslint-disable react-hooks/exhaustive-deps -- fetchUsers 按需重建，依赖 [status] 已覆盖触发条件 */
   useEffect(() => {
     if (status !== 'authenticated') return;
     fetchUsers();
   }, [status]);
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   // ── Actions ──
 
