@@ -5,6 +5,34 @@
 格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/)，
 并且本项目遵循 [语义化版本控制](https://semver.org/lang/zh-CN/)。
 
+## [2.1.0] - 2026-08-02
+
+### Added
+- 前端会话恢复：刷新不再踢回登录页（httpOnly Cookie 调 /auth/me 恢复会话）
+- 批量导入全流程：上传 → 预览校验（必填字段/SKU 重复）→ 选择模式 → 执行 → 结果统计
+- 强制改密页面：首次登录管理员可正常修改密码（登录页自动跳转）
+- `/health/db` 数据库健康检查端点；用户列表分页元数据
+- 日志集中采集：Loki + Promtail（自动发现容器日志，30 天保留），Grafana 预置数据源
+- 异地备份：backup.sh 支持 rclone 远端上传（S3 / SFTP / OSS），ofelia 镜像内置 rclone
+- CI 门禁补全：前端 typecheck / lint / 单测 / 生产构建；依赖漏洞扫描换 pip-audit 并硬性生效
+- Dependabot（npm / pip / docker / github-actions）；.gitattributes 统一行尾
+- 开源配套：SECURITY.md、CODEOWNERS 修正、5 个 GBK 文档转 UTF-8、README 开篇重写
+
+### Fixed
+- 登录审计日志与 last_login_at 未落库（缺 commit，实测复现后修复）
+- Excel 导入超过 100 行静默截断（按扩展名完整重解析）；.xls 白名单移除（openpyxl 不支持）
+- 导入执行无审计 → 补 import_execute 审计（文件 SHA-256 + 统计，ADR-013）
+- 强制改密死锁：change-password 端点放行强制改密用户（其他接口仍拦截）
+- 术语/产品重复创建 500 → 409；导入文件内重复 SKU 去重跳过
+- 导出审计时序：失败导出不再记为成功；refresh/logout 无 body 走 Cookie
+- 生产部署修复：alertmanager 镜像构建失败、prod compose 嵌套只读卷挂载、entrypoint BOM 破坏 shebang、ofelia 命令覆盖镜像入口、prometheus 幽灵抓取目标、nginx 上传限制与指标访问控制
+- 打包修复：.gitignore 吞掉 frontend/src/lib/api.ts 与 deploy/backup（ofelia 配置），恢复跟踪
+- 依赖漏洞：python-multipart 0.0.30 → 0.0.31、pytest 8.4.2 → 9.0.3；认证栈 python-jose → PyJWT、passlib → bcrypt 原生
+
+### Changed
+- 版本号统一为 2.1.0（FastAPI / 前端 package.json）
+- 测试规模：后端 184 passed（2 skipped），前端 13 passed，CI 全绿
+
 ## [2.0.0] - 2026-08-01
 
 ### Added

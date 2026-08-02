@@ -23,9 +23,9 @@ class TestHealthMetrics:
         assert data["status"] in ("healthy", "unhealthy")
 
     def test_app_version_matches_release(self, client):
-        """App version string must match the released version (v2.0.0)."""
+        """App version string must match the released version (v2.1.0)."""
         from app.main import app
-        assert app.version == "2.0.0"
+        assert app.version == "2.1.0"
 
     def test_prometheus_metrics_public(self, client):
         """Prometheus metrics endpoint is publicly accessible."""

@@ -117,7 +117,7 @@ async def lifespan(app: FastAPI):  # noqa: C901
 app = FastAPI(
     title=settings.PROJECT_NAME,
     description="not a translation tool, a consistency management system for cross-border sellers",
-    version="2.0.0",
+    version="2.1.0",
     lifespan=lifespan,
 )
 

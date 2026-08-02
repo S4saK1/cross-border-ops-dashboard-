@@ -163,7 +163,7 @@ CI 管道（[.github/workflows/ci-cd.yml](.github/workflows/ci-cd.yml)）依次�
 
 ## 版本历史
 
-- [CHANGELOG.md](CHANGELOG.md)：v2.0.0（2026-08-01）、v1.1.0（2026-07-30）、v1.0.0（2026-07-23）
+- [CHANGELOG.md](CHANGELOG.md)：v2.1.0（2026-08-02）、v2.0.0（2026-08-01）、v1.1.0（2026-07-30）、v1.0.0（2026-07-23）
 
 ## 贡献指南
 
