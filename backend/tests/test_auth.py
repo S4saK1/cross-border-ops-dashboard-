@@ -1,5 +1,6 @@
 import pytest
 from app.models.user import UserProfile
+from app.core.security import get_password_hash, verify_password
 
 pytestmark = pytest.mark.integration
 
@@ -148,3 +149,39 @@ class TestAuth:
 
         response = client.post("/api/v1/auth/logout")
         assert response.status_code == 200
+
+    def test_change_password_with_forced_token(self, client, db):
+        """Force-password user must be able to change password, not 403."""
+        user = UserProfile(
+            email="forced@test.com",
+            password_hash=get_password_hash("OldPass123!"),
+            display_name="Forced",
+            role="viewer",
+            force_password_change=True,
+        )
+        db.add(user)
+        db.commit()
+        db.refresh(user)
+
+        login = client.post("/api/v1/auth/login", json={
+            "email": "forced@test.com",
+            "password": "OldPass123!",
+        })
+        assert login.status_code == 200
+        assert login.json()["force_password_change"] is True
+
+        # 其他接口仍应被强制改密拦截
+        me = client.get("/api/v1/auth/me")
+        assert me.status_code == 403
+
+        # 改密端点必须放行强制改密用户
+        res = client.post("/api/v1/auth/change-password", json={
+            "current_password": "OldPass123!",
+            "new_password": "NewPass123!",
+        })
+        assert res.status_code == 200
+
+        db.expire_all()
+        db.refresh(user)
+        assert user.force_password_change is False
+        assert verify_password("NewPass123!", user.password_hash)

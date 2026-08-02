@@ -27,7 +27,11 @@ export default function LoginPage() {
       const data = await auth.login(email, password);
       setToken(data.access_token);
       localStorage.setItem('user', JSON.stringify(data.user));
-      router.push('/');
+      if (data.force_password_change) {
+        router.push('/change-password');
+      } else {
+        router.push('/');
+      }
     } catch (err: any) {
       setError(err.message || '登录失败');
     } finally {
@@ -45,13 +49,13 @@ export default function LoginPage() {
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">邮箱</label>
-            <input type="email" value={email} onChange={e => setEmail(e.target.value)}
+            <input type="email" aria-label="邮箱" value={email} onChange={e => setEmail(e.target.value)}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               placeholder="admin@bilingual-product-cms.com" required />
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">密码</label>
-            <input type="password" value={password} onChange={e => setPassword(e.target.value)}
+            <input type="password" aria-label="密码" value={password} onChange={e => setPassword(e.target.value)}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               placeholder="输入密码" required />
           </div>
