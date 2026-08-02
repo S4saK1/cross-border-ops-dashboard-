@@ -146,7 +146,7 @@ flake8 app/ --max-complexity=10 --max-line-length=127
 bandit -r app/ -ll
 ```
 
-CI 管道（[.github/workflows/ci-cd.yml](.github/workflows/ci-cd.yml)）依次执行：gitleaks 密钥扫描 → flake8 → bandit → safety → pytest（PostgreSQL + Redis 服务，覆盖率门禁 70%）→ Docker 镜像构建并推送 GHCR。
+CI 管道（[.github/workflows/ci-cd.yml](.github/workflows/ci-cd.yml)）依次执行：gitleaks 密钥扫描 → flake8 → bandit → pip-audit 依赖漏洞扫描 → pytest（PostgreSQL + Redis 服务，覆盖率门禁 70%）→ Docker 镜像构建并推送 GHCR；前端并行执行 typecheck、单元测试与生产构建。
 
 ## 生产部署
 
