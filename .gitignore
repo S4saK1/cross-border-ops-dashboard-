@@ -110,6 +110,7 @@ tmp/
 *.crt
 *.p12
 *.pfx
+deploy/backup/rclone.conf
 
 # Logs
 logs/

@@ -152,7 +152,7 @@ CI 管道（[.github/workflows/ci-cd.yml](.github/workflows/ci-cd.yml)）依次�
 
 - **安全配置**：设置强 `SECRET_KEY` 与 `ADMIN_PASSWORD`，配置 CORS 白名单，Nginx 启用 HTTPS
 - **数据库迁移**：`alembic upgrade head`（v2.0 起由 Alembic 统一管理 schema）
-- **数据备份**：`scripts/backup.sh`，支持 pg_dump / SQLite 双模式；设置 `BACKUP_GPG_RECIPIENT` 可启用 GPG 加密，异地备份需自行接入对象存储/SFTP
+- **数据备份**：`scripts/backup.sh`，支持 pg_dump / SQLite 双模式；设置 `BACKUP_GPG_RECIPIENT` 可启用 GPG 加密；创建 `deploy/backup/rclone.conf`（rclone 配置）并设置 `BACKUP_REMOTE`（如 `s3:bucket/cms-backups`）即可自动上传 S3/SFTP/OSS 等远端
 - **监控告警**：Prometheus + Grafana + Alertmanager，配置见 [monitoring/](monitoring/) 与 [docs/monitoring-guide.md](docs/monitoring-guide.md)
 - **部署检查清单**：[deploy/deployment-checklist.md](deploy/deployment-checklist.md)
 

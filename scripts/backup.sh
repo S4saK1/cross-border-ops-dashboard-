@@ -116,6 +116,24 @@ if [ -n "${BACKUP_GPG_RECIPIENT:-}" ]; then
     fi
 fi
 
+# ── Optional remote offsite copy (P3) ─────────────────────
+# 设置 BACKUP_REMOTE（rclone 远程，如 s3:bucket/cms-backups 或 user@host:path）
+# 后，备份会用 rclone 上传到远端（S3 / SFTP / 阿里 OSS 等由 rclone 配置决定）。
+if [ -n "${BACKUP_REMOTE:-}" ]; then
+    if command -v rclone >/dev/null 2>&1; then
+        echo "Uploading backup to remote: $BACKUP_REMOTE"
+        if rclone copy "$BACKUP_FILE" "$BACKUP_REMOTE" 2>/tmp/rclone.err; then
+            echo "Remote upload successful: $BACKUP_FILE -> $BACKUP_REMOTE"
+        else
+            echo "ERROR: rclone upload failed" >&2
+            cat /tmp/rclone.err >&2 || true
+            exit 1
+        fi
+    else
+        echo "WARNING: BACKUP_REMOTE is set but rclone is not installed; keeping local backup only" >&2
+    fi
+fi
+
 # ── Re-verify final artifact ───────────────────────────────
 if [ ! -f "$BACKUP_FILE" ] || [ ! -s "$BACKUP_FILE" ]; then
     echo "ERROR: Backup file was not created or is empty: $BACKUP_FILE" >&2
