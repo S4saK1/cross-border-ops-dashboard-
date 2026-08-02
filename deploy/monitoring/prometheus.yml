@@ -1,4 +1,4 @@
-global:
+﻿global:
   scrape_interval: 15s
   evaluation_interval: 15s
 
@@ -14,16 +14,10 @@ alerting:
           - alertmanager:9093
 
 scrape_configs:
-  - job_name: 'bilingual-product-cms-backend'
+  - job_name: 'backend'
     static_configs:
       - targets: ['backend:8000']
     metrics_path: '/metrics/prometheus'
-    scrape_interval: 30s
 
-  - job_name: 'node-exporter'
-    static_configs:
-      - targets: ['node-exporter:9100']
-
-  - job_name: 'cadvisor'
-    static_configs:
-      - targets: ['cadvisor:8080']
+  # 注意：node-exporter / cadvisor 服务未在 docker-compose.prod.yml 中定义，
+  # 此前配置会持续报 target down；如需容器/主机级指标，请先添加对应服务再恢复此配置。

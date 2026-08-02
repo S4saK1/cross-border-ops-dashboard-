@@ -39,7 +39,7 @@
 - `CONTRIBUTING.md`
 - `CODE_OF_CONDUCT.md`
 - `CHANGELOG.md`
-- `QUICKSTART.md`
+- `docs/QUICKSTART.md`
 - `.gitignore`
 
 ### 配置模板 ✅
@@ -54,13 +54,12 @@
 - `docker-compose.staging.yml`
 - `.github/`（GitHub Actions 工作流）
 - `scripts/deploy.sh`
-- `DEPLOY.md`
+- `docs/DEPLOY.md`
 
 ### 文档 ✅
 - `docs/api-reference.md`
-- `CI-CD-Documentation.md`
-- `GITHUB_UPLOAD_GUIDE.md`
-- `OPEN_SOURCE_READINESS.md`
+- `docs/CI-CD-Documentation.md`
+- `docs/OPEN_SOURCE_READINESS.md`
 
 ---
 

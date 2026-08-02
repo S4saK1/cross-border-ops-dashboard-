@@ -122,7 +122,7 @@
 - **开发环境**：`docker-compose.yml`
 
 ### 监控配置
-- **Prometheus**：`monitoring/prometheus.yml`
+- **Prometheus**：`deploy/monitoring/prometheus.yml`
 - **Grafana**：`monitoring/grafana/`
 
 ## 环境变量
