@@ -1,7 +1,8 @@
 ﻿'use client';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { getToken } from '@/lib/api';
+import { authHeaders } from '@/lib/api';
+import { useRequireAuth } from '@/lib/auth';
 import Sidebar from '@/components/Sidebar';
 import { Users, Plus, X, Check, AlertCircle } from 'lucide-react';
 
@@ -26,10 +27,9 @@ function CreateUserModal({ open, onClose, onCreated }: {
     setError('');
     setLoading(true);
     try {
-      const token = getToken();
       const res = await fetch('/api/v1/users', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        headers: authHeaders({ 'Content-Type': 'application/json' }),
         body: JSON.stringify({ email, password, display_name: displayName, role }),
       });
       if (!res.ok) {
@@ -138,6 +138,7 @@ function ResetPasswordModal({ open, onClose, tempPassword, userId }: {
 // ── Main Page ──
 export default function UsersPage() {
   const router = useRouter();
+  const { status } = useRequireAuth(router);
   const [users, setUsers] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -154,9 +155,8 @@ export default function UsersPage() {
     setLoading(true);
     setError('');
     try {
-      const token = getToken();
       const res = await fetch('/api/v1/users', {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: authHeaders(),
       });
       if (res.status === 403) { router.push('/'); return; }
       if (!res.ok) throw new Error('加载失败');
@@ -169,18 +169,17 @@ export default function UsersPage() {
   };
 
   useEffect(() => {
-    if (!getToken()) { router.push('/login'); return; }
+    if (status !== 'authenticated') return;
     fetchUsers();
-  }, []);
+  }, [status]);
 
   // ── Actions ──
 
   const handleRoleChange = async (userId: string, newRole: string) => {
     try {
-      const token = getToken();
       const res = await fetch(`/api/v1/users/${userId}/role?role=${newRole}`, {
         method: 'PUT',
-        headers: { Authorization: `Bearer ${token}` },
+        headers: authHeaders(),
       });
       if (!res.ok) {
         const err = await res.json().catch(() => ({ detail: '操作失败' }));
@@ -196,12 +195,11 @@ export default function UsersPage() {
     const action = currentlyActive ? '禁用' : '启用';
     if (!confirm(`确认${action}该用户？`)) return;
     try {
-      const token = getToken();
       if (currentlyActive) {
         // Disable via DELETE
         const res = await fetch(`/api/v1/users/${userId}`, {
           method: 'DELETE',
-          headers: { Authorization: `Bearer ${token}` },
+          headers: authHeaders(),
         });
         if (!res.ok) throw new Error('操作失败');
         setUsers(prev => prev.map(u => u.id === userId ? { ...u, is_active: false } : u));
@@ -209,7 +207,7 @@ export default function UsersPage() {
         // Enable via PUT
         const res = await fetch(`/api/v1/users/${userId}`, {
           method: 'PUT',
-          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+          headers: authHeaders({ 'Content-Type': 'application/json' }),
           body: JSON.stringify({ is_active: true }),
         });
         if (!res.ok) throw new Error('操作失败');
@@ -223,10 +221,9 @@ export default function UsersPage() {
   const handleResetPassword = async (userId: string) => {
     if (!confirm('确认重置该用户的密码？其所有活跃会话将被撤销。')) return;
     try {
-      const token = getToken();
       const res = await fetch(`/api/v1/users/${userId}/reset-password`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        headers: authHeaders({ 'Content-Type': 'application/json' }),
         body: JSON.stringify({}),
       });
       if (!res.ok) throw new Error('操作失败');
@@ -260,11 +257,10 @@ export default function UsersPage() {
     if (!confirm(`确认批量${label} ${selected.size} 个用户？`)) return;
     setBulkLoading(true);
     try {
-      const token = getToken();
       const operations = Array.from(selected).map(userId => ({ user_id: userId, action }));
       const res = await fetch('/api/v1/users/bulk', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        headers: authHeaders({ 'Content-Type': 'application/json' }),
         body: JSON.stringify({ operations }),
       });
       if (!res.ok) {

@@ -1,12 +1,14 @@
 ﻿'use client';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { getToken } from '@/lib/api';
+import { authHeaders } from '@/lib/api';
+import { useRequireAuth } from '@/lib/auth';
 import Sidebar from '@/components/Sidebar';
 import { FileText } from 'lucide-react';
 
 export default function AuditPage() {
   const router = useRouter();
+  const { status } = useRequireAuth(router);
   const [logs, setLogs] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
@@ -15,9 +17,8 @@ export default function AuditPage() {
   const fetchLogs = async (p: number) => {
     setLoading(true);
     try {
-      const token = getToken();
       const res = await fetch(`/api/v1/audit-logs?page=${p}&page_size=20`, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: authHeaders(),
       });
       if (res.status === 403) { router.push('/'); return; }
       const data = await res.json();
@@ -28,9 +29,9 @@ export default function AuditPage() {
   };
 
   useEffect(() => {
-    if (!getToken()) { router.push('/login'); return; }
+    if (status !== 'authenticated') return;
     fetchLogs(page);
-  }, [page]);
+  }, [page, status]);
 
   return (
     <div className="flex min-h-screen">

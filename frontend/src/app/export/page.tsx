@@ -1,12 +1,14 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { getToken } from '@/lib/api';
+import { authHeaders } from '@/lib/api';
+import { useRequireAuth } from '@/lib/auth';
 import Sidebar from '@/components/Sidebar';
 import { Download, CheckSquare, Square } from 'lucide-react';
 
 export default function ExportPage() {
   const router = useRouter();
+  const { status } = useRequireAuth(router);
   const [platform, setPlatform] = useState('amazon');
   const [products, setProducts] = useState<any[]>([]);
   const [selected, setSelected] = useState<Set<string>>(new Set());
@@ -14,11 +16,11 @@ export default function ExportPage() {
   const [exporting, setExporting] = useState(false);
 
   useEffect(() => {
-    if (!getToken()) { router.push('/login'); return; }
+    if (status !== 'authenticated') return;
     fetch(`/api/v1/products?page=${page}&page_size=20`, {
-      headers: { Authorization: `Bearer ${getToken()}` },
+      headers: authHeaders(),
     }).then(r => r.json()).then(d => setProducts(d.items || [])).catch(() => {});
-  }, [page]);
+  }, [page, status]);
 
   const toggle = (id: string) => {
     setSelected(prev => {
@@ -42,7 +44,7 @@ export default function ExportPage() {
     try {
       const res = await fetch(`/api/v1/export/csv`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${getToken()}` },
+        headers: authHeaders({ 'Content-Type': 'application/json' }),
         body: JSON.stringify({ platform, product_ids: Array.from(selected) }),
       });
       const blob = await res.blob();

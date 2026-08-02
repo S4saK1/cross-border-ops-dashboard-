@@ -1,14 +1,23 @@
 ﻿'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { auth, setToken } from '@/lib/api';
+import { useSession } from '@/lib/auth';
 
 export default function LoginPage() {
   const router = useRouter();
+  const { status } = useSession();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  // 已有有效会话（httpOnly cookie）时直接回首页，不再要求重复登录
+  useEffect(() => {
+    if (status === 'authenticated') {
+      router.push('/');
+    }
+  }, [status, router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

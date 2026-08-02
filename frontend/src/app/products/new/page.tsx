@@ -1,12 +1,14 @@
 ﻿'use client';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { getToken } from '@/lib/api';
+import { authHeaders } from '@/lib/api';
+import { useRequireAuth } from '@/lib/auth';
 import Sidebar from '@/components/Sidebar';
 import { ArrowLeft, Save } from 'lucide-react';
 
 export default function NewProductPage() {
   const router = useRouter();
+  const { status } = useRequireAuth(router);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [form, setForm] = useState({
@@ -15,19 +17,14 @@ export default function NewProductPage() {
     platform: 'amazon',
   });
 
-  useEffect(() => {
-    if (!getToken()) { router.push('/login'); return; }
-  }, []);
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
     setLoading(true);
     try {
-      const token = getToken();
       const res = await fetch('/api/v1/products', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        headers: authHeaders({ 'Content-Type': 'application/json' }),
         body: JSON.stringify(form),
       });
       if (!res.ok) {
