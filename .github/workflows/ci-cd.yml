@@ -127,6 +127,11 @@ jobs:
         cd frontend
         npm run typecheck
 
+    - name: Lint
+      run: |
+        cd frontend
+        npm run lint
+
     - name: Unit tests
       run: |
         cd frontend

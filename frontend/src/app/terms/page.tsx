@@ -29,10 +29,12 @@ export default function TermsPage() {
     setTotal(data.total || 0);
   };
 
+  /* eslint-disable react-hooks/exhaustive-deps -- search 由 Enter 键显式触发，避免输入时逐键请求 */
   useEffect(() => {
     if (status !== 'authenticated') return;
     fetchTerms(page, category, search);
   }, [page, category, status]);
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   return (
     <div className="flex min-h-screen">

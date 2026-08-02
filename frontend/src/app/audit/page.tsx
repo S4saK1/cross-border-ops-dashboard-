@@ -28,10 +28,12 @@ export default function AuditPage() {
     setLoading(false);
   };
 
+  /* eslint-disable react-hooks/exhaustive-deps -- fetchLogs 按需重建，依赖 [page, status] 已覆盖触发条件 */
   useEffect(() => {
     if (status !== 'authenticated') return;
     fetchLogs(page);
   }, [page, status]);
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   return (
     <div className="flex min-h-screen">

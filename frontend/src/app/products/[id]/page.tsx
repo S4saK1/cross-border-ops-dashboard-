@@ -43,10 +43,12 @@ export default function ProductDetailPage() {
     setLoading(false);
   };
 
+  /* eslint-disable react-hooks/exhaustive-deps -- fetchProduct 按需重建，依赖 [productId, status] 已覆盖 */
   useEffect(() => {
     if (status !== 'authenticated') return;
     fetchProduct();
   }, [productId, status]);
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   const handleSave = async () => {
     setSaving(true);

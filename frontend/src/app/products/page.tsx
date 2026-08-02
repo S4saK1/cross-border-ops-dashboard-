@@ -41,10 +41,12 @@ export default function ProductsPage() {
     setLoading(false);
   };
 
+  /* eslint-disable react-hooks/exhaustive-deps -- search 由搜索按钮显式触发，避免输入时逐键请求 */
   useEffect(() => {
     if (status !== 'authenticated') return;
     fetchProducts(page, search);
   }, [page, status]);
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   const handleSearch = () => { setPage(1); fetchProducts(1, search); };
 
