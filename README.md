@@ -118,7 +118,7 @@ curl http://localhost:8000/health
 docker compose ps
 ```
 
-更详细的步骤见 [QUICKSTART.md](QUICKSTART.md) 与 [DEPLOY.md](DEPLOY.md)。
+更详细的步骤见 [docs/QUICKSTART.md](docs/QUICKSTART.md) 与 [docs/DEPLOY.md](docs/DEPLOY.md)。
 
 ## 安全设计
 
@@ -159,7 +159,7 @@ CI 管道（[.github/workflows/ci-cd.yml](.github/workflows/ci-cd.yml)）依次�
 - **数据库迁移**：`alembic upgrade head`（v2.0 起由 Alembic 统一管理 schema）
 - **数据备份**：`scripts/backup.sh`，支持 pg_dump / SQLite 双模式；设置 `BACKUP_GPG_RECIPIENT` 可启用 GPG 加密；创建 `deploy/backup/rclone.conf`（rclone 配置）并设置 `BACKUP_REMOTE`（如 `s3:bucket/cms-backups`）即可自动上传 S3/SFTP/OSS 等远端
 - **监控告警**：Prometheus + Grafana + Alertmanager，配置见 [monitoring/](monitoring/) 与 [docs/monitoring-guide.md](docs/monitoring-guide.md)
-- **部署检查清单**：[deploy/deployment-checklist.md](deploy/deployment-checklist.md)
+- **部署检查清单**：[docs/deployment-checklist.md](docs/deployment-checklist.md)
 
 ## 版本历史
 

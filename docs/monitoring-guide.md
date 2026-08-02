@@ -115,7 +115,7 @@
 ### Prometheus配置
 
 ```yaml
-# prometheus.yml（与 monitoring/prometheus.yml 同步）
+# prometheus.yml（与 deploy/monitoring/prometheus.yml 同步）
 global:
   scrape_interval: 15s
   evaluation_interval: 15s

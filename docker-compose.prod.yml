@@ -157,7 +157,7 @@ services:
       - SMTP_PASSWORD=${SMTP_PASSWORD:-}
       - ALERT_EMAIL_TO=${ALERT_EMAIL_TO:-admin@bilingual-product-cms.com}
     volumes:
-      - ./monitoring/alertmanager.yml.tmpl:/etc/alertmanager/alertmanager.yml.tmpl:ro
+      - ./deploy/monitoring/alertmanager.yml.tmpl:/etc/alertmanager/alertmanager.yml.tmpl:ro
       - alertmanager-data:/alertmanager
     restart: unless-stopped
     command:
@@ -175,8 +175,8 @@ services:
     # ports:  # Internal network only
     #   - "9090:9090"
     volumes:
-      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
-      - ./monitoring/alerts.yml:/etc/prometheus/alerts.yml:ro
+      - ./deploy/monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./deploy/monitoring/alerts.yml:/etc/prometheus/alerts.yml:ro
       - prometheus-data:/prometheus
     restart: unless-stopped
     logging:
@@ -224,8 +224,8 @@ services:
       - GF_USERS_ALLOW_SIGN_UP=false
     volumes:
       - grafana-data:/var/lib/grafana
-      - ./monitoring/grafana/dashboards:/etc/grafana/provisioning/dashboards
-      - ./monitoring/grafana/datasources:/etc/grafana/provisioning/datasources
+      - ./deploy/monitoring/grafana/dashboards:/etc/grafana/provisioning/dashboards
+      - ./deploy/monitoring/grafana/datasources:/etc/grafana/provisioning/datasources
     restart: unless-stopped
     logging:
       driver: json-file

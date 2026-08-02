@@ -114,7 +114,7 @@
 4. `backend/Dockerfile` - Docker 构建文件（已优化）
 
 ### 监控配置文件
-5. `monitoring/prometheus.yml` - Prometheus 配置
+5. `deploy/monitoring/prometheus.yml` - Prometheus 配置
 6. `monitoring/grafana/datasources/datasources.yml` - Grafana 数据源
 7. `monitoring/grafana/dashboards/dashboards.yml` - 仪表板配置
 8. `monitoring/grafana/dashboards/backend-dashboard.json` - 后端监控仪表板
@@ -125,8 +125,8 @@
 11. `scripts/health-check.sh` - 健康检查脚本
 
 ### 文档文件
-12. `CI-CD-Documentation.md` - 完整流程文档
-13. `CI-CD-Report.md` - 本报告
+12. `docs/CI-CD-Documentation.md` - 完整流程文档
+13. `docs/CI-CD-Report.md` - 本报告
 14. `.env.example` - 环境变量示例
 
 ### 配置文件
