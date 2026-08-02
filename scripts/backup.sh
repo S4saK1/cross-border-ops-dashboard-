@@ -97,6 +97,31 @@ if [ ! -f "$BACKUP_FILE" ] || [ ! -s "$BACKUP_FILE" ]; then
     exit 1
 fi
 
+# ── Optional GPG encryption (P3) ───────────────────────────
+# 设置 BACKUP_GPG_RECIPIENT（GPG 接收者）后，备份会用公钥加密再落盘；
+# 未设置或 gpg 不可用时保持明文，并给出提示。
+if [ -n "${BACKUP_GPG_RECIPIENT:-}" ]; then
+    if command -v gpg >/dev/null 2>&1; then
+        ENCRYPTED_FILE="${BACKUP_FILE}.gpg"
+        echo "Encrypting backup with GPG for recipient: $BACKUP_GPG_RECIPIENT"
+        if gpg --batch --yes --trust-model always -e -r "$BACKUP_GPG_RECIPIENT" -o "$ENCRYPTED_FILE" "$BACKUP_FILE"; then
+            rm -f "$BACKUP_FILE"
+            BACKUP_FILE="$ENCRYPTED_FILE"
+            echo "Encrypted backup: $BACKUP_FILE"
+        else
+            echo "ERROR: GPG encryption failed; keeping plaintext backup" >&2
+        fi
+    else
+        echo "WARNING: BACKUP_GPG_RECIPIENT is set but gpg is not installed; keeping plaintext backup" >&2
+    fi
+fi
+
+# ── Re-verify final artifact ───────────────────────────────
+if [ ! -f "$BACKUP_FILE" ] || [ ! -s "$BACKUP_FILE" ]; then
+    echo "ERROR: Backup file was not created or is empty: $BACKUP_FILE" >&2
+    exit 1
+fi
+
 BACKUP_SIZE=$(stat -c%s "$BACKUP_FILE" 2>/dev/null || stat -f%z "$BACKUP_FILE" 2>/dev/null || echo "0")
 echo "Backup created successfully: $BACKUP_FILE (${BACKUP_SIZE} bytes)"
 exit 0

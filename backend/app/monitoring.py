@@ -142,19 +142,42 @@ def get_all_metrics() -> Dict[str, Any]:
     }
 
 
+def _get_aggregated_counts() -> Dict[str, int]:
+    """跨 worker 全局请求/错误计数。
+
+    Redis 可用时读取聚合计数器（多 worker 部署下 Prometheus 指标才准确），
+    否则回退到当前进程内存计数。
+    """
+    if _metrics_aggregator is not None:
+        try:
+            from app.core.redis import is_redis_available
+            if is_redis_available():
+                return {
+                    "request_count": _metrics_aggregator.get_counter("request_count"),
+                    "error_count": _metrics_aggregator.get_counter("error_count"),
+                }
+        except Exception:
+            pass
+    return {
+        "request_count": _metrics_cache["request_count"],
+        "error_count": _metrics_cache["error_count"],
+    }
+
+
 # Prometheus format metrics
 def get_prometheus_metrics() -> str:
     """Generate Prometheus format metrics"""
     metrics = get_all_metrics()
+    aggregated = _get_aggregated_counts()
 
     lines = []
     lines.append("# HELP app_requests_total Total number of requests")
     lines.append("# TYPE app_requests_total counter")
-    lines.append(f"app_requests_total {metrics['application']['total_requests']}")
+    lines.append(f"app_requests_total {aggregated['request_count']}")
 
     lines.append("# HELP app_errors_total Total number of errors")
     lines.append("# TYPE app_errors_total counter")
-    lines.append(f"app_errors_total {metrics['application']['error_count']}")
+    lines.append(f"app_errors_total {aggregated['error_count']}")
 
     lines.append("# HELP app_response_time_seconds Average response time")
     lines.append("# TYPE app_response_time_seconds gauge")

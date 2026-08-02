@@ -15,6 +15,21 @@ class TestUsers:
         )
         assert response.status_code == 200
 
+    def test_list_users_returns_pagination_metadata(self, client, admin_token, admin_user, viewer_user):
+        """User list must return pagination metadata, not a bare array."""
+        response = client.get(
+            "/api/v1/users",
+            headers={"Authorization": f"Bearer {admin_token}"}
+        )
+        assert response.status_code == 200
+        data = response.json()
+        assert "items" in data
+        assert "total" in data
+        assert "page" in data
+        assert "page_size" in data
+        assert data["total"] >= 2
+        assert len(data["items"]) >= 2
+
     def test_list_users_viewer_forbidden(self, client, viewer_token):
         """Viewer cannot list users."""
         response = client.get(

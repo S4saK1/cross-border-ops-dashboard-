@@ -125,3 +125,26 @@ class TestAuth:
         db.expire_all()
         user = db.query(UserProfile).filter(UserProfile.email == "admin@test.com").first()
         assert user.last_login_at is not None
+
+    def test_refresh_without_body_uses_cookie(self, client, admin_user):
+        """Refresh must work with httpOnly cookie alone, without a JSON body."""
+        login = client.post("/api/v1/auth/login", json={
+            "email": "admin@test.com",
+            "password": "admin123",
+        })
+        assert login.status_code == 200
+
+        response = client.post("/api/v1/auth/refresh")
+        assert response.status_code == 200
+        assert "access_token" in response.json()
+
+    def test_logout_without_body_uses_cookie(self, client, admin_user):
+        """Logout must work with httpOnly cookie alone, without a JSON body."""
+        login = client.post("/api/v1/auth/login", json={
+            "email": "admin@test.com",
+            "password": "admin123",
+        })
+        assert login.status_code == 200
+
+        response = client.post("/api/v1/auth/logout")
+        assert response.status_code == 200

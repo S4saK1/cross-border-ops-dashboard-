@@ -1,6 +1,7 @@
 import math
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
+from sqlalchemy.exc import IntegrityError
 from app.database import get_db
 from app.models.term import TermDictionary
 from app.schemas.term import TermCreate, TermOut, TermListResponse
@@ -45,12 +46,24 @@ def create_term(
     db: Session = Depends(get_db),
     current_user=Depends(require_editor),
 ):
+    # P3: 预检 (zh, en) 唯一索引冲突，返回 409 而非 500
+    existing = db.query(TermDictionary).filter(
+        TermDictionary.zh == data.zh,
+        TermDictionary.en == data.en,
+    ).first()
+    if existing:
+        raise HTTPException(status_code=409, detail="Term already exists")
+
     term = TermDictionary(
         **data.model_dump(),
         is_builtin=False,
         created_by=current_user.id,
     )
     db.add(term)
-    db.commit()
+    try:
+        db.commit()
+    except IntegrityError:
+        db.rollback()
+        raise HTTPException(status_code=409, detail="Term already exists")
     db.refresh(term)
     return term

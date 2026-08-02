@@ -65,6 +65,20 @@ def test_create_custom_term(client, editor_token, db):
     assert data["is_builtin"] is False
 
 
+def test_create_duplicate_term_returns_conflict(client, editor_token):
+    """Duplicate (zh, en) must return 409, not a 500 IntegrityError."""
+    payload = {"zh": "重复术语", "en": "Duplicate Term", "category": "General"}
+    first = client.post("/api/v1/terms", json=payload, headers={
+        "Authorization": f"Bearer {editor_token}"
+    })
+    assert first.status_code == 201
+
+    second = client.post("/api/v1/terms", json=payload, headers={
+        "Authorization": f"Bearer {editor_token}"
+    })
+    assert second.status_code == 409
+
+
 def test_terms_require_auth(client):
     response = client.get("/api/v1/terms")
     assert response.status_code == 401

@@ -15,6 +15,18 @@ class TestHealthMetrics:
         data = response.json()
         assert data["status"] == "healthy"
 
+    def test_health_db_endpoint(self, client):
+        """DB health endpoint exists and reports a status."""
+        response = client.get("/health/db")
+        assert response.status_code == 200
+        data = response.json()
+        assert data["status"] in ("healthy", "unhealthy")
+
+    def test_app_version_matches_release(self, client):
+        """App version string must match the released version (v2.0.0)."""
+        from app.main import app
+        assert app.version == "2.0.0"
+
     def test_prometheus_metrics_public(self, client):
         """Prometheus metrics endpoint is publicly accessible."""
         response = client.get("/metrics/prometheus")
