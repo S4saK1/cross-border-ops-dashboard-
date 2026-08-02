@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Package, BookOpen, Download, Upload, FileText, Users, LayoutDashboard, LogOut, type LucideIcon } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import { auth } from '@/lib/api';
 
 interface NavItem {
   href: string;
@@ -60,7 +61,11 @@ export default function Sidebar({ className, userRole }: SidebarProps) {
         })}
       </nav>
       <div className="p-3 border-t border-gray-200">
-        <button onClick={() => { localStorage.clear(); window.location.href = '/login'; }}
+        <button onClick={async () => {
+          try { await auth.logout(); } catch { /* 即使服务端失败也清理本地会话 */ }
+          localStorage.clear();
+          window.location.href = '/login';
+        }}
           className="flex items-center gap-2 w-full px-3 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg">
           <LogOut size={18} /> 退出登录
         </button>

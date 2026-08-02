@@ -1,7 +1,8 @@
 ﻿'use client';
 import { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
-import { getToken } from '@/lib/api';
+import { authHeaders } from '@/lib/api';
+import { useRequireAuth } from '@/lib/auth';
 import Sidebar from '@/components/Sidebar';
 import { ArrowLeft, Edit, Save } from 'lucide-react';
 
@@ -19,6 +20,7 @@ export default function ProductDetailPage() {
   const router = useRouter();
   const params = useParams();
   const productId = params.id as string;
+  const { status } = useRequireAuth(router);
   const [product, setProduct] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState(false);
@@ -28,9 +30,8 @@ export default function ProductDetailPage() {
   const fetchProduct = async () => {
     setLoading(true);
     try {
-      const token = getToken();
       const res = await fetch(`/api/v1/products/${productId}`, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: authHeaders(),
       });
       if (!res.ok) throw new Error('Product not found');
       const data = await res.json();
@@ -43,17 +44,16 @@ export default function ProductDetailPage() {
   };
 
   useEffect(() => {
-    if (!getToken()) { router.push('/login'); return; }
+    if (status !== 'authenticated') return;
     fetchProduct();
-  }, [productId]);
+  }, [productId, status]);
 
   const handleSave = async () => {
     setSaving(true);
     try {
-      const token = getToken();
       const res = await fetch(`/api/v1/products/${productId}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        headers: authHeaders({ 'Content-Type': 'application/json' }),
         body: JSON.stringify(form),
       });
       if (!res.ok) throw new Error('更新失败');

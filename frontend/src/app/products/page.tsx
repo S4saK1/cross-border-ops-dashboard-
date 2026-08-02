@@ -1,7 +1,8 @@
 ﻿'use client';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { getToken } from '@/lib/api';
+import { authHeaders } from '@/lib/api';
+import { useRequireAuth } from '@/lib/auth';
 import Sidebar from '@/components/Sidebar';
 import { Plus, Search, Trash2, Eye } from 'lucide-react';
 
@@ -17,6 +18,7 @@ const statusLabels: Record<string, string> = {
 
 export default function ProductsPage() {
   const router = useRouter();
+  const { status } = useRequireAuth(router);
   const [items, setItems] = useState<any[]>([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
@@ -28,9 +30,8 @@ export default function ProductsPage() {
     try {
       const params: Record<string, string> = { page: String(p), page_size: '20' };
       if (q) params.search = q;
-      const token = getToken();
       const res = await fetch(`/api/v1/products?${new URLSearchParams(params)}`, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: authHeaders(),
       });
       if (!res.ok) throw new Error("Request failed");
       const data = await res.json();
@@ -41,16 +42,16 @@ export default function ProductsPage() {
   };
 
   useEffect(() => {
-    if (!getToken()) { router.push('/login'); return; }
+    if (status !== 'authenticated') return;
     fetchProducts(page, search);
-  }, [page]);
+  }, [page, status]);
 
   const handleSearch = () => { setPage(1); fetchProducts(1, search); };
 
   const handleDelete = async (id: string) => {
     if (!confirm('确认删除此产品？')) return;
     await fetch(`/api/v1/products/${id}`, {
-      method: 'DELETE', headers: { Authorization: `Bearer ${getToken()}` },
+      method: 'DELETE', headers: authHeaders(),
     });
     fetchProducts(page, search);
   };

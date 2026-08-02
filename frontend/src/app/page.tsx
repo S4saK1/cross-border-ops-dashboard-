@@ -1,21 +1,23 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { getToken } from '@/lib/api';
+import { authHeaders } from '@/lib/api';
+import { useRequireAuth } from '@/lib/auth';
 import Sidebar from '@/components/Sidebar';
 import { Package, BookOpen, AlertTriangle, CheckCircle } from 'lucide-react';
 
 export default function Dashboard() {
   const router = useRouter();
+  const { status } = useRequireAuth(router);
   const [stats, setStats] = useState({ products: 0, terms: 0, errors: 0, passed: 0 });
 
   useEffect(() => {
-    if (!getToken()) { router.push('/login'); return; }
-    fetch('/api/v1/products?page_size=1', { headers: { Authorization: `Bearer ${getToken()}` } })
+    if (status !== 'authenticated') return;
+    fetch('/api/v1/products?page_size=1', { headers: authHeaders() })
       .then(r => r.json()).then(d => setStats(s => ({ ...s, products: d.total || 0 }))).catch(() => {});
-    fetch('/api/v1/terms?page_size=1', { headers: { Authorization: `Bearer ${getToken()}` } })
+    fetch('/api/v1/terms?page_size=1', { headers: authHeaders() })
       .then(r => r.json()).then(d => setStats(s => ({ ...s, terms: d.total || 0 }))).catch(() => {});
-  }, []);
+  }, [status]);
 
   const cards = [
     { label: '产品总数', value: stats.products, icon: Package, color: 'bg-blue-500' },

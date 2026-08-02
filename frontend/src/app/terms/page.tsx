@@ -1,7 +1,8 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { getToken } from '@/lib/api';
+import { authHeaders } from '@/lib/api';
+import { useRequireAuth } from '@/lib/auth';
 import Sidebar from '@/components/Sidebar';
 import { Search, Plus } from 'lucide-react';
 
@@ -9,6 +10,7 @@ const CATEGORIES = ['全部', '通用属性', '服装鞋帽', '3C电子', '家�
 
 export default function TermsPage() {
   const router = useRouter();
+  const { status } = useRequireAuth(router);
   const [items, setItems] = useState<any[]>([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
@@ -20,7 +22,7 @@ export default function TermsPage() {
     if (cat !== '全部') params.category = cat;
     if (q) params.q = q;
     const res = await fetch(`/api/v1/terms?${new URLSearchParams(params)}`, {
-      headers: { Authorization: `Bearer ${getToken()}` },
+      headers: authHeaders(),
     });
     const data = await res.json();
     setItems(data.items || []);
@@ -28,9 +30,9 @@ export default function TermsPage() {
   };
 
   useEffect(() => {
-    if (!getToken()) { router.push('/login'); return; }
+    if (status !== 'authenticated') return;
     fetchTerms(page, category, search);
-  }, [page, category]);
+  }, [page, category, status]);
 
   return (
     <div className="flex min-h-screen">
