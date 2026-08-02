@@ -65,6 +65,11 @@ export const auth = {
     request('/auth/login', { method: 'POST', body: JSON.stringify({ email, password }) }),
   me: () => request('/auth/me'),
   logout: () => request('/auth/logout', { method: 'POST', body: JSON.stringify({}) }),
+  changePassword: (currentPassword: string, newPassword: string) =>
+    request('/auth/change-password', {
+      method: 'POST',
+      body: JSON.stringify({ current_password: currentPassword, new_password: newPassword }),
+    }),
 };
 
 // Products

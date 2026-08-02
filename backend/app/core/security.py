@@ -228,10 +228,11 @@ def get_refresh_token_from_cookie(request: Request) -> str | None:
     return request.cookies.get("refresh_token")
 
 
-async def get_current_user(
+async def _authenticate(
     token: str = Depends(oauth2_scheme),
     request: Request = None,
     db: Session = Depends(get_db),
+    enforce_force_password: bool = True,
 ):
     from app.models.user import UserProfile
 
@@ -272,11 +273,29 @@ async def get_current_user(
             detail="Token has been revoked",
         )
 
-    # P0-7: 强制改密服务端拦截
-    if payload.get("force_password_change"):
+    # P0-7: 强制改密服务端拦截（改密端点自身通过 allow_forced 变体放行）
+    if enforce_force_password and payload.get("force_password_change"):
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Password change required",
         )
 
     return user
+
+
+async def get_current_user(
+    token: str = Depends(oauth2_scheme),
+    request: Request = None,
+    db: Session = Depends(get_db),
+):
+    """标准认证依赖：强制改密用户会被拦截。"""
+    return await _authenticate(token=token, request=request, db=db, enforce_force_password=True)
+
+
+async def get_current_user_allow_forced(
+    token: str = Depends(oauth2_scheme),
+    request: Request = None,
+    db: Session = Depends(get_db),
+):
+    """认证依赖变体：放行强制改密用户（仅用于 change-password 端点）。"""
+    return await _authenticate(token=token, request=request, db=db, enforce_force_password=False)
