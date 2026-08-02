@@ -4,15 +4,15 @@ This directory contains UI screenshots for the user manual.
 
 ## Planned Screenshots
 
-- `login-page.png` ¡ª µÇÂ¼Ò³Ãæ
-- `product-list.png` ¡ª ²úÆ·ÁĞ±íÒ³Ãæ
-- `product-edit.png` ¡ª ²úÆ·±à¼­Ò³Ãæ
-- `import-wizard.png` ¡ª ÅúÁ¿µ¼ÈëÏòµ¼
-- `export-dialog.png` ¡ª µ¼³ö¶Ô»°¿ò
-- `consistency-check.png` ¡ª Ò»ÖÂĞÔ¼ì²â½á¹û
-- `term-dictionary.png` ¡ª ÊõÓï´ÊµäÒ³Ãæ
-- `audit-log.png` ¡ª Éó¼ÆÈÕÖ¾Ò³Ãæ
-- `user-management.png` ¡ª ÓÃ»§¹ÜÀíÒ³Ãæ
-- `settings-page.png` ¡ª ÏµÍ³ÉèÖÃÒ³Ãæ
+- `login-page.png` â€” ç™»å½•é¡µé¢
+- `product-list.png` â€” äº§å“åˆ—è¡¨é¡µé¢
+- `product-edit.png` â€” äº§å“ç¼–è¾‘é¡µé¢
+- `import-wizard.png` â€” æ‰¹é‡å¯¼å…¥å‘å¯¼
+- `export-dialog.png` â€” å¯¼å‡ºå¯¹è¯æ¡†
+- `consistency-check.png` â€” ä¸€è‡´æ€§æ£€æµ‹ç»“æœ
+- `term-dictionary.png` â€” æœ¯è¯­è¯å…¸é¡µé¢
+- `audit-log.png` â€” å®¡è®¡æ—¥å¿—é¡µé¢
+- `user-management.png` â€” ç”¨æˆ·ç®¡ç†é¡µé¢
+- `settings-page.png` â€” ç³»ç»Ÿè®¾ç½®é¡µé¢
 
-> ½ØÍ¼¹¤¾ßÍÆ¼ö£ºÊ¹ÓÃä¯ÀÀÆ÷¿ª·¢Õß¹¤¾ß½ØÍ¼£¨F12 ¡ú Ctrl+Shift+P ¡ú "Capture full size screenshot"£©
+> æˆªå›¾å·¥å…·æ¨èï¼šä½¿ç”¨æµè§ˆå™¨å¼€å‘è€…å·¥å…·æˆªå›¾ï¼ˆF12 â†’ Ctrl+Shift+P â†’ "Capture full size screenshot"ï¼‰

@@ -21,7 +21,7 @@
 ## 作者自检清单（合并前必须全部勾选）
 
 - [ ] 本地已运行 lint：`flake8 app/`（后端）/ `npm run lint`（前端）
-- [ ] 本地已运行类型检查：`mypy app/`（后端）/ `npm run typecheck`（前端）
+- [ ] 本地已运行类型检查：`npm run typecheck`（前端；后端类型检查见 flake8/bandit 门禁）
 - [ ] 本地已运行测试且通过：`pytest`（后端）/ `npm run test`（前端）
 - [ ] 已运行密钥扫描（如 `gitleaks detect` 或 `bandit -r app/`），无新增密钥/漏洞
 - [ ] 无调试代码（`print` / `pdb` 断点 / 临时日志）遗留

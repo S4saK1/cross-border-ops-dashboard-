@@ -1,6 +1,6 @@
-# ²¿ÊğÖ¸ÄÏ
+# éƒ¨ç½²æŒ‡å—
 
-## ±¾µØ¿ª·¢
+## æœ¬åœ°å¼€å‘
 
 ```bash
 cd backend
@@ -9,72 +9,72 @@ python init_db.py
 python -m uvicorn app.main:app --reload --port 8000
 ```
 
-·ÃÎÊ http://localhost:8000/docs ²é¿´ API ÎÄµµ¡£
+è®¿é—® http://localhost:8000/docs æŸ¥çœ‹ API æ–‡æ¡£ã€‚
 
-Ä¬ÈÏ¹ÜÀíÔ±£ºadmin@bilingual-product-cms.com£¨ÃÜÂëÓÉ»·¾³±äÁ¿ADMIN_PASSWORDÉèÖÃ£¬Ê×´ÎµÇÂ¼ĞèĞŞ¸ÄÃÜÂë£©
+é»˜è®¤ç®¡ç†å‘˜ï¼šadmin@bilingual-product-cms.comï¼ˆå¯†ç ç”±ç¯å¢ƒå˜é‡ADMIN_PASSWORDè®¾ç½®ï¼Œé¦–æ¬¡ç™»å½•éœ€ä¿®æ”¹å¯†ç ï¼‰
 
-## Docker ²¿Êğ
+## Docker éƒ¨ç½²
 
-### Ç°ÖÃÌõ¼ş
-- Docker Desktop ÒÑ°²×°
-- Docker Compose v2+ ÒÑ°²×°
+### å‰ç½®æ¡ä»¶
+- Docker Desktop å·²å®‰è£…
+- Docker Compose v2+ å·²å®‰è£…
 
-### »·¾³±äÁ¿ÅäÖÃ
+### ç¯å¢ƒå˜é‡é…ç½®
 
-`docker compose` Æô¶¯Ê±ĞèÒª `SECRET_KEY`¡£´Ó `.env.example` ´´½¨ `.env` ÎÄ¼ş£º
+`docker compose` å¯åŠ¨æ—¶éœ€è¦ `SECRET_KEY`ã€‚ä» `.env.example` åˆ›å»º `.env` æ–‡ä»¶ï¼š
 
 ```bash
-# ¸´ÖÆÄ£°å²¢Éú³É°²È«ÃÜÔ¿
+# å¤åˆ¶æ¨¡æ¿å¹¶ç”Ÿæˆå®‰å…¨å¯†é’¥
 cp .env.example .env
-# Linux/Mac: ×Ô¶¯Ìæ»» SECRET_KEY
+# Linux/Mac: è‡ªåŠ¨æ›¿æ¢ SECRET_KEY
 sed -i "s/^SECRET_KEY=.*/SECRET_KEY=$(openssl rand -hex 32)/" .env
-# Windows: ÊÖ¶¯±à¼­ .env£¬»òÓÃ PowerShell Ìæ»»£¨¼û README.md£©
+# Windows: æ‰‹åŠ¨ç¼–è¾‘ .envï¼Œæˆ–ç”¨ PowerShell æ›¿æ¢ï¼ˆè§ README.mdï¼‰
 ```
 
-> **ÖØÒª**£º`.env` ±ØĞëÔÚÆô¶¯ÈİÆ÷Ç°ÅäÖÃÍê³É¡£`SECRET_KEY` Îª±ØÌîÏî£¨docker-compose.yml Ê¹ÓÃ `${SECRET_KEY:?}` Ğ£Ñé£©£¬È±ÉÙ»áµ¼ÖÂÆô¶¯Ê§°Ü¡£Ïê¼û `.env.example` ÖĞµÄÈ«²¿ÅäÖÃÏî¡£
+> **é‡è¦**ï¼š`.env` å¿…é¡»åœ¨å¯åŠ¨å®¹å™¨å‰é…ç½®å®Œæˆã€‚`SECRET_KEY` ä¸ºå¿…å¡«é¡¹ï¼ˆdocker-compose.yml ä½¿ç”¨ `${SECRET_KEY:?}` æ ¡éªŒï¼‰ï¼Œç¼ºå°‘ä¼šå¯¼è‡´å¯åŠ¨å¤±è´¥ã€‚è¯¦è§ `.env.example` ä¸­çš„å…¨éƒ¨é…ç½®é¡¹ã€‚
 
-### Ò»¼üÆô¶¯
+### ä¸€é”®å¯åŠ¨
 
 ```bash
 docker compose up -d --build
 ```
 
-### ÑéÖ¤
+### éªŒè¯
 
 ```bash
-# ¼ì²éÈİÆ÷×´Ì¬
+# æ£€æŸ¥å®¹å™¨çŠ¶æ€
 docker compose ps
 
-# ²é¿´ÈÕÖ¾
+# æŸ¥çœ‹æ—¥å¿—
 docker compose logs -f backend
 
-# ²âÊÔ½¡¿µ¼ì²é
+# æµ‹è¯•å¥åº·æ£€æŸ¥
 curl http://localhost:8000/health
 ```
 
-### Í£Ö¹
+### åœæ­¢
 
 ```bash
 docker compose down
 ```
 
-### Êı¾İ³Ö¾Ã»¯
+### æ•°æ®æŒä¹…åŒ–
 
-SQLite Êı¾İ¿â´æ´¢ÔÚ Docker volume `cms-data` ÖĞ£¬ÖØÆô²»»á¶ªÊ§Êı¾İ¡£
+SQLite æ•°æ®åº“å­˜å‚¨åœ¨ Docker volume `cms-data` ä¸­ï¼Œé‡å¯ä¸ä¼šä¸¢å¤±æ•°æ®ã€‚
 
-## Éú²ú»·¾³½¨Òé
+## ç”Ÿäº§ç¯å¢ƒå»ºè®®
 
-### 1. Ìæ»» SECRET_KEY
+### 1. æ›¿æ¢ SECRET_KEY
 
 ```bash
 export SECRET_KEY=$(python -c "import secrets; print(secrets.token_urlsafe(32))")
 ```
 
-### 2. ÅäÖÃ CORS °×Ãûµ¥
+### 2. é…ç½® CORS ç™½åå•
 
-ĞŞ¸Ä `docker-compose.yml` ÖĞµÄ `ALLOWED_ORIGINS`¡£
+ä¿®æ”¹ `docker-compose.yml` ä¸­çš„ `ALLOWED_ORIGINS`ã€‚
 
-### 3. Ê¹ÓÃ·´Ïò´úÀí£¨Nginx£©
+### 3. ä½¿ç”¨åå‘ä»£ç†ï¼ˆNginxï¼‰
 
 ```nginx
 server {
@@ -91,56 +91,56 @@ server {
 }
 ```
 
-### 4. Êı¾İ±¸·İ
+### 4. æ•°æ®å¤‡ä»½
 
 ```bash
-# ±¸·İ SQLite Êı¾İ¿â
+# å¤‡ä»½ SQLite æ•°æ®åº“
 docker compose exec backend python -c "
 import shutil
 shutil.copy('/app/data/runtime/bilingual_cms.db', '/app/data/runtime/backup.db')
 print('Backup created')
 "
 
-# »òµ¼³öÎª SQL
+# æˆ–å¯¼å‡ºä¸º SQL
 docker compose exec backend python -c "
 from app.database import engine
 from sqlalchemy import text
 with engine.connect() as conn:
-    # SQLite µ¼³ö
+    # SQLite å¯¼å‡º
     pass
 "
 ```
 
-### 5. Ç¨ÒÆµ½ PostgreSQL£¨²Î¿¼ ADR-006£©
+### 5. è¿ç§»åˆ° PostgreSQLï¼ˆå‚è€ƒ ADR-006ï¼‰
 
-°²×°Çı¶¯£º
+å®‰è£…é©±åŠ¨ï¼š
 pip install psycopg2-binary
 
-ĞŞ¸Ä .env »ò»·¾³±äÁ¿£º
+ä¿®æ”¹ .env æˆ–ç¯å¢ƒå˜é‡ï¼š
 ```bash
 DATABASE_URL=postgresql://postgres:postgres@localhost:5432/bilingual_product_cms
 ```
 
-Ê¹ÓÃ Alembic ¹ÜÀíÇ¨ÒÆ£º
+ä½¿ç”¨ Alembic ç®¡ç†è¿ç§»ï¼š
 ```bash
 cd backend
 alembic revision --autogenerate -m "initial_migration"
 alembic upgrade head
 ```
 
-ÑéÖ¤Á¬½Ó£º
+éªŒè¯è¿æ¥ï¼š
 ```bash
 python -c "from app.database import engine; engine.connect()"
 ```
 
-Éú²ú»·¾³Ê¹ÓÃ Docker Compose£¬È·±£ postgres ·şÎñÆôÓÃÁË DATABASE_URL »·¾³±äÁ¿¡£
+ç”Ÿäº§ç¯å¢ƒä½¿ç”¨ Docker Composeï¼Œç¡®ä¿ postgres æœåŠ¡å¯ç”¨äº† DATABASE_URL ç¯å¢ƒå˜é‡ã€‚
 
-ĞŞ¸Ä `.env`£º
+ä¿®æ”¹ `.env`ï¼š
 ```
 DATABASE_URL=postgresql://user:password@localhost:5432/bilingual_cms
 ```
 
-°²×°Çı¶¯£º
+å®‰è£…é©±åŠ¨ï¼š
 ```bash
 pip install psycopg2-binary
 ```

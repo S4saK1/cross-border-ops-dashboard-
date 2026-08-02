@@ -1,5 +1,9 @@
 # CI/CD 流程报告
 
+> **状态说明（2026-08）**：本文档为早期内部规划报告（2025-01），
+> 其中"蓝绿部署、自动回滚、容器镜像扫描"等声明为规划目标，并非当前已实现功能。
+> 当前 CI/CD 实际能力以 [README](README.md) 与 [.github/workflows/ci-cd.yml](.github/workflows/ci-cd.yml) 为准。
+
 ## 项目概述
 
 **项目名称**: bilingual-product-cms (跨境产品资料中英对照系统)  
