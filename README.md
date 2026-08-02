@@ -1,16 +1,21 @@
 # 跨境产品资料中英对照系统
 
+> 一件商品，两种语言，一套标准。
+> 让每一份产品资料，在跨出国境之前，就已经对齐。
+
 [![Build Status](https://img.shields.io/github/actions/workflow/status/S4saK1/cross-border-ops-dashboard-/ci-cd.yml?label=build)](https://github.com/S4saK1/cross-border-ops-dashboard-/actions)
 [![Release](https://img.shields.io/github/v/release/S4saK1/cross-border-ops-dashboard-?label=release)](https://github.com/S4saK1/cross-border-ops-dashboard-/releases)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
 [![Node.js 18+](https://img.shields.io/badge/node.js-18+-green.svg)](https://nodejs.org/)
 
-> 不是翻译工具，是跨境卖家的产品资料一致性管理系统
-
 ## 项目简介
 
-跨境产品资料中英对照系统（Cross-Border Product CMS）是面向跨境卖家的一站式产品资料管理平台，帮助卖家集中维护产品参数的中英文对照关系，并在导出到全球电商平台（Amazon、AliExpress 等）之前自动校验一致性，确保产品资料准确、统一、专业。
+做跨境，最难的不是把商品卖出去，而是让同一件商品在不同语言、不同平台上的资料始终保持一致——标题、属性、规格、术语，任何一处偏差，都可能让商品在流量入口前功尽弃。
+
+**Cross-Border Product CMS** 正是为这个场景而生：集中维护产品参数的中英文对照，内置行业术语词典与三层一致性校验引擎，在导出到 Amazon、AliExpress 等平台之前自动拦截不一致数据，让产品资料以准确、统一、专业的方式跨出国境。
+
+> 它不是翻译工具——翻译只解决"怎么说"，它解决"说得对不对、全平台是否一致"。
 
 **v2.0.0（2026-08-01）** 在 v1.0.0 基础上完成安全加固与工程化收尾：Redis 限流、CSRF 防护、JWT 令牌黑名单、Alembic 数据库迁移、统一审计日志，并让 CI 管道全绿（171 项测试通过、覆盖率 72.45%、flake8/bandit/gitleaks 零问题）。
 
